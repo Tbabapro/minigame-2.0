@@ -3,78 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deneyap Gemi Tasarımı - 3D Modeli</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0f172a; color: #fff; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        #canvas-container { flex: 1; width: 100%; height: 100%; position: relative; }
-        
-        /* UI Panel */
-        .ui-overlay { position: absolute; top: 20px; left: 20px; z-index: 10; display: flex; flex-direction: column; gap: 10px; max-width: 320px; }
-        .card { background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        h1 { font-size: 1.2rem; font-weight: 700; color: #38bdf8; margin-bottom: 6px; }
-        p { font-size: 0.85rem; color: #94a3b8; line-height: 1.4; }
-        
-        /* Controls */
-        .btn-group { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-        button { background: #2563eb; color: white; border: none; padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        button:hover { background: #1d4ed8; transform: translateY(-1px); }
-        button.active { background: #059669; }
-        
-        /* Info Panel */
-        .info-panel { position: absolute; bottom: 20px; right: 20px; z-index: 10; max-width: 300px; display: none; }
-        .info-title { font-size: 1rem; color: #f59e0b; margin-bottom: 4px; font-weight: bold; }
-        .info-desc { font-size: 0.8rem; color: #cbd5e1; }
-        
-        /* Water Status indicator */
-        .status-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; padding: 4px 8px; border-radius: 20px; background: rgba(56, 189, 248, 0.1); color: #38bdf8; width: fit-content; margin-top: 6px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; }
-        .dot.active { background: #10b981; box-shadow: 0 0 8px #10b981; }
-    </style>
-    <!-- Three.js Libraries -->
+    <title>DENEYAP 3D Airboat / Pervaneli Gemi Proje Modeli</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Three.js & OrbitControls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom scrollbar for sidebar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 3px;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 h-screen w-screen relative">
 
-    <div id="canvas-container">
-        <div class="ui-overlay">
-            <div class="card">
-                <h1>Gemi Tasarımı (3D)</h1>
-                <p>Su geçirmez kılıflı DC motor ve şaft aktarımlı hava itişli tekne modeli.</p>
-                
-                <div class="status-badge">
-                    <span class="dot" id="motor-dot"></span>
-                    <span id="motor-status">Motor: Kapalı</span>
-                </div>
-
-                <div class="btn-group">
-                    <button id="btn-toggle-motor">⚡ Motoru Çalıştır / Durdur</button>
-                    <button id="btn-explode">🧩 Demonte (Katmanlı) Görünüm</button>
-                    <button id="btn-reset">🔄 Kamera Sıfırla</button>
-                </div>
+    <!-- Top Bar Navigation -->
+    <header class="absolute top-0 left-0 right-0 z-10 p-4 flex justify-between items-center pointer-events-none">
+        <div class="glass-card px-5 py-3 rounded-2xl flex items-center gap-3 pointer-events-auto shadow-2xl">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                <i class="fa-solid fa-ship"></i>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-white tracking-wide">DENEYAP 3D Gemi / Airboat Modeli</h1>
+                <p class="text-xs text-blue-400 font-medium">Demontaj &amp; Fiziksel Tasarım Simülasyonu</p>
             </div>
         </div>
 
-        <div class="card info-panel" id="info-card">
-            <div class="info-title" id="part-title">Parça Adı</div>
-            <div class="info-desc" id="part-desc">Parçanın işlevi ve detayları...</div>
+        <!-- Quick Status Badge -->
+        <div class="hidden sm:flex glass-card px-4 py-2 rounded-xl items-center gap-3 pointer-events-auto text-xs">
+            <span class="flex h-3 w-3 relative">
+              <span id="status-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span id="status-dot" class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span id="status-text" class="font-medium text-slate-200">Motor: Hazır (Durduruldu)</span>
         </div>
+    </header>
+
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container" class="w-full h-full"></div>
+
+    <!-- Control Sidebar (Right side) -->
+    <aside class="absolute right-4 top-20 bottom-4 w-80 max-w-[calc(100vw-2rem)] glass-card rounded-2xl p-5 z-10 flex flex-col gap-4 shadow-2xl overflow-y-auto">
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-col gap-2.5">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-sliders mr-1.5"></i> Model Kontrolleri</h2>
+            
+            <button id="btn-explode" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 transition text-sm font-semibold flex items-center justify-between shadow-lg shadow-blue-600/30">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-layer-group"></i> Demonte / Katmanlı Görünüm</span>
+                <span id="badge-explode" class="text-[10px] bg-blue-800 px-2 py-0.5 rounded-full uppercase">KAPALI</span>
+            </button>
+
+            <button id="btn-motor" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 transition text-sm font-semibold flex items-center justify-between shadow-lg shadow-emerald-600/30">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-fan"></i> Motoru Çalıştır</span>
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+
+            <button id="btn-reset-cam" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 transition text-xs font-medium text-slate-300 flex items-center justify-center gap-2 border border-slate-700">
+                <i class="fa-solid fa-rotate"></i> Kamerayı Sıfırla
+            </button>
+        </div>
+
+        <hr class="border-slate-800 my-1">
+
+        <!-- Parça Seçim Listesi (Interactive Components) -->
+        <div class="flex flex-col gap-2 flex-grow">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1"><i class="fa-solid fa-cubes mr-1.5"></i> Malzeme &amp; Parçalar</h2>
+            <p class="text-xs text-slate-400">İncelemek istediğiniz parçaya tıklayın veya 3D model üzerinden seçin:</p>
+            
+            <div id="part-list" class="flex flex-col gap-1.5 mt-1">
+                <!-- Part Items inserted dynamically -->
+            </div>
+        </div>
+
+        <!-- Part Details Info Box -->
+        <div id="info-card" class="bg-slate-900/90 rounded-xl p-3.5 border border-slate-700/60 mt-auto">
+            <div class="flex items-center justify-between mb-1">
+                <span id="info-title" class="text-sm font-bold text-blue-400">Parça Detayı</span>
+                <span id="info-badge" class="text-[10px] font-mono bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded">DENEYAP</span>
+            </div>
+            <p id="info-desc" class="text-xs text-slate-300 leading-relaxed">
+                Parçaların teknik işlevini görmek için listeden bir bileşene veya 3D model üzerine tıklayın.
+            </p>
+        </div>
+    </aside>
+
+    <!-- Bottom Left Instructions -->
+    <div class="absolute bottom-4 left-4 z-10 glass-card px-4 py-2.5 rounded-xl hidden md:flex items-center gap-4 text-xs text-slate-300 pointer-events-none">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-mouse text-blue-400"></i> Döndür: Sol Tık</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-up-down-left-right text-blue-400"></i> Kaydır: Sağ Tık</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-magnifying-glass-plus text-blue-400"></i> Yakınlaştır: Scroll</span>
     </div>
 
     <script>
-        // --- 1. SCENE SETUP ---
+        // --- 1. DATA & STATE MANAGEMENT ---
+        const PARTS_DATA = [
+            {
+                id: 'propeller',
+                name: 'Pervane (3 Kanatlı)',
+                material: 'Plastik Tabak / Enjeksiyon',
+                offsetY: 2.2, // Exploded view offset
+                color: '#ef4444',
+                desc: 'Motor miline takılarak yüksek devirde hava akımı üretir. Havanın geriye itilmesiyle gemi ileriye doğru hareket eder (Etki-Tepki Prensibi).'
+            },
+            {
+                id: 'motor',
+                name: 'DC Motor (3V-6V)',
+                material: 'Elektrikli Aksam',
+                offsetY: 1.6,
+                color: '#3b82f6',
+                desc: 'Pilden aldığı elektrik enerjisini mekanik dönme hareketine çevirir. Yüksek devirli (RPM) mini motordur.'
+            },
+            {
+                id: 'tower',
+                name: 'Motor Kulesi',
+                material: 'Dil Çubukları & Silikon',
+                offsetY: 1.0,
+                color: '#f59e0b',
+                desc: 'Motoru ve pervaneyi su seviyesinin üstünde tutar. Böylece elektrik aksamı sudan korunur ve pervanenin hava akışı engellenmez.'
+            },
+            {
+                id: 'battery',
+                name: 'Pil Yatağı & Anahtar',
+                material: '2x AA Kalem Pil / Anahtar',
+                offsetY: 0.5,
+                color: '#10b981',
+                desc: 'Devrenin güç kaynağıdır. Anahtar sayesinde akım kontrol edilerek motor istenildiği an açılıp kapatılabilir.'
+            },
+            {
+                id: 'hull',
+                name: 'Strafor Gövde (V-Kesim)',
+                material: 'Yüksek Yoğunluklu Köpük',
+                offsetY: 0.0,
+                color: '#94a3b8',
+                desc: 'Geminin yüzmesini sağlar. Ön kısmı "V" şeklinde sivri kesilerek su direnci (sürtünme) minimuma indirilmiştir.'
+            },
+            {
+                id: 'weight',
+                name: 'Denge Ağırlıkları (Somunlar)',
+                material: 'Metal Somun & Pul',
+                offsetY: -0.6,
+                color: '#64748b',
+                desc: 'Geminin tabanına yerleştirilir. Ağırlık merkezini aşağı çekerek rüzgarda veya dönüşlerde geminin devrilmesini (alabora olmasını) önler.'
+            }
+        ];
+
+        let state = {
+            isExploded: false,
+            isMotorRunning: false,
+            selectedPartId: null,
+            explodeProgress: 0 // Interpolation value for smooth explosion
+        };
+
+        // --- 2. THREE.JS SCENE SETUP ---
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0f1d);
-        scene.fog = new THREE.FogExp2(0x0a0f1d, 0.03);
+        scene.background = new THREE.Color(0x0f172a);
+        scene.fog = new THREE.FogExp2(0x0f172a, 0.035);
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(4, 3, 5);
+        camera.position.set(6, 4, 8);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
@@ -82,189 +201,342 @@
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Don't go below water
+        controls.maxPolarAngle = Math.PI / 2 - 0.02; // Don't go under water
+        controls.minDistance = 3;
+        controls.maxDistance = 20;
 
-        // --- 2. LIGHTING ---
+        // --- 3. LIGHTING ---
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-        dirLight.position.set(5, 10, 7);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        dirLight.position.set(10, 15, 8);
         dirLight.castShadow = true;
-        dirLight.shadow.mapSize.width = 1024;
-        dirLight.shadow.mapSize.height = 1024;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 30;
+        dirLight.shadow.camera.left = -6;
+        dirLight.shadow.camera.right = 6;
+        dirLight.shadow.camera.top = 6;
+        dirLight.shadow.camera.bottom = -6;
         scene.add(dirLight);
 
-        const blueLight = new THREE.PointLight(0x38bdf8, 1, 10);
-        blueLight.position.set(0, 1, 0);
-        scene.add(blueLight);
+        const pointLight = new THREE.PointLight(0x38bdf8, 1, 10);
+        pointLight.position.set(0, 2, 0);
+        scene.add(pointLight);
 
-        // --- 3. WATER SURFACE ---
-        const waterGeo = new THREE.PlaneGeometry(30, 30, 64, 64);
-        const waterMat = new THREE.MeshStandardMaterial({
+        // --- 4. ENVIRONMENT & WATER ---
+        const waterGeometry = new THREE.PlaneGeometry(100, 100, 64, 64);
+        const waterMaterial = new THREE.MeshStandardMaterial({
             color: 0x0284c7,
             roughness: 0.1,
             metalness: 0.8,
             transparent: true,
-            opacity: 0.8
+            opacity: 0.85,
+            wireframe: false
         });
-        const water = new THREE.Mesh(waterGeo, waterMat);
+        const water = new THREE.Mesh(waterGeometry, waterMaterial);
         water.rotation.x = -Math.PI / 2;
-        water.position.y = -0.2;
+        water.position.y = -0.3;
         scene.add(water);
 
-        // --- 4. BOAT MODEL GROUP ---
+        // Wake Particles (behind boat when engine runs)
+        const particleCount = 60;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePos = new Float32Array(particleCount * 3);
+        for(let i=0; i<particleCount*3; i++) particlePos[i] = 0;
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+        
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.12,
+            transparent: true,
+            opacity: 0.7
+        });
+        const wakeParticles = new THREE.Points(particleGeo, particleMat);
+        scene.add(wakeParticles);
+
+        // --- 5. AIRBOAT MODEL ASSEMBLY ---
         const boatGroup = new THREE.Group();
         scene.add(boatGroup);
 
-        // Materials
-        const styrofoamMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.9, name: "Gövde (Strafor)" });
-        const woodMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.7, name: "Kule (Dil Çubukları)" });
-        const casingMat = new THREE.MeshPhysicalMaterial({ 
-            color: 0x38bdf8, 
-            transparent: true, 
-            opacity: 0.6, 
-            roughness: 0.1, 
-            transmission: 0.9,
-            name: "Su Geçirmez Motor Kılıfı" 
-        });
-        const motorMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8, roughness: 0.2, name: "DC Motor" });
-        const propMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, name: "Pervane" });
-        const batteryMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4, name: "Pil Yatağı & Piller" });
-        const weightMat = new THREE.MeshStandardMaterial({ color: 0x64748b, metalness: 0.9, roughness: 0.1, name: "Denge Somunu (Ağırlık)" });
+        const partMeshes = {}; // Stores group references for explosion animation
 
-        // Parts Map for Exploded View
-        const parts = {};
+        // Helper function for procedural textures
+        function createWoodMaterial() {
+            return new THREE.MeshStandardMaterial({
+                color: 0xd97706,
+                roughness: 0.7,
+                metalness: 0.1
+            });
+        }
 
-        // A. HULL (Strafor Gövde)
+        // 1. Foam Hull (Strafor Gövde)
+        const hullGroup = new THREE.Group();
         const hullShape = new THREE.Shape();
-        hullShape.moveTo(0, 1.2);
-        hullShape.lineTo(0.6, 0.4);
-        hullShape.lineTo(0.6, -1.2);
-        hullShape.lineTo(-0.6, -1.2);
-        hullShape.lineTo(-0.6, 0.4);
+        hullShape.moveTo(-1.2, -2.0);
+        hullShape.lineTo(1.2, -2.0);
+        hullShape.lineTo(1.2, 0.8);
+        hullShape.lineTo(0.0, 2.0); // V-Shape front
+        hullShape.lineTo(-1.2, 0.8);
         hullShape.closePath();
 
-        const extrudeSettings = { depth: 0.3, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.05, bevelThickness: 0.05 };
+        const extrudeSettings = { depth: 0.5, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: 0.08, bevelThickness: 0.08 };
         const hullGeo = new THREE.ExtrudeGeometry(hullShape, extrudeSettings);
-        const hull = new THREE.Mesh(hullGeo, styrofoamMat);
-        hull.rotation.x = Math.PI / 2;
-        hull.position.y = 0;
-        hull.castShadow = true;
-        hull.receiveShadow = true;
-        hull.userData = { title: "V-Tipi Strafor Gövde", desc: "Su direncini keser ve yüksek kaldırma kuvveti sağlayarak geminin batmasını engeller." };
-        boatGroup.add(hull);
-        parts.hull = { obj: hull, origY: 0, targetY: -0.8 };
+        const hullMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.9, metalness: 0.05 });
+        const hullMesh = new THREE.Mesh(hullGeo, hullMat);
+        hullMesh.rotation.x = Math.PI / 2;
+        hullMesh.rotation.z = Math.PI;
+        hullMesh.position.y = -0.1;
+        hullMesh.castShadow = true;
+        hullMesh.receiveShadow = true;
+        hullGroup.add(hullMesh);
 
-        // B. TOWER (Dil Çubukları Kule)
+        // Chamfer / Tape accents
+        const tapeGeo = new THREE.BoxGeometry(2.5, 0.06, 0.2);
+        const tapeMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.4 });
+        const tapeMesh = new THREE.Mesh(tapeGeo, tapeMat);
+        tapeMesh.position.set(0, 0.18, 0.5);
+        hullGroup.add(tapeMesh);
+
+        boatGroup.add(hullGroup);
+        partMeshes['hull'] = { group: hullGroup, basePos: new THREE.Vector3(0,0,0) };
+
+        // 2. Motor Tower (Dil Çubukları Kulesi)
         const towerGroup = new THREE.Group();
-        const legGeo = new THREE.BoxGeometry(0.06, 0.9, 0.06);
-        const leg1 = new THREE.Mesh(legGeo, woodMat); leg1.position.set(-0.25, 0.45, -0.2); leg1.rotation.z = -0.15;
-        const leg2 = new THREE.Mesh(legGeo, woodMat); leg2.position.set(0.25, 0.45, -0.2); leg2.rotation.z = 0.15;
-        const leg3 = new THREE.Mesh(legGeo, woodMat); leg3.position.set(-0.25, 0.45, 0.2); leg3.rotation.z = -0.15;
-        const leg4 = new THREE.Mesh(legGeo, woodMat); leg4.position.set(0.25, 0.45, 0.2); leg4.rotation.z = 0.15;
-        const platformGeo = new THREE.BoxGeometry(0.5, 0.05, 0.5);
-        const platform = new THREE.Mesh(platformGeo, woodMat); platform.position.set(0, 0.9, 0);
+        const stickMat = createWoodMaterial();
 
-        towerGroup.add(leg1, leg2, leg3, leg4, platform);
-        towerGroup.userData = { title: "Ahşap Taşıyıcı Kule", desc: "Motoru su seviyesinin üstüne çıkararak sudan korur ve hava akımını yüksek tutar." };
-        boatGroup.add(towerGroup);
-        parts.tower = { obj: towerGroup, origY: 0, targetY: 0.2 };
-
-        // C. WATERPROOF CASING & DC MOTOR (Tepede)
-        const motorGroup = new THREE.Group();
-        motorGroup.position.set(0, 1.1, 0);
-
-        // Waterproof Housing
-        const casingGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.45, 16);
-        const casing = new THREE.Mesh(casingGeo, casingMat);
-        casing.rotation.x = Math.PI / 2;
-        casing.userData = { title: "Su Geçirmez Kılıf/Muhafaza", desc: "DC motoru su sıçramalarından tamamen izole eden şeffaf koruyucu kaplama." };
-
-        // Internal DC Motor
-        const dcMotorGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.35, 16);
-        const dcMotor = new THREE.Mesh(dcMotorGeo, motorMat);
-        dcMotor.rotation.x = Math.PI / 2;
-        dcMotor.userData = { title: "DC Elektrik Motoru", desc: "Pilden aldığı elektrik enerjisini yüksek devirli mekanik dönme hareketine çevirir." };
-
-        // Shaft (Aktarım Mili)
-        const shaftGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.2, 8);
-        const shaft = new THREE.Mesh(shaftGeo, weightMat);
-        shaft.rotation.x = Math.PI / 2;
-        shaft.position.z = 0.22;
-
-        motorGroup.add(casing, dcMotor, shaft);
-        boatGroup.add(motorGroup);
-        parts.motor = { obj: motorGroup, origY: 1.1, targetY: 1.8 };
-
-        // D. PROPELLER (Pervane - Motora Bağlı Tepede)
-        const propGroup = new THREE.Group();
-        propGroup.position.set(0, 1.1, 0.3); // Directly on shaft
-
-        const centerHub = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.06, 12), propMat);
-        centerHub.rotation.x = Math.PI / 2;
-        propGroup.add(centerHub);
-
-        const bladeGeo = new THREE.BoxGeometry(0.4, 0.08, 0.02);
-        for(let i=0; i<3; i++) {
-            const blade = new THREE.Mesh(bladeGeo, propMat);
-            blade.rotation.z = (i * Math.PI * 2) / 3;
-            propGroup.add(blade);
+        function createStick(w, h, d, px, py, pz, rx=0, ry=0, rz=0) {
+            const geo = new THREE.BoxGeometry(w, h, d);
+            const mesh = new THREE.Mesh(geo, stickMat);
+            mesh.position.set(px, py, pz);
+            mesh.rotation.set(rx, ry, rz);
+            mesh.castShadow = true;
+            return mesh;
         }
-        propGroup.userData = { title: "3 Kanatlı İtiş Pervanesi", desc: "Motor mili üzerinden dönerek havayı geriye iter ve etki-tepki prensibiyle gemiyi ileri yürütür." };
-        boatGroup.add(propGroup);
-        parts.propeller = { obj: propGroup, origY: 1.1, targetY: 2.3 };
 
-        // E. BATTERY & WEIGHTS (Gövde Üstü / Taban)
-        const batGeo = new THREE.BoxGeometry(0.35, 0.15, 0.25);
-        const battery = new THREE.Mesh(batGeo, batteryMat);
-        battery.position.set(0, 0.18, -0.4);
-        battery.userData = { title: "Pil Yatağı & Piller", desc: "Sistem için gerekli doğru akım (DC) enerjisini sağlar." };
-        boatGroup.add(battery);
-        parts.battery = { obj: battery, origY: 0.18, targetY: -0.3 };
+        // A-Frame Legs
+        towerGroup.add(createStick(0.12, 1.4, 0.05, -0.45, 0.8, -0.2, 0, 0, -0.25));
+        towerGroup.add(createStick(0.12, 1.4, 0.05, 0.45, 0.8, -0.2, 0, 0, 0.25));
+        towerGroup.add(createStick(0.12, 1.4, 0.05, -0.45, 0.8, 0.4, 0, 0, -0.25));
+        towerGroup.add(createStick(0.12, 1.4, 0.05, 0.45, 0.8, 0.4, 0, 0, 0.25));
+        // Cross Beams
+        towerGroup.add(createStick(0.9, 0.1, 0.05, 0, 0.5, -0.2));
+        towerGroup.add(createStick(0.9, 0.1, 0.05, 0, 0.5, 0.4));
+        // Top Mount Platform
+        towerGroup.add(createStick(0.6, 0.08, 0.7, 0, 1.35, 0.1));
 
-        const weightGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.04, 12);
-        const weight1 = new THREE.Mesh(weightGeo, weightMat); weight1.position.set(-0.2, -0.05, 0);
-        const weight2 = new THREE.Mesh(weightGeo, weightMat); weight2.position.set(0.2, -0.05, 0);
-        boatGroup.add(weight1, weight2);
+        boatGroup.add(towerGroup);
+        partMeshes['tower'] = { group: towerGroup, basePos: new THREE.Vector3(0,0,0) };
 
-        // --- 5. INTERACTION & ANIMATION STATE ---
-        let isMotorRunning = false;
-        let isExploded = false;
-        const clock = new THREE.Clock();
+        // 3. DC Motor
+        const motorGroup = new THREE.Group();
+        const motorBodyGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.5, 16);
+        const motorMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.2 });
+        const motorMesh = new THREE.Mesh(motorBodyGeo, motorMat);
+        motorMesh.rotation.x = Math.PI / 2;
+        motorMesh.position.set(0, 1.6, 0.1);
+        motorMesh.castShadow = true;
+        motorGroup.add(motorMesh);
 
-        // UI Buttons Logic
-        const btnMotor = document.getElementById('btn-toggle-motor');
-        const btnExplode = document.getElementById('btn-explode');
-        const btnReset = document.getElementById('btn-reset');
-        const motorDot = document.getElementById('motor-dot');
-        const motorStatus = document.getElementById('motor-status');
+        // Shaft
+        const shaftGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.3, 8);
+        const shaftMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 1.0, roughness: 0.1 });
+        const shaftMesh = new THREE.Mesh(shaftGeo, shaftMat);
+        shaftMesh.rotation.x = Math.PI / 2;
+        shaftMesh.position.set(0, 1.6, 0.45);
+        motorGroup.add(shaftMesh);
 
-        btnMotor.addEventListener('click', () => {
-            isMotorRunning = !isMotorRunning;
-            btnMotor.classList.toggle('active', isMotorRunning);
-            motorDot.classList.toggle('active', isMotorRunning);
-            motorStatus.innerText = isMotorRunning ? "Motor: Çalışıyor (Yüksek Devir)" : "Motor: Kapalı";
+        boatGroup.add(motorGroup);
+        partMeshes['motor'] = { group: motorGroup, basePos: new THREE.Vector3(0,0,0) };
+
+        // 4. Propeller (Pervane)
+        const propellerGroup = new THREE.Group();
+        propellerGroup.position.set(0, 1.6, 0.55);
+
+        const propCenterGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.1, 12);
+        const propMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, roughness: 0.3, metalness: 0.1 });
+        const propCenter = new THREE.Mesh(propCenterGeo, propMat);
+        propCenter.rotation.x = Math.PI / 2;
+        propellerGroup.add(propCenter);
+
+        // 3 Blades
+        for (let i = 0; i < 3; i++) {
+            const bladeGeo = new THREE.BoxGeometry(0.12, 0.6, 0.02);
+            const blade = new THREE.Mesh(bladeGeo, propMat);
+            blade.position.y = 0.3;
+            blade.rotation.z = 0.15; // Pitch
+            blade.castShadow = true;
+
+            const bladePivot = new THREE.Group();
+            bladePivot.rotation.z = (i * Math.PI * 2) / 3;
+            bladePivot.add(blade);
+            propellerGroup.add(bladePivot);
+        }
+
+        boatGroup.add(propellerGroup);
+        partMeshes['propeller'] = { group: propellerGroup, basePos: new THREE.Vector3(0,0,0) };
+
+        // 5. Battery Pack & Switch (Pil & Anahtar)
+        const batteryGroup = new THREE.Group();
+        const packGeo = new THREE.BoxGeometry(0.6, 0.25, 0.9);
+        const packMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5 });
+        const packMesh = new THREE.Mesh(packGeo, packMat);
+        packMesh.position.set(0, 0.3, -0.8);
+        packMesh.castShadow = true;
+        batteryGroup.add(packMesh);
+
+        // Batteries inside
+        const batGeo = new THREE.CylinderGeometry(0.09, 0.09, 0.7, 12);
+        const batMat = new THREE.MeshStandardMaterial({ color: 0xeab308, metalness: 0.5, roughness: 0.3 });
+        const bat1 = new THREE.Mesh(batGeo, batMat);
+        bat1.rotation.x = Math.PI / 2;
+        bat1.position.set(-0.15, 0.35, -0.8);
+        batteryGroup.add(bat1);
+
+        const bat2 = bat1.clone();
+        bat2.position.x = 0.15;
+        batteryGroup.add(bat2);
+
+        // Switch
+        const switchGeo = new THREE.BoxGeometry(0.15, 0.15, 0.15);
+        const switchMat = new THREE.MeshStandardMaterial({ color: 0xef4444 });
+        const switchMesh = new THREE.Mesh(switchGeo, switchMat);
+        switchMesh.position.set(0.2, 0.45, -0.5);
+        batteryGroup.add(switchMesh);
+
+        boatGroup.add(batteryGroup);
+        partMeshes['battery'] = { group: batteryGroup, basePos: new THREE.Vector3(0,0,0) };
+
+        // 6. Ballast Weights (Somunlar)
+        const weightGroup = new THREE.Group();
+        const nutGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.08, 6); // Hexagon nut
+        const nutMat = new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.2 });
+
+        const positions = [
+            [-0.4, -0.32, -0.5], [0.4, -0.32, -0.5],
+            [-0.3, -0.32, 0.5], [0.3, -0.32, 0.5]
+        ];
+
+        positions.forEach(pos => {
+            const nut = new THREE.Mesh(nutGeo, nutMat);
+            nut.position.set(pos[0], pos[1], pos[2]);
+            nut.castShadow = true;
+            weightGroup.add(nut);
         });
+
+        boatGroup.add(weightGroup);
+        partMeshes['weight'] = { group: weightGroup, basePos: new THREE.Vector3(0,0,0) };
+
+
+        // --- 6. UI BUILDER & INTERACTION LOGIC ---
+        const partListContainer = document.getElementById('part-list');
+
+        PARTS_DATA.forEach((part) => {
+            const btn = document.createElement('button');
+            btn.className = `part-item w-full py-2 px-3 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 active:scale-98 transition text-left flex items-center justify-between border border-slate-700/50`;
+            btn.dataset.id = part.id;
+            btn.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${part.color}"></span>
+                    <span class="text-xs font-medium text-slate-200">${part.name}</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+            `;
+            btn.addEventListener('click', () => selectPart(part.id));
+            partListContainer.appendChild(btn);
+        });
+
+        function selectPart(id) {
+            state.selectedPartId = id;
+            const partInfo = PARTS_DATA.find(p => p.id === id);
+
+            // Update UI list highlight
+            document.querySelectorAll('.part-item').forEach(el => {
+                if (el.dataset.id === id) {
+                    el.classList.add('border-blue-500', 'bg-blue-950/40');
+                    el.classList.remove('border-slate-700/50');
+                } else {
+                    el.classList.remove('border-blue-500', 'bg-blue-950/40');
+                    el.classList.add('border-slate-700/50');
+                }
+            });
+
+            // Update Info Card
+            if (partInfo) {
+                document.getElementById('info-title').innerText = partInfo.name;
+                document.getElementById('info-badge').innerText = partInfo.material;
+                document.getElementById('info-desc').innerText = partInfo.desc;
+            }
+
+            // Pulse effect on 3D Object
+            if (partMeshes[id]) {
+                const grp = partMeshes[id].group;
+                const originalY = grp.position.y;
+                
+                // Quick highlight bounce
+                let startTime = Date.now();
+                function bounce() {
+                    let elapsed = (Date.now() - startTime) / 1000;
+                    if (elapsed < 0.4) {
+                        grp.position.y = originalY + Math.sin(elapsed * Math.PI * 5) * 0.15;
+                        requestAnimationFrame(bounce);
+                    } else {
+                        grp.position.y = originalY;
+                    }
+                }
+                bounce();
+            }
+        }
+
+        // Explode Toggle Button
+        const btnExplode = document.getElementById('btn-explode');
+        const badgeExplode = document.getElementById('badge-explode');
 
         btnExplode.addEventListener('click', () => {
-            isExploded = !isExploded;
-            btnExplode.classList.toggle('active', isExploded);
+            state.isExploded = !state.isExploded;
+            badgeExplode.innerText = state.isExploded ? 'AÇIK' : 'KAPALI';
+            badgeExplode.className = state.isExploded 
+                ? 'text-[10px] bg-emerald-700 text-emerald-100 px-2 py-0.5 rounded-full uppercase'
+                : 'text-[10px] bg-blue-800 text-blue-100 px-2 py-0.5 rounded-full uppercase';
+            
+            btnExplode.classList.toggle('bg-blue-600', !state.isExploded);
+            btnExplode.classList.toggle('bg-amber-600', state.isExploded);
         });
 
-        btnReset.addEventListener('click', () => {
-            camera.position.set(4, 3, 5);
+        // Motor Toggle Button
+        const btnMotor = document.getElementById('btn-motor');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const statusPing = document.getElementById('status-ping');
+
+        btnMotor.addEventListener('click', () => {
+            state.isMotorRunning = !state.isMotorRunning;
+            
+            btnMotor.classList.toggle('bg-emerald-600', !state.isMotorRunning);
+            btnMotor.classList.toggle('bg-rose-600', state.isMotorRunning);
+            btnMotor.querySelector('span').innerText = state.isMotorRunning ? 'Motoru Durdur' : 'Motoru Çalıştır';
+
+            statusText.innerText = state.isMotorRunning ? 'Motor: Çalışıyor (Tam Devir)' : 'Motor: Hazır (Durduruldu)';
+            statusDot.className = state.isMotorRunning ? 'relative inline-flex rounded-full h-3 w-3 bg-emerald-400' : 'relative inline-flex rounded-full h-3 w-3 bg-amber-500';
+            statusPing.className = state.isMotorRunning ? 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' : 'hidden';
+        });
+
+        // Camera Reset Button
+        document.getElementById('btn-reset-cam').addEventListener('click', () => {
+            camera.position.set(6, 4, 8);
             controls.target.set(0, 0, 0);
         });
 
-        // Raycasting for object selection
+        // Raycaster for 3D Click selection
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-        const infoCard = document.getElementById('info-card');
-        const partTitle = document.getElementById('part-title');
-        const partDesc = document.getElementById('part-desc');
 
         window.addEventListener('click', (e) => {
+            // Ignore UI clicks
+            if (e.target.closest('aside') || e.target.closest('header')) return;
+
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
@@ -273,61 +545,107 @@
 
             if (intersects.length > 0) {
                 let obj = intersects[0].object;
-                while (obj.parent && obj.parent !== boatGroup && !obj.userData.title) {
+                // Traverse up to find matching part group
+                while (obj.parent && obj.parent !== boatGroup) {
                     obj = obj.parent;
                 }
-                if (obj.userData && obj.userData.title) {
-                    partTitle.innerText = obj.userData.title;
-                    partDesc.innerText = obj.userData.desc;
-                    infoCard.style.display = 'block';
+                
+                // Match with PARTS_DATA
+                for (let key in partMeshes) {
+                    if (partMeshes[key].group === obj) {
+                        selectPart(key);
+                        break;
+                    }
                 }
             }
         });
 
-        // --- 6. ANIMATION LOOP ---
+
+        // --- 7. ANIMATION LOOP ---
+        const clock = new THREE.Clock();
+
         function animate() {
             requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            const time = clock.getElapsedTime();
 
-            // Water Ripple Effect
-            const pos = waterGeo.attributes.position;
-            for (let i = 0; i < pos.count; i++) {
-                const u = pos.getX(i);
-                const v = pos.getY(i);
-                const z = Math.sin(u * 1.5 + time * 2) * 0.03 + Math.cos(v * 1.5 + time * 1.5) * 0.03;
-                pos.setZ(i, z);
-            }
-            waterGeo.computeVertexNormals();
-            waterGeo.attributes.position.needsUpdate = true;
-
-            // Motor & Propeller Spin
-            if (isMotorRunning) {
-                propGroup.rotation.z += 0.4; // High speed rotation
-                boatGroup.position.y = Math.sin(time * 8) * 0.01; // Gentle boat vibration
-            } else {
-                boatGroup.position.y = Math.sin(time * 2) * 0.02; // Gentle water floating
-            }
-
-            // Exploded View Lerp Animation
-            for (const key in parts) {
-                const item = parts[key];
-                const targetY = isExploded ? item.targetY : item.origY;
-                item.obj.position.y += (targetY - item.obj.position.y) * 0.1;
-            }
-
+            const elapsedTime = clock.getElapsedTime();
             controls.update();
+
+            // 1. Water Wave Motion
+            const posAttr = waterGeometry.attributes.position;
+            for (let i = 0; i < posAttr.count; i++) {
+                const u = posAttr.getX(i);
+                const v = posAttr.getY(i);
+                const z = Math.sin(u * 0.8 + elapsedTime * 2) * 0.04 + Math.cos(v * 0.8 + elapsedTime * 1.5) * 0.04;
+                posAttr.setZ(i, z);
+            }
+            waterGeometry.computeVertexNormals();
+            posAttr.needsUpdate = true;
+
+            // 2. Boat Floating Physics (Pitching & Heaving)
+            if (!state.isExploded) {
+                boatGroup.position.y = Math.sin(elapsedTime * 2) * 0.03;
+                boatGroup.rotation.z = Math.sin(elapsedTime * 1.5) * 0.02;
+                boatGroup.rotation.x = Math.cos(elapsedTime * 1.2) * 0.02;
+            } else {
+                // Return to flat rotation when exploded
+                boatGroup.position.y = THREE.MathUtils.lerp(boatGroup.position.y, 0, 0.1);
+                boatGroup.rotation.z = THREE.MathUtils.lerp(boatGroup.rotation.z, 0, 0.1);
+                boatGroup.rotation.x = THREE.MathUtils.lerp(boatGroup.rotation.x, 0, 0.1);
+            }
+
+            // 3. Exploded View Smooth Animation (Lerp)
+            const targetExplode = state.isExploded ? 1.0 : 0.0;
+            state.explodeProgress = THREE.MathUtils.lerp(state.explodeProgress, targetExplode, 0.08);
+
+            PARTS_DATA.forEach(part => {
+                if (partMeshes[part.id]) {
+                    const targetY = partMeshes[part.id].basePos.y + (part.offsetY * state.explodeProgress * 1.8);
+                    partMeshes[part.id].group.position.y = THREE.MathUtils.lerp(partMeshes[part.id].group.position.y, targetY, 0.1);
+                }
+            });
+
+            // 4. Engine & Propeller Spin + Wake Particles
+            if (state.isMotorRunning) {
+                // Spin propeller fast
+                propellerGroup.rotation.z -= 0.45;
+
+                // Animate water wake behind boat
+                const pPos = particleGeo.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    let idx = i * 3;
+                    pPos[idx + 2] -= 0.08; // Move backwards
+                    pPos[idx + 1] = -0.28 + (Math.random() - 0.5) * 0.05; // Stay near water surface
+                    
+                    // Reset particles reaching back limit
+                    if (pPos[idx + 2] < -3.5) {
+                        pPos[idx] = (Math.random() - 0.5) * 0.6; // Spread width
+                        pPos[idx + 1] = -0.28;
+                        pPos[idx + 2] = -1.8; // Start behind hull
+                    }
+                }
+                particleGeo.attributes.position.needsUpdate = true;
+                wakeParticles.material.opacity = 0.8;
+            } else {
+                // Fade out particles when stopped
+                wakeParticles.material.opacity = THREE.MathUtils.lerp(wakeParticles.material.opacity, 0, 0.1);
+            }
+
             renderer.render(scene, camera);
         }
 
-        animate();
-
-        // Responsive Resizing
+        // --- 8. RESPONSIVE RESIZE ---
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+
+        // Initialize First Selection and Start Loop
+        window.onload = function() {
+            selectPart('hull');
+            animate();
+        };
+
     </script>
 </body>
 </html>
