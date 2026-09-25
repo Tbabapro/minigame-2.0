@@ -1,10 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Akıllı Araştırma AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI Araştırmacı</title>
 
 <style>
 *{
@@ -14,11 +14,10 @@
 }
 
 body{
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#0b1020;
     color:white;
     height:100vh;
-    overflow:hidden;
 }
 
 .app{
@@ -26,15 +25,11 @@ body{
     height:100vh;
 }
 
-/* SOL MENÜ */
-
 .sidebar{
-    width:260px;
+    width:250px;
     background:#11182b;
-    border-right:1px solid #26304a;
+    border-right:1px solid #29334d;
     padding:20px;
-    display:flex;
-    flex-direction:column;
 }
 
 .logo{
@@ -44,48 +39,38 @@ body{
 }
 
 .logo span{
-    color:#6c63ff;
+    color:#7167ff;
 }
 
 .newChat{
-    background:#6c63ff;
-    border:0;
-    color:white;
+    width:100%;
     padding:13px;
+    border:0;
     border-radius:10px;
-    cursor:pointer;
+    background:#7167ff;
+    color:white;
     font-size:15px;
+    cursor:pointer;
     margin-bottom:20px;
 }
 
-.newChat:hover{
-    background:#7d75ff;
-}
-
-.history{
-    flex:1;
-    overflow-y:auto;
-}
-
 .historyTitle{
-    color:#8992aa;
-    font-size:13px;
+    color:#8993aa;
+    font-size:12px;
     margin-bottom:10px;
 }
 
 .historyItem{
     padding:10px;
     border-radius:8px;
+    margin-bottom:5px;
     color:#dce1ef;
     cursor:pointer;
-    margin-bottom:5px;
 }
 
 .historyItem:hover{
-    background:#1c2540;
+    background:#1d2740;
 }
-
-/* ANA ALAN */
 
 .main{
     flex:1;
@@ -95,18 +80,18 @@ body{
 
 .header{
     height:65px;
-    border-bottom:1px solid #26304a;
+    padding:0 25px;
     display:flex;
     align-items:center;
-    padding:0 25px;
+    border-bottom:1px solid #29334d;
     font-size:18px;
     font-weight:bold;
 }
 
 .status{
     margin-left:auto;
+    color:#4de495;
     font-size:13px;
-    color:#55e69a;
 }
 
 .chat{
@@ -117,7 +102,7 @@ body{
 
 .welcome{
     max-width:800px;
-    margin:80px auto;
+    margin:90px auto;
     text-align:center;
 }
 
@@ -126,13 +111,12 @@ body{
     margin-bottom:15px;
 }
 
-.welcome h1 span{
-    color:#6c63ff;
+.welcome span{
+    color:#7167ff;
 }
 
 .welcome p{
-    color:#9da6bd;
-    font-size:17px;
+    color:#9ca6bd;
     line-height:1.6;
 }
 
@@ -140,27 +124,27 @@ body{
     max-width:850px;
     margin:0 auto 25px;
     display:flex;
-    gap:15px;
+    gap:12px;
 }
 
 .avatar{
     width:40px;
     height:40px;
     border-radius:50%;
-    background:#6c63ff;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:#7167ff;
     flex-shrink:0;
 }
 
 .user .avatar{
-    background:#26304a;
+    background:#29334d;
 }
 
 .messageContent{
     background:#151e34;
-    padding:15px 18px;
+    padding:15px;
     border-radius:12px;
     line-height:1.6;
     white-space:pre-wrap;
@@ -171,40 +155,38 @@ body{
 }
 
 .research{
-    color:#8e9ab5;
+    color:#8f9ab1;
     font-size:13px;
-    margin-bottom:10px;
+    margin-bottom:6px;
 }
-
-/* ALT KISIM */
 
 .inputArea{
     padding:20px;
-    border-top:1px solid #26304a;
+    border-top:1px solid #29334d;
 }
 
 .inputBox{
     max-width:850px;
     margin:auto;
+    display:flex;
+    align-items:flex-end;
     background:#151e34;
     border:1px solid #303b59;
     border-radius:15px;
-    display:flex;
-    align-items:flex-end;
     padding:10px;
 }
 
 textarea{
     flex:1;
+    min-height:45px;
+    max-height:150px;
     resize:none;
     background:transparent;
     border:0;
     outline:0;
     color:white;
-    font-size:16px;
     padding:10px;
-    min-height:45px;
-    max-height:150px;
+    font-size:16px;
     font-family:Arial;
 }
 
@@ -213,367 +195,13 @@ textarea{
     height:45px;
     border:0;
     border-radius:10px;
-    background:#6c63ff;
+    background:#7167ff;
     color:white;
     font-size:20px;
     cursor:pointer;
 }
 
-.send:hover{
-    background:#7d75ff;
-}
-
 .info{
     text-align:center;
-    color:#68738d;
-    font-size:11px;
-    margin-top:8px;
-}
+```
 
-/* MOBİL */
-
-@media(max-width:700px){
-
-    .sidebar{
-        display:none;
-    }
-
-    .welcome h1{
-        font-size:32px;
-    }
-
-    .chat{
-        padding:15px;
-    }
-
-    .message{
-        gap:8px;
-    }
-
-    .inputArea{
-        padding:10px;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            <span>AI</span> Araştırmacı
-        </div>
-
-        <button class="newChat" onclick="newChat()">
-            + Yeni Sohbet
-        </button>
-
-        <div class="historyTitle">
-            SOHBETLER
-        </div>
-
-        <div class="history" id="history"></div>
-
-    </aside>
-
-
-    <main class="main">
-
-        <header class="header">
-
-            🔎 AI Araştırmacı
-
-            <div class="status">
-                ● Sistem aktif
-            </div>
-
-        </header>
-
-
-        <section class="chat" id="chat">
-
-            <div class="welcome" id="welcome">
-
-                <h1>
-                    Merhaba 👋<br>
-                    <span>Ne araştırmamı istersin?</span>
-                </h1>
-
-                <p>
-                    Sorunu yaz. Yapay zekâ sorunu analiz eder,
-                    araştırma yapar ve sana anlaşılır bir cevap hazırlar.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <div class="inputArea">
-
-            <div class="inputBox">
-
-                <textarea
-                    id="question"
-                    placeholder="Bir şey sor veya araştır..."
-                    onkeydown="handleKey(event)"
-                ></textarea>
-
-                <button class="send" onclick="askAI()">
-                    ➤
-                </button>
-
-            </div>
-
-            <div class="info">
-                Yapay zekâ cevapları hata içerebilir. Önemli bilgileri kontrol et.
-            </div>
-
-        </div>
-
-    </main>
-
-</div>
-
-
-<script>
-
-let conversations = [];
-
-
-// ENTER TUŞU
-
-function handleKey(event){
-
-    if(event.key === "Enter" && !event.shiftKey){
-
-        event.preventDefault();
-
-        askAI();
-
-    }
-
-}
-
-
-// MESAJ EKLE
-
-function addMessage(type,text,research=false){
-
-    const chat = document.getElementById("chat");
-
-    const message = document.createElement("div");
-
-    message.className = "message " + type;
-
-    message.innerHTML = `
-
-        <div class="avatar">
-            ${type === "user" ? "👤" : "🤖"}
-        </div>
-
-        <div>
-
-            ${research ? `
-                <div class="research">
-                    🔎 Araştırılıyor...
-                </div>
-            ` : ""}
-
-            <div class="messageContent">
-                ${escapeHTML(text)}
-            </div>
-
-        </div>
-
-    `;
-
-    chat.appendChild(message);
-
-    chat.scrollTop = chat.scrollHeight;
-
-    return message;
-
-}
-
-
-// HTML GÜVENLİĞİ
-
-function escapeHTML(text){
-
-    return text
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-// SORU SOR
-
-async function askAI(){
-
-    const input = document.getElementById("question");
-
-    const question = input.value.trim();
-
-    if(!question) return;
-
-    document.getElementById("welcome")?.remove();
-
-    input.value = "";
-
-    addMessage("user",question);
-
-    const loading = addMessage(
-        "ai",
-        "Sorunu analiz ediyorum...",
-        true
-    );
-
-    await new Promise(resolve => setTimeout(resolve,1800));
-
-    loading.remove();
-
-    /*
-        GERÇEK YAPAY ZEKA BURADA ÇALIŞACAK.
-
-        Örneğin backend'e:
-
-        fetch("/api/ask", {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                question:question
-            })
-        })
-
-        şeklinde istek gönderilebilir.
-
-        Backend:
-        1. Soruyu alır
-        2. Web'de araştırır
-        3. Kaynakları toplar
-        4. Yapay zekâya gönderir
-        5. Cevabı buraya geri gönderir.
-    */
-
-
-    let answer = `Demo modu aktif.
-
-Sorun:
-"${question}"
-
-Gerçek araştırma sistemi henüz bu HTML dosyasına bağlanmadı.
-
-Bu siteye gerçek bir yapay zekâ bağlandığında sistem:
-
-🔎 Web'de araştırma yapabilir
-📚 Kaynakları inceleyebilir
-🧠 Bilgileri karşılaştırabilir
-✍️ Sonuçları özetleyebilir
-🔗 Kaynakları gösterebilir
-
-Şu anda bu arayüz ve sohbet sistemi çalışıyor.`;
-
-
-    addMessage("ai",answer);
-
-    saveHistory(question);
-
-}
-
-
-// YENİ SOHBET
-
-function newChat(){
-
-    document.getElementById("chat").innerHTML = `
-
-        <div class="welcome" id="welcome">
-
-            <h1>
-                Yeni sohbet 🚀<br>
-                <span>Ne araştırmamı istersin?</span>
-            </h1>
-
-            <p>
-                Sorunu yaz ve araştırmaya başlayalım.
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-// GEÇMİŞ
-
-function saveHistory(question){
-
-    conversations.push(question);
-
-    localStorage.setItem(
-        "aiHistory",
-        JSON.stringify(conversations)
-    );
-
-    loadHistory();
-
-}
-
-
-function loadHistory(){
-
-    const history = document.getElementById("history");
-
-    history.innerHTML = "";
-
-    conversations.forEach(q => {
-
-        const item = document.createElement("div");
-
-        item.className = "historyItem";
-
-        item.textContent =
-            q.length > 30
-            ? q.substring(0,30) + "..."
-            : q;
-
-        history.appendChild(item);
-
-    });
-
-}
-
-
-function loadSavedHistory(){
-
-    const saved =
-        localStorage.getItem("aiHistory");
-
-    if(saved){
-
-        conversations = JSON.parse(saved);
-
-        loadHistory();
-
-    }
-
-}
-
-
-loadSavedHistory();
-
-</script>
-
-</body>
-</html>
