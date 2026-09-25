@@ -3,1028 +3,398 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>???</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Console</title>
 
 <style>
-
 *{
     box-sizing:border-box;
+}
+
+html,body{
     margin:0;
-    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:"Courier New",monospace;
 }
 
-body{
-    background:#050505;
-    color:white;
-    font-family:Arial,sans-serif;
-    overflow-x:hidden;
-    transition:.5s;
-}
-
-/* =========================
-   ANA EKRAN
-========================= */
-
-#main{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    padding:30px;
-}
-
-#main h1{
-    font-size:clamp(45px,8vw,90px);
-    letter-spacing:8px;
-    animation:glitch 3s infinite;
-}
-
-#main p{
-    color:#777;
-    margin-top:20px;
-}
-
-.start{
-    margin-top:35px;
-    padding:16px 35px;
-    background:white;
-    color:black;
-    border:0;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
+#terminal{
+    width:100%;
+    height:100%;
+    padding:25px;
+    color:#00ff41;
+    background:
+        radial-gradient(circle at center, #001b08 0%, #000 70%);
     font-size:16px;
-    transition:.3s;
+    line-height:1.55;
+    text-shadow:
+        0 0 5px #00ff41,
+        0 0 10px rgba(0,255,65,.4);
+    overflow:hidden;
+    position:relative;
 }
 
-.start:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 30px white;
+#terminal::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0,255,65,.035) 0px,
+            rgba(0,255,65,.035) 1px,
+            transparent 2px,
+            transparent 4px
+        );
 }
 
-/* =========================
-   SİSTEM EKRANI
-========================= */
-
-#system{
-    display:none;
-    min-height:100vh;
-    padding:40px;
+#terminal::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    box-shadow:inset 0 0 100px #000;
 }
 
-.systemBox{
-    max-width:900px;
-    margin:auto;
+#content{
+    position:relative;
+    z-index:2;
 }
 
-.line{
-    font-family:monospace;
-    margin:12px 0;
-    color:#52ff98;
+.header{
+    color:#00ff41;
+    margin-bottom:15px;
 }
 
-.progress{
-    height:8px;
-    background:#151515;
-    margin:20px 0;
+.warning{
+    color:#00ff41;
+    font-weight:bold;
 }
 
-.progress div{
+.red{
+    color:#ff3030;
+    text-shadow:0 0 8px red;
+}
+
+.yellow{
+    color:#ffe600;
+}
+
+.progressBox{
+    width:100%;
+    max-width:700px;
+    height:22px;
+    border:1px solid #00ff41;
+    margin-top:12px;
+    box-shadow:0 0 10px rgba(0,255,65,.4);
+}
+
+#progress{
     height:100%;
     width:0%;
-    background:#52ff98;
-    transition:1s;
+    background:#00ff41;
+    box-shadow:0 0 15px #00ff41;
+    transition:.2s;
 }
 
-/* =========================
-   GİZEMLİ EKRAN
-========================= */
+#percent{
+    margin-top:5px;
+}
 
-#secret{
+.cursor{
+    display:inline-block;
+    width:9px;
+    height:18px;
+    background:#00ff41;
+    vertical-align:middle;
+    animation:blink .7s infinite;
+}
+
+@keyframes blink{
+    0%,50%{opacity:1}
+    51%,100%{opacity:0}
+}
+
+#fakeData{
+    position:absolute;
+    right:25px;
+    top:25px;
+    width:250px;
+    height:150px;
+    border:1px solid #00ff41;
+    padding:10px;
+    font-size:12px;
+    opacity:.75;
+}
+
+@media(max-width:700px){
+    #fakeData{
+        display:none;
+    }
+
+    #terminal{
+        font-size:13px;
+        padding:15px;
+    }
+}
+
+#final{
     display:none;
-    position:fixed;
+    position:absolute;
     inset:0;
+    z-index:10;
     background:#000;
-    z-index:5000;
-    justify-content:center;
+    color:#00ff41;
     align-items:center;
+    justify-content:center;
     flex-direction:column;
     text-align:center;
 }
 
-#secret h1{
-    font-size:60px;
-    animation:pulse 1s infinite;
+#final h1{
+    font-size:clamp(35px,8vw,90px);
+    margin:0;
+    text-shadow:
+        0 0 10px #00ff41,
+        0 0 30px #00ff41;
 }
 
-#secret p{
-    color:#777;
-    margin-top:20px;
+#final p{
+    font-size:20px;
 }
 
-/* =========================
-   GLITCH
-========================= */
-
-.glitchMode{
-    animation:shake .08s infinite;
-}
-
-@keyframes shake{
-    0%{transform:translate(0)}
-    25%{transform:translate(5px,-3px)}
-    50%{transform:translate(-4px,3px)}
-    75%{transform:translate(3px,2px)}
-    100%{transform:translate(0)}
-}
-
-@keyframes glitch{
-
-    0%,90%,100%{
-        transform:none;
-    }
-
-    91%{
-        transform:skew(10deg);
-    }
-
-    92%{
-        transform:translate(-5px);
-    }
-
-    93%{
-        transform:translate(5px);
-    }
-
-    94%{
-        transform:none;
-    }
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        transform:scale(1);
-        opacity:.6;
-    }
-
-    50%{
-        transform:scale(1.1);
-        opacity:1;
-    }
-}
-
-/* =========================
-   BUTONLAR
-========================= */
-
-#secretButton{
-    position:fixed;
-    bottom:10px;
-    right:10px;
-    width:10px;
-    height:10px;
-    opacity:.08;
-    cursor:pointer;
-}
-
-/* =========================
-   HAZİNE
-========================= */
-
-#treasure{
+#joke{
     display:none;
-    position:fixed;
-    inset:0;
-    background:
-        radial-gradient(circle,#333,#000);
-    z-index:4000;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-}
-
-#treasure h1{
-    font-size:70px;
-}
-
-#treasure button{
-    margin-top:30px;
-    padding:15px 30px;
-    border:0;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-/* =========================
-   SAYI OYUNU
-========================= */
-
-#game{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:#090909;
-    z-index:3000;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-}
-
-#game input{
-    margin-top:20px;
-    padding:12px;
-    background:#151515;
-    border:1px solid #555;
     color:white;
+    font-size:clamp(30px,7vw,80px);
+    font-family:Arial,sans-serif;
+    font-weight:bold;
 }
-
-#game button{
-    margin-top:10px;
-    padding:10px 25px;
-}
-
-/* =========================
-   PARTICLES
-========================= */
-
-.particle{
-    position:fixed;
-    width:4px;
-    height:4px;
-    background:white;
-    border-radius:50%;
-    pointer-events:none;
-    animation:fall linear forwards;
-}
-
-@keyframes fall{
-
-    from{
-        transform:translateY(-20px);
-        opacity:1;
-    }
-
-    to{
-        transform:translateY(110vh);
-        opacity:0;
-    }
-
-}
-
-/* =========================
-   MOBİL
-========================= */
-
-@media(max-width:600px){
-
-    #system{
-        padding:20px;
-    }
-
-    #main h1{
-        letter-spacing:3px;
-    }
-
-}
-
 </style>
 </head>
 
 <body>
 
+<div id="terminal">
 
-<!-- =========================
-     ANA SAYFA
-========================= -->
+    <div id="content">
 
-<div id="main">
+        <div class="header">
+            ╔════════════════════════════════════════════════════════════╗<br>
+            ║              SYSTEM SECURITY CONSOLE v7.4                ║<br>
+            ╚════════════════════════════════════════════════════════════╝
+        </div>
 
-    <h1>???</h1>
-
-    <p>
-        Burada hiçbir şey yok.
-    </p>
-
-    <button
-    class="start"
-    onclick="start()">
-
-        Siteye Gir
-
-    </button>
-
-</div>
-
-
-<!-- =========================
-     SİSTEM
-========================= -->
-
-<div id="system">
-
-    <div class="systemBox">
-
-        <h2>
-            SYSTEM INITIALIZATION
-        </h2>
+        <div>> Initializing secure environment...</div>
+        <div>> Loading kernel modules...</div>
+        <div>> Checking network interface... <span class="warning">ONLINE</span></div>
+        <div>> Scanning available nodes...</div>
 
         <br>
 
         <div id="lines"></div>
 
-        <div class="progress">
-            <div id="bar"></div>
+        <div class="progressBox">
+            <div id="progress"></div>
         </div>
 
+        <div id="percent">ACCESS PROCESS: 0%</div>
+
+        <br>
+
+        <div id="status">
+            > Waiting for system response...
+        </div>
+
+        <br>
+
+        <span>root@system:~# </span><span class="cursor"></span>
+
+    </div>
+
+    <div id="fakeData">
+        CONNECTION: SECURE<br>
+        NODE: ACTIVE<br>
+        PACKETS: <span id="packets">0000</span><br>
+        ENCRYPTION: AES-256<br>
+        FIREWALL: <span id="firewall">ACTIVE</span><br>
+        ACCESS: UNKNOWN
     </div>
 
 </div>
 
 
-<!-- =========================
-     GİZLİ EKRAN
-========================= -->
+<div id="final">
 
-<div id="secret">
+    <h1 id="hackText">ACCESS GRANTED</h1>
 
-    <h1>
-        SEN BULAMAZSIN...
-    </h1>
-
-    <p>
-        Yoksa buldun mu?
+    <p id="finalText">
+        System control established...
     </p>
 
-    <button
-    class="start"
-    onclick="closeSecret()">
-
-        Geri dön
-
-    </button>
+    <div id="joke">
+        😂 ŞAKA YAPTIK!
+    </div>
 
 </div>
-
-
-<!-- =========================
-     HAZİNE
-========================= -->
-
-<div id="treasure">
-
-    <h1>
-        🎉
-    </h1>
-
-    <h2>
-        GİZLİ ODAYI BULDUN!
-    </h2>
-
-    <p>
-        Bunu bulan kişi gerçekten dikkatliymiş.
-    </p>
-
-    <button onclick="closeTreasure()">
-        Devam et
-    </button>
-
-</div>
-
-
-<!-- =========================
-     SAYI OYUNU
-========================= -->
-
-<div id="game">
-
-    <h2>
-        🎯 GİZLİ OYUN
-    </h2>
-
-    <p style="margin-top:10px">
-        1 ile 100 arasında sayıyı bul.
-    </p>
-
-    <input
-    id="guess"
-    type="number"
-    placeholder="Tahminin">
-
-    <button onclick="guessNumber()">
-        Tahmin Et
-    </button>
-
-    <p
-    id="gameResult"
-    style="margin-top:15px">
-    </p>
-
-</div>
-
-
-<!-- GİZLİ BUTON -->
-
-<button
-id="secretButton"
-onclick="secretFound()">
-</button>
 
 
 <script>
 
-/* =====================================
-   DEĞİŞKENLER
-===================================== */
+const lines = [
 
-let clickCount=0;
-
-let number=
-Math.floor(Math.random()*100)+1;
-
-let gameOpened=false;
-
-
-/* =====================================
-   BAŞLANGIÇ
-===================================== */
-
-function start(){
-
-    document.getElementById(
-        "main"
-    ).style.display="none";
-
-    document.getElementById(
-        "system"
-    ).style.display="block";
-
-    runSystem();
-
-}
-
-
-/* =====================================
-   SAHTE SİSTEM
-===================================== */
-
-const messages=[
-
-    "Booting mysterious system...",
-    "Searching for hidden files...",
-    "Scanning browser...",
-    "Checking user identity...",
-    "Analyzing mouse movements...",
-    "Searching secret locations...",
-    "Finding suspicious activity...",
-    "Encrypting unnecessary information...",
-    "Opening hidden layer...",
-    "SYSTEM READY."
+"> Establishing encrypted connection...",
+"> Searching local network...",
+"> Detecting active devices...",
+"> Device discovered: NODE_01",
+"> Device discovered: NODE_02",
+"> Analyzing security protocols...",
+"> Firewall detected...",
+"> Testing firewall response...",
+"> Firewall response: BYPASSED",
+"> Searching authentication service...",
+"> Authentication service located.",
+"> Requesting administrator privileges...",
+"> Administrator response received.",
+"> Access level: RESTRICTED",
+"> Attempting privilege escalation...",
+"> Privilege escalation: SUCCESS",
+"> Loading encrypted directory...",
+"> Directory found.",
+"> Decrypting security layer...",
+"> Encryption key detected.",
+"> Verifying encryption key...",
+"> Key accepted.",
+"> Accessing protected environment...",
+"> Security checkpoint 01 passed.",
+"> Security checkpoint 02 passed.",
+"> Security checkpoint 03 passed.",
+"> Establishing root session...",
+"> ROOT SESSION INITIALIZED",
+"> Reading system information...",
+"> Collecting system parameters...",
+"> Synchronizing data packets...",
+"> Packet transfer initialized...",
+"> Preparing final access...",
+"> Removing temporary restrictions...",
+"> Final authentication request...",
+"> Authentication accepted.",
+"> SYSTEM ACCESS GRANTED"
 
 ];
 
-let index=0;
+const linesDiv = document.getElementById("lines");
+const progress = document.getElementById("progress");
+const percent = document.getElementById("percent");
+const status = document.getElementById("status");
+const packets = document.getElementById("packets");
 
-function runSystem(){
+let lineIndex = 0;
+let progressValue = 0;
 
-    if(index>=messages.length){
+function randomPacket(){
 
-        setTimeout(finalEvent,1000);
+    let number = Math.floor(Math.random()*9999)
+        .toString()
+        .padStart(4,"0");
 
+    packets.textContent = number;
+}
+
+function addLine(){
+
+    if(lineIndex >= lines.length){
+        finish();
         return;
     }
 
-    const line=
-        document.createElement("div");
+    const line = document.createElement("div");
 
-    line.className="line";
-
-    line.textContent=
-        "> "+messages[index];
-
-    document.getElementById(
-        "lines"
-    ).appendChild(line);
-
-    document.getElementById(
-        "bar"
-    ).style.width=
-        ((index+1)/messages.length*100)+"%";
-
-    index++;
-
-    setTimeout(
-        runSystem,
-        650
-    );
-
-}
-
-
-/* =====================================
-   İLK SÜRPRİZ
-===================================== */
-
-function finalEvent(){
-
-    document.body.classList.add(
-        "glitchMode"
-    );
-
-    setTimeout(()=>{
-
-        document.body.classList.remove(
-            "glitchMode"
-        );
-
-        document.getElementById(
-            "system"
-        ).innerHTML=`
-
-            <div style="
-                text-align:center;
-                margin-top:35vh;
-            ">
-
-                <h1>
-                    ŞAKA 😎
-                </h1>
-
-                <p style="
-                    margin-top:20px;
-                    color:#777;
-                ">
-                    Sistem aslında hiçbir şey yapmadı.
-                </p>
-
-            </div>
-
-        `;
-
-        setTimeout(
-            randomSurprise,
-            2500
-        );
-
-    },1200);
-
-}
-
-
-/* =====================================
-   RASTGELE SÜRPRİZLER
-===================================== */
-
-function randomSurprise(){
-
-    const events=[
-
-        surpriseFlash,
-        screenShake,
-        particleRain,
-        fakeMessage,
-        openGame,
-        nightMode
-
-    ];
-
-    const event=
-        events[
-            Math.floor(
-                Math.random()*events.length
-            )
-        ];
-
-    event();
-
-}
-
-
-/* =====================================
-   EKRAN FLAŞ
-===================================== */
-
-function surpriseFlash(){
-
-    const flash=
-        document.createElement("div");
-
-    flash.style.position="fixed";
-    flash.style.inset="0";
-    flash.style.background="white";
-    flash.style.zIndex="9999";
-
-    document.body.appendChild(flash);
-
-    setTimeout(()=>{
-        flash.remove();
-    },120);
-
-}
-
-
-/* =====================================
-   EKRAN TITREŞİMİ
-===================================== */
-
-function screenShake(){
-
-    document.body.classList.add(
-        "glitchMode"
-    );
-
-    setTimeout(()=>{
-
-        document.body.classList.remove(
-            "glitchMode"
-        );
-
-    },1000);
-
-}
-
-
-/* =====================================
-   PARÇACIK YAĞMURU
-===================================== */
-
-function particleRain(){
-
-    for(let i=0;i<100;i++){
-
-        setTimeout(()=>{
-
-            const p=
-                document.createElement(
-                    "div"
-                );
-
-            p.className="particle";
-
-            p.style.left=
-                Math.random()*100+"vw";
-
-            p.style.animationDuration=
-                (1+Math.random()*3)+"s";
-
-            document.body.appendChild(p);
-
-            setTimeout(()=>{
-                p.remove();
-            },4000);
-
-        },i*20);
-
-    }
-
-}
-
-
-/* =====================================
-   SAHTE MESAJ
-===================================== */
-
-function fakeMessage(){
-
-    setTimeout(()=>{
-
-        alert(
-            "⚠️ SİSTEM MESAJI\n\n"+
-            "Burayı gerçekten okuduğunu fark ettik."
-        );
-
-    },500);
-
-}
-
-
-/* =====================================
-   GECE MODU
-===================================== */
-
-function nightMode(){
-
-    document.body.style.background="#000";
-
-    setTimeout(()=>{
-
-        alert(
-            "🌙 Gece modu aktif."
-        );
-
-    },500);
-
-}
-
-
-/* =====================================
-   GİZLİ BUTON
-===================================== */
-
-function secretFound(){
-
-    document.getElementById(
-        "secret"
-    ).style.display="flex";
-
-}
-
-
-function closeSecret(){
-
-    document.getElementById(
-        "secret"
-    ).style.display="none";
-
-}
-
-
-/* =====================================
-   MOUSE HAREKETİ
-===================================== */
-
-document.addEventListener(
-    "mousemove",
-    e=>{
-
-        if(Math.random()<0.01){
-
-            const dot=
-                document.createElement(
-                    "div"
-                );
-
-            dot.style.position="fixed";
-
-            dot.style.left=
-                e.clientX+"px";
-
-            dot.style.top=
-                e.clientY+"px";
-
-            dot.style.width="5px";
-            dot.style.height="5px";
-
-            dot.style.background="#fff";
-
-            dot.style.borderRadius="50%";
-
-            dot.style.pointerEvents="none";
-
-            document.body.appendChild(dot);
-
-            setTimeout(()=>{
-                dot.remove();
-            },500);
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   KLAVYE GİZLİ KODU
-===================================== */
-
-let secretCode="";
-
-document.addEventListener(
-    "keydown",
-    e=>{
-
-        secretCode+=
-            e.key.toLowerCase();
-
-        if(secretCode.length>15){
-
-            secretCode=
-                secretCode.slice(-15);
-
-        }
-
-        /* "gizli" yazılırsa */
-
-        if(
-            secretCode.includes("gizli")
-        ){
-
-            document.getElementById(
-                "treasure"
-            ).style.display="flex";
-
-            secretCode="";
-
-        }
-
-        /* "oyun" yazılırsa */
-
-        if(
-            secretCode.includes("oyun") &&
-            !gameOpened
-        ){
-
-            openGame();
-
-            secretCode="";
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   GİZLİ ODAYI KAPAT
-===================================== */
-
-function closeTreasure(){
-
-    document.getElementById(
-        "treasure"
-    ).style.display="none";
-
-}
-
-
-/* =====================================
-   MİNİ OYUN
-===================================== */
-
-function openGame(){
-
-    if(gameOpened) return;
-
-    gameOpened=true;
-
-    document.getElementById(
-        "game"
-    ).style.display="flex";
-
-}
-
-
-function guessNumber(){
-
-    const value=
-        Number(
-            document.getElementById(
-                "guess"
-            ).value
-        );
-
-    const result=
-        document.getElementById(
-            "gameResult"
-        );
-
-
-    if(!value){
-
-        result.textContent=
-            "Bir sayı yaz.";
-
-        return;
-
-    }
-
-
-    if(value===number){
-
-        result.textContent=
-            "🎉 DOĞRU! Gizli sistemi açtın!";
-
-        setTimeout(()=>{
-
-            document.getElementById(
-                "game"
-            ).style.display="none";
-
-            document.getElementById(
-                "treasure"
-            ).style.display="flex";
-
-        },1000);
-
-    }
-
-    else if(value<number){
-
-        result.textContent=
-            "⬆️ Daha büyük bir sayı.";
-
-    }
-
-    else{
-
-        result.textContent=
-            "⬇️ Daha küçük bir sayı.";
-
-    }
-
-}
-
-
-/* =====================================
-   TELEFONDA TIKLAMA SÜRPRİZİ
-===================================== */
-
-document.addEventListener(
-    "click",
-    ()=>{
-
-        clickCount++;
-
-        if(clickCount===15){
-
-            alert(
-                "👀\n\n"+
-                "15 kez tıkladın.\n"+
-                "Sen gerçekten her şeye basıyorsun."
-            );
-
-        }
-
-        if(clickCount===30){
-
-            alert(
-                "😂\n\n"+
-                "Tamam tamam.\n"+
-                "Artık yeter."
-            );
-
-            clickCount=0;
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   SAYFADAN ÇIKMAYA ÇALIŞINCA
-===================================== */
-
-let leaving=false;
-
-window.addEventListener(
-    "beforeunload",
-    e=>{
-
-        if(!leaving){
-
-            e.preventDefault();
-
-            e.returnValue="";
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   OTOMATİK SÜRPRİZ
-===================================== */
-
-setTimeout(()=>{
+    line.textContent = lines[lineIndex];
 
     if(
-        document.getElementById(
-            "main"
-        ).style.display!=="none"
+        lines[lineIndex].includes("SUCCESS") ||
+        lines[lineIndex].includes("GRANTED") ||
+        lines[lineIndex].includes("BYPASSED")
     ){
-
-        const p=
-            document.createElement(
-                "div"
-            );
-
-        p.style.position="fixed";
-
-        p.style.bottom="20px";
-
-        p.style.left="50%";
-
-        p.style.transform=
-            "translateX(-50%)";
-
-        p.style.color="#333";
-
-        p.style.fontSize="10px";
-
-        p.textContent=
-            "ipucu: her şeye tıklamak kötü fikir olabilir";
-
-        document.body.appendChild(p);
-
+        line.classList.add("yellow");
     }
 
-},5000);
+    linesDiv.appendChild(line);
+
+    lineIndex++;
+
+    progressValue += Math.floor(
+        100 / lines.length
+    );
+
+    if(progressValue > 100){
+        progressValue = 100;
+    }
+
+    progress.style.width = progressValue + "%";
+    percent.textContent =
+        "ACCESS PROCESS: " + progressValue + "%";
+
+    randomPacket();
+
+    document.getElementById("terminal").scrollTop =
+        document.getElementById("terminal").scrollHeight;
+
+    let delay = 180 + Math.random()*350;
+
+    setTimeout(addLine,delay);
+}
+
+
+function finish(){
+
+    progress.style.width="100%";
+    percent.textContent="ACCESS PROCESS: 100%";
+
+    status.innerHTML =
+        '<span class="red">> CRITICAL: UNAUTHORIZED ACCESS DETECTED</span>';
+
+    setTimeout(()=>{
+
+        status.innerHTML =
+            '<span class="red">> SYSTEM CONTROL ESTABLISHED</span>';
+
+    },900);
+
+    setTimeout(()=>{
+
+        document.getElementById("terminal").style.display="none";
+
+        const final = document.getElementById("final");
+
+        final.style.display="flex";
+
+    },2200);
+
+    setTimeout(()=>{
+
+        document.getElementById("hackText").style.display="none";
+        document.getElementById("finalText").style.display="none";
+
+        document.getElementById("joke").style.display="block";
+
+        document.getElementById("final").style.background =
+            "radial-gradient(circle,#071f0b,#000)";
+
+    },4200);
+}
+
+
+// Rastgele terminal verileri
+setInterval(randomPacket,150);
+
+
+// Başlat
+setTimeout(addLine,800);
 
 </script>
 
