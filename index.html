@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nova AI</title>
+<title>Akıllı Araştırma AI</title>
 
 <style>
 *{
@@ -32,14 +31,14 @@ body{
 .sidebar{
     width:260px;
     background:#11182b;
-    border-right:1px solid #27304a;
+    border-right:1px solid #26304a;
     padding:20px;
     display:flex;
     flex-direction:column;
 }
 
 .logo{
-    font-size:25px;
+    font-size:24px;
     font-weight:bold;
     margin-bottom:25px;
 }
@@ -49,8 +48,8 @@ body{
 }
 
 .newChat{
-    border:0;
     background:#6c63ff;
+    border:0;
     color:white;
     padding:13px;
     border-radius:10px;
@@ -60,13 +59,7 @@ body{
 }
 
 .newChat:hover{
-    background:#8179ff;
-}
-
-.historyTitle{
-    color:#8993ad;
-    font-size:13px;
-    margin-bottom:10px;
+    background:#7d75ff;
 }
 
 .history{
@@ -74,16 +67,22 @@ body{
     overflow-y:auto;
 }
 
+.historyTitle{
+    color:#8992aa;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
 .historyItem{
     padding:10px;
     border-radius:8px;
+    color:#dce1ef;
     cursor:pointer;
     margin-bottom:5px;
-    color:#d9def0;
 }
 
 .historyItem:hover{
-    background:#1c2640;
+    background:#1c2540;
 }
 
 /* ANA ALAN */
@@ -94,100 +93,118 @@ body{
     flex-direction:column;
 }
 
-.topbar{
+.header{
     height:65px;
-    border-bottom:1px solid #27304a;
+    border-bottom:1px solid #26304a;
     display:flex;
     align-items:center;
-    justify-content:space-between;
     padding:0 25px;
-}
-
-.aiName{
     font-size:18px;
     font-weight:bold;
 }
 
 .status{
-    color:#62e6a5;
+    margin-left:auto;
     font-size:13px;
+    color:#55e69a;
 }
 
-/* MESAJLAR */
-
-.messages{
+.chat{
     flex:1;
     overflow-y:auto;
-    padding:30px 10%;
+    padding:30px;
 }
 
 .welcome{
+    max-width:800px;
+    margin:80px auto;
     text-align:center;
-    margin-top:12vh;
 }
 
 .welcome h1{
-    font-size:40px;
+    font-size:42px;
     margin-bottom:15px;
 }
 
+.welcome h1 span{
+    color:#6c63ff;
+}
+
 .welcome p{
-    color:#9ba5bd;
+    color:#9da6bd;
     font-size:17px;
+    line-height:1.6;
 }
 
 .message{
+    max-width:850px;
+    margin:0 auto 25px;
     display:flex;
-    margin-bottom:25px;
+    gap:15px;
 }
 
-.message.user{
-    justify-content:flex-end;
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#6c63ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-shrink:0;
 }
 
-.bubble{
-    max-width:75%;
+.user .avatar{
+    background:#26304a;
+}
+
+.messageContent{
+    background:#151e34;
     padding:15px 18px;
-    border-radius:15px;
+    border-radius:12px;
     line-height:1.6;
     white-space:pre-wrap;
 }
 
-.user .bubble{
-    background:#6c63ff;
+.user .messageContent{
+    background:#1d2945;
 }
 
-.ai .bubble{
-    background:#171f35;
-    border:1px solid #28334f;
+.research{
+    color:#8e9ab5;
+    font-size:13px;
+    margin-bottom:10px;
 }
 
-/* YAZMA ALANI */
+/* ALT KISIM */
 
 .inputArea{
-    padding:15px 10%;
-    border-top:1px solid #27304a;
+    padding:20px;
+    border-top:1px solid #26304a;
 }
 
 .inputBox{
-    background:#151d32;
-    border:1px solid #303b5a;
+    max-width:850px;
+    margin:auto;
+    background:#151e34;
+    border:1px solid #303b59;
     border-radius:15px;
     display:flex;
-    align-items:center;
-    padding:8px;
+    align-items:flex-end;
+    padding:10px;
 }
 
 textarea{
     flex:1;
     resize:none;
+    background:transparent;
     border:0;
     outline:0;
-    background:transparent;
     color:white;
     font-size:16px;
     padding:10px;
-    height:45px;
+    min-height:45px;
+    max-height:150px;
     font-family:Arial;
 }
 
@@ -203,36 +220,14 @@ textarea{
 }
 
 .send:hover{
-    background:#8179ff;
+    background:#7d75ff;
 }
 
-.tools{
-    display:flex;
-    gap:10px;
+.info{
+    text-align:center;
+    color:#68738d;
+    font-size:11px;
     margin-top:8px;
-}
-
-.tool{
-    color:#8d98b2;
-    font-size:12px;
-}
-
-/* ARAŞTIRIYOR */
-
-.research{
-    display:none;
-    color:#8e9ab7;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.dot{
-    animation:blink 1.4s infinite;
-}
-
-@keyframes blink{
-    0%,100%{opacity:.2}
-    50%{opacity:1}
 }
 
 /* MOBİL */
@@ -243,20 +238,20 @@ textarea{
         display:none;
     }
 
-    .messages{
-        padding:20px;
+    .welcome h1{
+        font-size:32px;
+    }
+
+    .chat{
+        padding:15px;
+    }
+
+    .message{
+        gap:8px;
     }
 
     .inputArea{
         padding:10px;
-    }
-
-    .welcome h1{
-        font-size:30px;
-    }
-
-    .bubble{
-        max-width:90%;
     }
 }
 </style>
@@ -266,5 +261,319 @@ textarea{
 
 <div class="app">
 
-    <aside class=
-```
+    <aside class="sidebar">
+
+        <div class="logo">
+            <span>AI</span> Araştırmacı
+        </div>
+
+        <button class="newChat" onclick="newChat()">
+            + Yeni Sohbet
+        </button>
+
+        <div class="historyTitle">
+            SOHBETLER
+        </div>
+
+        <div class="history" id="history"></div>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="header">
+
+            🔎 AI Araştırmacı
+
+            <div class="status">
+                ● Sistem aktif
+            </div>
+
+        </header>
+
+
+        <section class="chat" id="chat">
+
+            <div class="welcome" id="welcome">
+
+                <h1>
+                    Merhaba 👋<br>
+                    <span>Ne araştırmamı istersin?</span>
+                </h1>
+
+                <p>
+                    Sorunu yaz. Yapay zekâ sorunu analiz eder,
+                    araştırma yapar ve sana anlaşılır bir cevap hazırlar.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div class="inputArea">
+
+            <div class="inputBox">
+
+                <textarea
+                    id="question"
+                    placeholder="Bir şey sor veya araştır..."
+                    onkeydown="handleKey(event)"
+                ></textarea>
+
+                <button class="send" onclick="askAI()">
+                    ➤
+                </button>
+
+            </div>
+
+            <div class="info">
+                Yapay zekâ cevapları hata içerebilir. Önemli bilgileri kontrol et.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+let conversations = [];
+
+
+// ENTER TUŞU
+
+function handleKey(event){
+
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+
+        askAI();
+
+    }
+
+}
+
+
+// MESAJ EKLE
+
+function addMessage(type,text,research=false){
+
+    const chat = document.getElementById("chat");
+
+    const message = document.createElement("div");
+
+    message.className = "message " + type;
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${type === "user" ? "👤" : "🤖"}
+        </div>
+
+        <div>
+
+            ${research ? `
+                <div class="research">
+                    🔎 Araştırılıyor...
+                </div>
+            ` : ""}
+
+            <div class="messageContent">
+                ${escapeHTML(text)}
+            </div>
+
+        </div>
+
+    `;
+
+    chat.appendChild(message);
+
+    chat.scrollTop = chat.scrollHeight;
+
+    return message;
+
+}
+
+
+// HTML GÜVENLİĞİ
+
+function escapeHTML(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+// SORU SOR
+
+async function askAI(){
+
+    const input = document.getElementById("question");
+
+    const question = input.value.trim();
+
+    if(!question) return;
+
+    document.getElementById("welcome")?.remove();
+
+    input.value = "";
+
+    addMessage("user",question);
+
+    const loading = addMessage(
+        "ai",
+        "Sorunu analiz ediyorum...",
+        true
+    );
+
+    await new Promise(resolve => setTimeout(resolve,1800));
+
+    loading.remove();
+
+    /*
+        GERÇEK YAPAY ZEKA BURADA ÇALIŞACAK.
+
+        Örneğin backend'e:
+
+        fetch("/api/ask", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                question:question
+            })
+        })
+
+        şeklinde istek gönderilebilir.
+
+        Backend:
+        1. Soruyu alır
+        2. Web'de araştırır
+        3. Kaynakları toplar
+        4. Yapay zekâya gönderir
+        5. Cevabı buraya geri gönderir.
+    */
+
+
+    let answer = `Demo modu aktif.
+
+Sorun:
+"${question}"
+
+Gerçek araştırma sistemi henüz bu HTML dosyasına bağlanmadı.
+
+Bu siteye gerçek bir yapay zekâ bağlandığında sistem:
+
+🔎 Web'de araştırma yapabilir
+📚 Kaynakları inceleyebilir
+🧠 Bilgileri karşılaştırabilir
+✍️ Sonuçları özetleyebilir
+🔗 Kaynakları gösterebilir
+
+Şu anda bu arayüz ve sohbet sistemi çalışıyor.`;
+
+
+    addMessage("ai",answer);
+
+    saveHistory(question);
+
+}
+
+
+// YENİ SOHBET
+
+function newChat(){
+
+    document.getElementById("chat").innerHTML = `
+
+        <div class="welcome" id="welcome">
+
+            <h1>
+                Yeni sohbet 🚀<br>
+                <span>Ne araştırmamı istersin?</span>
+            </h1>
+
+            <p>
+                Sorunu yaz ve araştırmaya başlayalım.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+// GEÇMİŞ
+
+function saveHistory(question){
+
+    conversations.push(question);
+
+    localStorage.setItem(
+        "aiHistory",
+        JSON.stringify(conversations)
+    );
+
+    loadHistory();
+
+}
+
+
+function loadHistory(){
+
+    const history = document.getElementById("history");
+
+    history.innerHTML = "";
+
+    conversations.forEach(q => {
+
+        const item = document.createElement("div");
+
+        item.className = "historyItem";
+
+        item.textContent =
+            q.length > 30
+            ? q.substring(0,30) + "..."
+            : q;
+
+        history.appendChild(item);
+
+    });
+
+}
+
+
+function loadSavedHistory(){
+
+    const saved =
+        localStorage.getItem("aiHistory");
+
+    if(saved){
+
+        conversations = JSON.parse(saved);
+
+        loadHistory();
+
+    }
+
+}
+
+
+loadSavedHistory();
+
+</script>
+
+</body>
+</html>
