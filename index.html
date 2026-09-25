@@ -4,9 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AI Araştırmacı</title>
+<title>???</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -14,727 +15,1016 @@
 }
 
 body{
+    background:#050505;
+    color:white;
     font-family:Arial,sans-serif;
-    background:#0b1020;
-    color:white;
-    height:100vh;
+    overflow-x:hidden;
+    transition:.5s;
 }
 
-.app{
-    display:flex;
-    height:100vh;
-}
+/* =========================
+   ANA EKRAN
+========================= */
 
-.sidebar{
-    width:250px;
-    background:#11182b;
-    border-right:1px solid #29334d;
-    padding:20px;
-}
-
-.logo{
-    font-size:24px;
-    font-weight:bold;
-    margin-bottom:25px;
-}
-
-.logo span{
-    color:#7167ff;
-}
-
-.newChat{
-    width:100%;
-    padding:13px;
-    border:0;
-    border-radius:10px;
-    background:#7167ff;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-bottom:20px;
-}
-
-.historyTitle{
-    color:#8993aa;
-    font-size:12px;
-    margin-bottom:10px;
-}
-
-.historyItem{
-    padding:10px;
-    border-radius:8px;
-    margin-bottom:5px;
-    color:#dce1ef;
-    cursor:pointer;
-}
-
-.historyItem:hover{
-    background:#1d2740;
-}
-
-.main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-}
-
-.header{
-    height:65px;
-    padding:0 25px;
-    display:flex;
-    align-items:center;
-    border-bottom:1px solid #29334d;
-    font-size:18px;
-    font-weight:bold;
-}
-
-.status{
-    margin-left:auto;
-    color:#4de495;
-    font-size:13px;
-}
-
-.chat{
-    flex:1;
-    overflow-y:auto;
-    padding:30px;
-}
-
-.welcome{
-    max-width:800px;
-    margin:90px auto;
-    text-align:center;
-}
-
-.welcome h1{
-    font-size:42px;
-    margin-bottom:15px;
-}
-
-.welcome span{
-    color:#7167ff;
-}
-
-.welcome p{
-    color:#9ca6bd;
-    line-height:1.6;
-}
-
-.message{
-    max-width:850px;
-    margin:0 auto 25px;
-    display:flex;
-    gap:12px;
-}
-
-.avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
+#main{
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#7167ff;
-    flex-shrink:0;
+    flex-direction:column;
+    text-align:center;
+    padding:30px;
 }
 
-.user .avatar{
-    background:#29334d;
+#main h1{
+    font-size:clamp(45px,8vw,90px);
+    letter-spacing:8px;
+    animation:glitch 3s infinite;
 }
 
-.messageContent{
-    background:#151e34;
-    padding:15px;
-    border-radius:12px;
-    line-height:1.6;
-    white-space:pre-wrap;
+#main p{
+    color:#777;
+    margin-top:20px;
 }
 
-.user .messageContent{
-    background:#1d2945;
-}
-
-.research{
-    color:#8f9ab1;
-    font-size:13px;
-    margin-bottom:6px;
-}
-
-.inputArea{
-    padding:20px;
-    border-top:1px solid #29334d;
-}
-
-.inputBox{
-    max-width:850px;
-    margin:auto;
-    display:flex;
-    align-items:flex-end;
-    background:#151e34;
-    border:1px solid #303b59;
-    border-radius:15px;
-    padding:10px;
-}
-
-textarea{
-    flex:1;
-    min-height:45px;
-    max-height:150px;
-    resize:none;
-    background:transparent;
+.start{
+    margin-top:35px;
+    padding:16px 35px;
+    background:white;
+    color:black;
     border:0;
-    outline:0;
-    color:white;
-    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
     font-size:16px;
-    font-family:Arial;
+    transition:.3s;
 }
 
-.send{
-    width:45px;
-    height:45px;
-    border:0;
-    border-radius:10px;
-    background:#7167ff;
-    color:white;
-    font-size:20px;
+.start:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 30px white;
+}
+
+/* =========================
+   SİSTEM EKRANI
+========================= */
+
+#system{
+    display:none;
+    min-height:100vh;
+    padding:40px;
+}
+
+.systemBox{
+    max-width:900px;
+    margin:auto;
+}
+
+.line{
+    font-family:monospace;
+    margin:12px 0;
+    color:#52ff98;
+}
+
+.progress{
+    height:8px;
+    background:#151515;
+    margin:20px 0;
+}
+
+.progress div{
+    height:100%;
+    width:0%;
+    background:#52ff98;
+    transition:1s;
+}
+
+/* =========================
+   GİZEMLİ EKRAN
+========================= */
+
+#secret{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:5000;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+#secret h1{
+    font-size:60px;
+    animation:pulse 1s infinite;
+}
+
+#secret p{
+    color:#777;
+    margin-top:20px;
+}
+
+/* =========================
+   GLITCH
+========================= */
+
+.glitchMode{
+    animation:shake .08s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translate(0)}
+    25%{transform:translate(5px,-3px)}
+    50%{transform:translate(-4px,3px)}
+    75%{transform:translate(3px,2px)}
+    100%{transform:translate(0)}
+}
+
+@keyframes glitch{
+
+    0%,90%,100%{
+        transform:none;
+    }
+
+    91%{
+        transform:skew(10deg);
+    }
+
+    92%{
+        transform:translate(-5px);
+    }
+
+    93%{
+        transform:translate(5px);
+    }
+
+    94%{
+        transform:none;
+    }
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        transform:scale(1);
+        opacity:.6;
+    }
+
+    50%{
+        transform:scale(1.1);
+        opacity:1;
+    }
+}
+
+/* =========================
+   BUTONLAR
+========================= */
+
+#secretButton{
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    width:10px;
+    height:10px;
+    opacity:.08;
     cursor:pointer;
 }
 
-.info{
+/* =========================
+   HAZİNE
+========================= */
+
+#treasure{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle,#333,#000);
+    z-index:4000;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
     text-align:center;
-    color:#68738d;
-    font-size:11px;
-    margin-top:8px;
 }
 
-@media(max-width:700px){
-
-    .sidebar{
-        display:none;
-    }
-
-    .chat{
-        padding:15px;
-    }
-
-    .welcome h1{
-        font-size:31px;
-    }
-
-    .inputArea{
-        padding:10px;
-    }
+#treasure h1{
+    font-size:70px;
 }
+
+#treasure button{
+    margin-top:30px;
+    padding:15px 30px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* =========================
+   SAYI OYUNU
+========================= */
+
+#game{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#090909;
+    z-index:3000;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#game input{
+    margin-top:20px;
+    padding:12px;
+    background:#151515;
+    border:1px solid #555;
+    color:white;
+}
+
+#game button{
+    margin-top:10px;
+    padding:10px 25px;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle{
+    position:fixed;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    pointer-events:none;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+    from{
+        transform:translateY(-20px);
+        opacity:1;
+    }
+
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+
+}
+
+/* =========================
+   MOBİL
+========================= */
+
+@media(max-width:600px){
+
+    #system{
+        padding:20px;
+    }
+
+    #main h1{
+        letter-spacing:3px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="app">
 
-<aside class="sidebar">
+<!-- =========================
+     ANA SAYFA
+========================= -->
 
-    <div class="logo">
-        <span>AI</span> Araştırmacı
-    </div>
+<div id="main">
 
-    <button class="newChat" onclick="newChat()">
-        + Yeni Sohbet
+    <h1>???</h1>
+
+    <p>
+        Burada hiçbir şey yok.
+    </p>
+
+    <button
+    class="start"
+    onclick="start()">
+
+        Siteye Gir
+
     </button>
 
-    <div class="historyTitle">
-        SOHBETLER
+</div>
+
+
+<!-- =========================
+     SİSTEM
+========================= -->
+
+<div id="system">
+
+    <div class="systemBox">
+
+        <h2>
+            SYSTEM INITIALIZATION
+        </h2>
+
+        <br>
+
+        <div id="lines"></div>
+
+        <div class="progress">
+            <div id="bar"></div>
+        </div>
+
     </div>
 
-    <div id="history"></div>
-
-</aside>
+</div>
 
 
-<main class="main">
+<!-- =========================
+     GİZLİ EKRAN
+========================= -->
 
-<header class="header">
-
-    🔎 AI Araştırmacı
-
-    <div class="status">
-        ● Aktif
-    </div>
-
-</header>
-
-
-<section class="chat" id="chat">
-
-<div class="welcome" id="welcome">
+<div id="secret">
 
     <h1>
-        Merhaba 👋<br>
-        <span>Ne öğrenmek istiyorsun?</span>
+        SEN BULAMAZSIN...
     </h1>
 
     <p>
-        Bana bir soru sor. Sorunun konusunu analiz edip
-        uygun bir cevap oluşturmaya çalışacağım.
+        Yoksa buldun mu?
+    </p>
+
+    <button
+    class="start"
+    onclick="closeSecret()">
+
+        Geri dön
+
+    </button>
+
+</div>
+
+
+<!-- =========================
+     HAZİNE
+========================= -->
+
+<div id="treasure">
+
+    <h1>
+        🎉
+    </h1>
+
+    <h2>
+        GİZLİ ODAYI BULDUN!
+    </h2>
+
+    <p>
+        Bunu bulan kişi gerçekten dikkatliymiş.
+    </p>
+
+    <button onclick="closeTreasure()">
+        Devam et
+    </button>
+
+</div>
+
+
+<!-- =========================
+     SAYI OYUNU
+========================= -->
+
+<div id="game">
+
+    <h2>
+        🎯 GİZLİ OYUN
+    </h2>
+
+    <p style="margin-top:10px">
+        1 ile 100 arasında sayıyı bul.
+    </p>
+
+    <input
+    id="guess"
+    type="number"
+    placeholder="Tahminin">
+
+    <button onclick="guessNumber()">
+        Tahmin Et
+    </button>
+
+    <p
+    id="gameResult"
+    style="margin-top:15px">
     </p>
 
 </div>
 
-</section>
 
+<!-- GİZLİ BUTON -->
 
-<div class="inputArea">
-
-<div class="inputBox">
-
-<textarea
-id="question"
-placeholder="Örneğin: Dünya'nın en büyük ülkesi hangisi?"
-onkeydown="handleKey(event)"
-></textarea>
-
-<button class="send" onclick="askAI()">➤</button>
-
-</div>
-
-<div class="info">
-    Enter = Gönder • Shift + Enter = Yeni satır
-</div>
-
-</div>
-
-</main>
-
-</div>
+<button
+id="secretButton"
+onclick="secretFound()">
+</button>
 
 
 <script>
 
-let conversations =
-JSON.parse(localStorage.getItem("aiHistory") || "[]");
+/* =====================================
+   DEĞİŞKENLER
+===================================== */
+
+let clickCount=0;
+
+let number=
+Math.floor(Math.random()*100)+1;
+
+let gameOpened=false;
 
 
-// ENTER
+/* =====================================
+   BAŞLANGIÇ
+===================================== */
 
-function handleKey(e){
+function start(){
 
-    if(e.key==="Enter" && !e.shiftKey){
+    document.getElementById(
+        "main"
+    ).style.display="none";
 
-        e.preventDefault();
+    document.getElementById(
+        "system"
+    ).style.display="block";
 
-        askAI();
+    runSystem();
 
+}
+
+
+/* =====================================
+   SAHTE SİSTEM
+===================================== */
+
+const messages=[
+
+    "Booting mysterious system...",
+    "Searching for hidden files...",
+    "Scanning browser...",
+    "Checking user identity...",
+    "Analyzing mouse movements...",
+    "Searching secret locations...",
+    "Finding suspicious activity...",
+    "Encrypting unnecessary information...",
+    "Opening hidden layer...",
+    "SYSTEM READY."
+
+];
+
+let index=0;
+
+function runSystem(){
+
+    if(index>=messages.length){
+
+        setTimeout(finalEvent,1000);
+
+        return;
     }
 
+    const line=
+        document.createElement("div");
+
+    line.className="line";
+
+    line.textContent=
+        "> "+messages[index];
+
+    document.getElementById(
+        "lines"
+    ).appendChild(line);
+
+    document.getElementById(
+        "bar"
+    ).style.width=
+        ((index+1)/messages.length*100)+"%";
+
+    index++;
+
+    setTimeout(
+        runSystem,
+        650
+    );
+
 }
 
 
-// HTML GÜVENLİĞİ
+/* =====================================
+   İLK SÜRPRİZ
+===================================== */
 
-function escapeHTML(text){
+function finalEvent(){
 
-    return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    document.body.classList.add(
+        "glitchMode"
+    );
 
-}
+    setTimeout(()=>{
 
+        document.body.classList.remove(
+            "glitchMode"
+        );
 
-// MESAJ
+        document.getElementById(
+            "system"
+        ).innerHTML=`
 
-function addMessage(type,text,research=false){
+            <div style="
+                text-align:center;
+                margin-top:35vh;
+            ">
 
-    const chat=document.getElementById("chat");
+                <h1>
+                    ŞAKA 😎
+                </h1>
 
-    const div=document.createElement("div");
+                <p style="
+                    margin-top:20px;
+                    color:#777;
+                ">
+                    Sistem aslında hiçbir şey yapmadı.
+                </p>
 
-    div.className="message "+type;
-
-    div.innerHTML=`
-
-        <div class="avatar">
-            ${type==="user" ? "👤" : "🤖"}
-        </div>
-
-        <div>
-
-            ${research ? `
-                <div class="research">
-                    🔎 Sorun analiz ediliyor...
-                </div>
-            `:""}
-
-            <div class="messageContent">
-                ${escapeHTML(text)}
             </div>
 
-        </div>
-    `;
+        `;
 
-    chat.appendChild(div);
+        setTimeout(
+            randomSurprise,
+            2500
+        );
 
-    chat.scrollTop=chat.scrollHeight;
+    },1200);
 
-    return div;
 }
 
 
-// SORUYU ANALİZ ET
+/* =====================================
+   RASTGELE SÜRPRİZLER
+===================================== */
 
-function generateAnswer(question){
+function randomSurprise(){
 
-    const q=question.toLowerCase().trim();
+    const events=[
 
+        surpriseFlash,
+        screenShake,
+        particleRain,
+        fakeMessage,
+        openGame,
+        nightMode
 
-    // SELAMLAMA
+    ];
 
-    if(
-        q==="merhaba" ||
-        q==="selam" ||
-        q==="sa" ||
-        q.includes("merhaba")
-    ){
+    const event=
+        events[
+            Math.floor(
+                Math.random()*events.length
+            )
+        ];
 
-        return "Merhaba! 👋 Ben AI Araştırmacı. Bana tarih, bilim, teknoloji, oyunlar, matematik veya başka bir konu hakkında soru sorabilirsin.";
+    event();
 
-    }
-
-
-    // KİMSİN
-
-    if(
-        q.includes("kimsin") ||
-        q.includes("nesin") ||
-        q.includes("ne yapabiliyorsun")
-    ){
-
-        return "Ben bu sitenin yapay zekâ asistanıyım. Sorularını analiz edip elimdeki bilgi ve kurallara göre cevap oluşturmaya çalışıyorum.";
-
-    }
+}
 
 
-    // TÜRKİYE
+/* =====================================
+   EKRAN FLAŞ
+===================================== */
 
-    if(
-        q.includes("türkiye") &&
-        (
-            q.includes("başkent") ||
-            q.includes("başkenti")
-        )
-    ){
+function surpriseFlash(){
 
-        return "Türkiye'nin başkenti Ankara'dır. 🇹🇷";
+    const flash=
+        document.createElement("div");
 
-    }
+    flash.style.position="fixed";
+    flash.style.inset="0";
+    flash.style.background="white";
+    flash.style.zIndex="9999";
 
+    document.body.appendChild(flash);
 
-    // DÜNYA
+    setTimeout(()=>{
+        flash.remove();
+    },120);
 
-    if(
-        q.includes("dünya") &&
-        q.includes("en büyük ülke")
-    ){
-
-        return "Yüzölçümü bakımından dünyanın en büyük ülkesi Rusya'dır.";
-
-    }
+}
 
 
-    // GÜNEŞ
+/* =====================================
+   EKRAN TITREŞİMİ
+===================================== */
 
-    if(
-        q.includes("güneş") &&
-        (
-            q.includes("gezegen") ||
-            q.includes("yıldız")
-        )
-    ){
+function screenShake(){
 
-        return "Güneş bir yıldızdır. Dünya'nın da içinde bulunduğu Güneş Sistemi'nin merkezindedir.";
+    document.body.classList.add(
+        "glitchMode"
+    );
 
-    }
+    setTimeout(()=>{
 
+        document.body.classList.remove(
+            "glitchMode"
+        );
 
-    // SU
+    },1000);
 
-    if(
-        q.includes("su") &&
-        (
-            q.includes("kaç derece") ||
-            q.includes("don")
-        )
-    ){
-
-        return "Saf su, normal atmosfer basıncında yaklaşık 0°C'de donar.";
-
-    }
+}
 
 
-    // PYTHON
+/* =====================================
+   PARÇACIK YAĞMURU
+===================================== */
 
-    if(
-        q.includes("python") &&
-        (
-            q.includes("nedir") ||
-            q.includes("ne")
-        )
-    ){
+function particleRain(){
 
-        return "Python, okunması kolay sözdizimine sahip, çok amaçlı bir programlama dilidir. Web geliştirme, yapay zekâ, veri analizi ve oyun geliştirme gibi birçok alanda kullanılır.";
+    for(let i=0;i<100;i++){
 
-    }
+        setTimeout(()=>{
 
+            const p=
+                document.createElement(
+                    "div"
+                );
 
-    // MINECRAFT
+            p.className="particle";
 
-    if(q.includes("minecraft")){
+            p.style.left=
+                Math.random()*100+"vw";
 
-        return "Minecraft, oyuncuların bloklardan oluşan bir dünyayı keşfedip inşa edebildiği bir sandbox oyunudur. Hayatta kalma, yaratıcı ve macera gibi farklı oynanış biçimleri bulunur.";
+            p.style.animationDuration=
+                (1+Math.random()*3)+"s";
+
+            document.body.appendChild(p);
+
+            setTimeout(()=>{
+                p.remove();
+            },4000);
+
+        },i*20);
 
     }
 
+}
 
-    // MATEMATİK
 
-    if(
-        q.includes("kaç") &&
-        /\d/.test(q)
-    ){
+/* =====================================
+   SAHTE MESAJ
+===================================== */
 
-        const numbers=q.match(/\d+/g);
+function fakeMessage(){
 
-        if(numbers && numbers.length>=2){
+    setTimeout(()=>{
 
-            const a=Number(numbers[0]);
-            const b=Number(numbers[1]);
+        alert(
+            "⚠️ SİSTEM MESAJI\n\n"+
+            "Burayı gerçekten okuduğunu fark ettik."
+        );
 
-            if(q.includes("+") || q.includes("topla")){
+    },500);
 
-                return `${a} + ${b} = ${a+b}`;
+}
 
-            }
 
-            if(q.includes("-") || q.includes("çıkar")){
+/* =====================================
+   GECE MODU
+===================================== */
 
-                return `${a} - ${b} = ${a-b}`;
+function nightMode(){
 
-            }
+    document.body.style.background="#000";
 
-            if(
-                q.includes("*") ||
-                q.includes("çarp")
-            ){
+    setTimeout(()=>{
 
-                return `${a} × ${b} = ${a*b}`;
+        alert(
+            "🌙 Gece modu aktif."
+        );
 
-            }
+    },500);
 
-            if(
-                q.includes("/") ||
-                q.includes("böl")
-            ){
+}
 
-                if(b!==0){
 
-                    return `${a} ÷ ${b} = ${a/b}`;
+/* =====================================
+   GİZLİ BUTON
+===================================== */
 
-                }
+function secretFound(){
 
-            }
+    document.getElementById(
+        "secret"
+    ).style.display="flex";
+
+}
+
+
+function closeSecret(){
+
+    document.getElementById(
+        "secret"
+    ).style.display="none";
+
+}
+
+
+/* =====================================
+   MOUSE HAREKETİ
+===================================== */
+
+document.addEventListener(
+    "mousemove",
+    e=>{
+
+        if(Math.random()<0.01){
+
+            const dot=
+                document.createElement(
+                    "div"
+                );
+
+            dot.style.position="fixed";
+
+            dot.style.left=
+                e.clientX+"px";
+
+            dot.style.top=
+                e.clientY+"px";
+
+            dot.style.width="5px";
+            dot.style.height="5px";
+
+            dot.style.background="#fff";
+
+            dot.style.borderRadius="50%";
+
+            dot.style.pointerEvents="none";
+
+            document.body.appendChild(dot);
+
+            setTimeout(()=>{
+                dot.remove();
+            },500);
 
         }
 
     }
+);
 
 
-    // TARİH
+/* =====================================
+   KLAVYE GİZLİ KODU
+===================================== */
+
+let secretCode="";
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        secretCode+=
+            e.key.toLowerCase();
+
+        if(secretCode.length>15){
+
+            secretCode=
+                secretCode.slice(-15);
+
+        }
+
+        /* "gizli" yazılırsa */
+
+        if(
+            secretCode.includes("gizli")
+        ){
+
+            document.getElementById(
+                "treasure"
+            ).style.display="flex";
+
+            secretCode="";
+
+        }
+
+        /* "oyun" yazılırsa */
+
+        if(
+            secretCode.includes("oyun") &&
+            !gameOpened
+        ){
+
+            openGame();
+
+            secretCode="";
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   GİZLİ ODAYI KAPAT
+===================================== */
+
+function closeTreasure(){
+
+    document.getElementById(
+        "treasure"
+    ).style.display="none";
+
+}
+
+
+/* =====================================
+   MİNİ OYUN
+===================================== */
+
+function openGame(){
+
+    if(gameOpened) return;
+
+    gameOpened=true;
+
+    document.getElementById(
+        "game"
+    ).style.display="flex";
+
+}
+
+
+function guessNumber(){
+
+    const value=
+        Number(
+            document.getElementById(
+                "guess"
+            ).value
+        );
+
+    const result=
+        document.getElementById(
+            "gameResult"
+        );
+
+
+    if(!value){
+
+        result.textContent=
+            "Bir sayı yaz.";
+
+        return;
+
+    }
+
+
+    if(value===number){
+
+        result.textContent=
+            "🎉 DOĞRU! Gizli sistemi açtın!";
+
+        setTimeout(()=>{
+
+            document.getElementById(
+                "game"
+            ).style.display="none";
+
+            document.getElementById(
+                "treasure"
+            ).style.display="flex";
+
+        },1000);
+
+    }
+
+    else if(value<number){
+
+        result.textContent=
+            "⬆️ Daha büyük bir sayı.";
+
+    }
+
+    else{
+
+        result.textContent=
+            "⬇️ Daha küçük bir sayı.";
+
+    }
+
+}
+
+
+/* =====================================
+   TELEFONDA TIKLAMA SÜRPRİZİ
+===================================== */
+
+document.addEventListener(
+    "click",
+    ()=>{
+
+        clickCount++;
+
+        if(clickCount===15){
+
+            alert(
+                "👀\n\n"+
+                "15 kez tıkladın.\n"+
+                "Sen gerçekten her şeye basıyorsun."
+            );
+
+        }
+
+        if(clickCount===30){
+
+            alert(
+                "😂\n\n"+
+                "Tamam tamam.\n"+
+                "Artık yeter."
+            );
+
+            clickCount=0;
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   SAYFADAN ÇIKMAYA ÇALIŞINCA
+===================================== */
+
+let leaving=false;
+
+window.addEventListener(
+    "beforeunload",
+    e=>{
+
+        if(!leaving){
+
+            e.preventDefault();
+
+            e.returnValue="";
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   OTOMATİK SÜRPRİZ
+===================================== */
+
+setTimeout(()=>{
 
     if(
-        q.includes("atatürk") ||
-        q.includes("mustafa kemal")
+        document.getElementById(
+            "main"
+        ).style.display!=="none"
     ){
 
-        return "Mustafa Kemal Atatürk, Türkiye Cumhuriyeti'nin kurucusu ve ilk Cumhurbaşkanıdır. 1881'de Selanik'te doğmuş, 10 Kasım 1938'de İstanbul'da vefat etmiştir.";
+        const p=
+            document.createElement(
+                "div"
+            );
+
+        p.style.position="fixed";
+
+        p.style.bottom="20px";
+
+        p.style.left="50%";
+
+        p.style.transform=
+            "translateX(-50%)";
+
+        p.style.color="#333";
+
+        p.style.fontSize="10px";
+
+        p.textContent=
+            "ipucu: her şeye tıklamak kötü fikir olabilir";
+
+        document.body.appendChild(p);
 
     }
 
-
-    // HAYVANLAR
-
-    if(
-        q.includes("hayvan") &&
-        (
-            q.includes("en hızlı") ||
-            q.includes("hızlı")
-        )
-    ){
-
-        return "Karada en hızlı hayvan çitadır. Kısa mesafelerde çok yüksek hızlara ulaşabilir.";
-
-    }
-
-
-    // OYUN
-
-    if(
-        q.includes("oyun") &&
-        q.includes("yap")
-    ){
-
-        return "Oyun yapmak için HTML, CSS ve JavaScript ile tarayıcı tabanlı oyunlar geliştirebilirsin. Daha gelişmiş oyunlar için Python, C# veya C++ gibi diller de kullanılabilir.";
-
-    }
-
-
-    // GENEL SORU
-
-    return `
-Sorunu anladım:
-
-"${question}"
-
-Bu soru için şu anda yerleşik bilgi tabanımda
-doğrudan eşleşen bir cevap bulunamadı.
-
-Gerçek araştırma modu bağlandığında sistem:
-
-🔎 Web'de arama yapacak
-📚 Birden fazla kaynağı inceleyecek
-🧠 Bilgileri karşılaştıracak
-✍️ Sonuçları özetleyecek
-🔗 Kaynakları gösterecek
-
-Yani bu sürümün asıl eksik kısmı yapay zekâ ve web araştırma API bağlantısıdır.
-`;
-
-}
-
-
-// SOR
-
-async function askAI(){
-
-    const input=document.getElementById("question");
-
-    const question=input.value.trim();
-
-    if(!question) return;
-
-    document.getElementById("welcome")?.remove();
-
-    input.value="";
-
-    addMessage("user",question);
-
-    const loading=addMessage(
-        "ai",
-        "Soruyu analiz ediyorum...",
-        true
-    );
-
-    await new Promise(
-        resolve=>setTimeout(resolve,700)
-    );
-
-    loading.remove();
-
-    const answer=generateAnswer(question);
-
-    addMessage("ai",answer);
-
-    saveHistory(question);
-
-}
-
-
-// GEÇMİŞE KAYDET
-
-function saveHistory(question){
-
-    conversations.push(question);
-
-    if(conversations.length>30){
-
-        conversations.shift();
-
-    }
-
-    localStorage.setItem(
-        "aiHistory",
-        JSON.stringify(conversations)
-    );
-
-    loadHistory();
-
-}
-
-
-// GEÇMİŞİ GÖSTER
-
-function loadHistory(){
-
-    const history=
-        document.getElementById("history");
-
-    history.innerHTML="";
-
-    conversations
-    .slice()
-    .reverse()
-    .forEach(question=>{
-
-        const item=
-            document.createElement("div");
-
-        item.className="historyItem";
-
-        item.textContent=
-            question.length>28
-            ? question.substring(0,28)+"..."
-            : question;
-
-        item.onclick=()=>{
-
-            document.getElementById("question").value=
-                question;
-
-        };
-
-        history.appendChild(item);
-
-    });
-
-}
-
-
-// YENİ SOHBET
-
-function newChat(){
-
-    document.getElementById("chat").innerHTML=`
-
-        <div class="welcome" id="welcome">
-
-            <h1>
-                Yeni sohbet 🚀<br>
-                <span>Ne öğrenmek istiyorsun?</span>
-            </h1>
-
-            <p>
-                Sorunu yaz ve başlayalım.
-            </p>
-
-        </div>
-    `;
-
-}
-
-
-loadHistory();
+},5000);
 
 </script>
 
