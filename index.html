@@ -4,397 +4,1128 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Console</title>
+
+<title>🎁 Sana Özel Bir Şey Var!</title>
 
 <style>
+
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,body{
-    margin:0;
     width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:"Courier New",monospace;
+    min-height:100%;
+    font-family:Arial,sans-serif;
+    background:#050510;
+    color:white;
+    overflow-x:hidden;
 }
 
-#terminal{
-    width:100%;
-    height:100%;
-    padding:25px;
-    color:#00ff41;
+/* =========================
+   GENEL
+========================= */
+
+body{
     background:
-        radial-gradient(circle at center, #001b08 0%, #000 70%);
-    font-size:16px;
-    line-height:1.55;
-    text-shadow:
-        0 0 5px #00ff41,
-        0 0 10px rgba(0,255,65,.4);
-    overflow:hidden;
-    position:relative;
+        radial-gradient(circle at 20% 20%,#25105e 0%,transparent 35%),
+        radial-gradient(circle at 80% 70%,#09285e 0%,transparent 35%),
+        #050510;
 }
 
-#terminal::before{
-    content:"";
-    position:absolute;
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* =========================
+   YILDIZLAR
+========================= */
+
+.stars{
+    position:fixed;
     inset:0;
     pointer-events:none;
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            rgba(0,255,65,.035) 0px,
-            rgba(0,255,65,.035) 1px,
-            transparent 2px,
-            transparent 4px
-        );
+    overflow:hidden;
+    z-index:0;
 }
 
-#terminal::after{
-    content:"";
+.star{
     position:absolute;
-    inset:0;
-    pointer-events:none;
-    box-shadow:inset 0 0 100px #000;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
 }
 
-#content{
+@keyframes twinkle{
+    from{opacity:.2;transform:scale(.7)}
+    to{opacity:1;transform:scale(1.5)}
+}
+
+/* =========================
+   SAYFALAR
+========================= */
+
+.screen{
     position:relative;
     z-index:2;
+    min-height:100vh;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
 }
 
-.header{
-    color:#00ff41;
+.screen.active{
+    display:flex;
+}
+
+/* =========================
+   AÇILIŞ
+========================= */
+
+.intro{
+    max-width:800px;
+}
+
+.small{
+    color:#aaa;
+    font-size:14px;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.intro h1{
+    font-size:clamp(40px,9vw,85px);
+    margin-bottom:20px;
+    background:linear-gradient(90deg,#ff4ecd,#7c5cff,#32d9ff);
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:titleGlow 3s infinite alternate;
+}
+
+@keyframes titleGlow{
+    from{filter:drop-shadow(0 0 5px #ff4ecd)}
+    to{filter:drop-shadow(0 0 25px #32d9ff)}
+}
+
+.intro p{
+    color:#c9c9d9;
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:35px;
+}
+
+.mainBtn{
+    border:none;
+    padding:17px 35px;
+    border-radius:50px;
+    font-size:18px;
+    color:white;
+    background:linear-gradient(90deg,#ff3cac,#784cff);
+    box-shadow:0 0 25px rgba(255,60,172,.5);
+    transition:.3s;
+}
+
+.mainBtn:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 45px rgba(120,76,255,.8);
+}
+
+/* =========================
+   ŞİFRE
+========================= */
+
+.card{
+    width:min(500px,95%);
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 50px rgba(100,50,255,.2);
+}
+
+.card h2{
+    font-size:35px;
     margin-bottom:15px;
 }
 
-.warning{
-    color:#00ff41;
-    font-weight:bold;
+.card p{
+    color:#bbb;
+    margin-bottom:25px;
+    line-height:1.5;
 }
 
-.red{
-    color:#ff3030;
-    text-shadow:0 0 8px red;
-}
-
-.yellow{
-    color:#ffe600;
-}
-
-.progressBox{
+.input{
     width:100%;
-    max-width:700px;
-    height:22px;
-    border:1px solid #00ff41;
-    margin-top:12px;
-    box-shadow:0 0 10px rgba(0,255,65,.4);
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #555;
+    background:#090912;
+    color:white;
+    text-align:center;
+    font-size:18px;
+    outline:none;
+    margin-bottom:15px;
 }
 
-#progress{
-    height:100%;
-    width:0%;
-    background:#00ff41;
-    box-shadow:0 0 15px #00ff41;
-    transition:.2s;
+.input:focus{
+    border-color:#9b6cff;
+    box-shadow:0 0 15px rgba(155,108,255,.4);
 }
 
-#percent{
-    margin-top:5px;
+.error{
+    color:#ff6262;
+    min-height:22px;
+    margin-bottom:10px;
 }
 
-.cursor{
-    display:inline-block;
-    width:9px;
-    height:18px;
-    background:#00ff41;
-    vertical-align:middle;
-    animation:blink .7s infinite;
+/* =========================
+   HEDİYE KUTULARI
+========================= */
+
+.giftTitle{
+    font-size:clamp(35px,7vw,65px);
+    margin-bottom:15px;
 }
 
-@keyframes blink{
-    0%,50%{opacity:1}
-    51%,100%{opacity:0}
+.giftSub{
+    color:#bbb;
+    margin-bottom:35px;
 }
 
-#fakeData{
-    position:absolute;
-    right:25px;
-    top:25px;
-    width:250px;
-    height:150px;
-    border:1px solid #00ff41;
-    padding:10px;
-    font-size:12px;
-    opacity:.75;
+.gifts{
+    display:flex;
+    gap:25px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
 
-@media(max-width:700px){
-    #fakeData{
-        display:none;
-    }
-
-    #terminal{
-        font-size:13px;
-        padding:15px;
-    }
-}
-
-#final{
-    display:none;
-    position:absolute;
-    inset:0;
-    z-index:10;
-    background:#000;
-    color:#00ff41;
+.gift{
+    width:180px;
+    height:210px;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,.15);
+    background:linear-gradient(145deg,#241052,#100b27);
+    display:flex;
     align-items:center;
     justify-content:center;
     flex-direction:column;
-    text-align:center;
+    transition:.4s;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
 
-#final h1{
-    font-size:clamp(35px,8vw,90px);
-    margin:0;
-    text-shadow:
-        0 0 10px #00ff41,
-        0 0 30px #00ff41;
+.gift:hover{
+    transform:translateY(-12px) rotate(-2deg);
+    box-shadow:0 20px 50px rgba(150,80,255,.4);
 }
 
-#final p{
+.giftIcon{
+    font-size:75px;
+    margin-bottom:10px;
+}
+
+.gift span{
+    color:#bbb;
+}
+
+.gift.opened{
+    animation:giftOpen .6s;
+}
+
+@keyframes giftOpen{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.2) rotate(5deg)}
+    100%{transform:scale(1)}
+}
+
+/* =========================
+   SÜRPRİZ
+========================= */
+
+.surprise{
+    max-width:700px;
+}
+
+.bigEmoji{
+    font-size:100px;
+    margin-bottom:20px;
+    animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+    to{transform:translateY(-12px)}
+}
+
+.surprise h2{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.surprise p{
+    color:#ccc;
     font-size:20px;
+    line-height:1.7;
 }
 
-#joke{
-    display:none;
-    color:white;
-    font-size:clamp(30px,7vw,80px);
-    font-family:Arial,sans-serif;
-    font-weight:bold;
+/* =========================
+   MİNİ OYUN
+========================= */
+
+.gameBox{
+    width:min(600px,95%);
 }
+
+.gameBox h2{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.gameBox p{
+    color:#bbb;
+    margin-bottom:20px;
+}
+
+.target{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#ff3c8e;
+    box-shadow:0 0 30px #ff3c8e;
+    position:fixed;
+    display:none;
+    cursor:pointer;
+    animation:targetPulse .7s infinite alternate;
+}
+
+@keyframes targetPulse{
+    from{transform:scale(.85)}
+    to{transform:scale(1.1)}
+}
+
+.score{
+    font-size:25px;
+    margin:20px;
+}
+
+#gameMessage{
+    color:#7dffae;
+    min-height:30px;
+}
+
+/* =========================
+   FOTOĞRAF
+========================= */
+
+.photoArea{
+    max-width:900px;
+}
+
+.photoArea h2{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.photoArea p{
+    color:#aaa;
+    margin-bottom:30px;
+}
+
+.photos{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.photo{
+    width:230px;
+    height:280px;
+    border-radius:20px;
+    background:linear-gradient(145deg,#19132e,#0b0b16);
+    border:1px solid rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    overflow:hidden;
+}
+
+.photo .emoji{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.photo span{
+    color:#aaa;
+}
+
+/* =========================
+   DOĞUM GÜNÜ
+========================= */
+
+.birthday{
+    max-width:900px;
+}
+
+.cake{
+    font-size:130px;
+    animation:cakeFloat 2s infinite alternate;
+}
+
+@keyframes cakeFloat{
+    from{transform:translateY(0)}
+    to{transform:translateY(-15px)}
+}
+
+.birthday h1{
+    font-size:clamp(45px,9vw,100px);
+    background:linear-gradient(
+        90deg,
+        #ff4ecd,
+        #ffe66d,
+        #65f7ff,
+        #9d6cff
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:rainbow 4s linear infinite;
+    background-size:300%;
+}
+
+@keyframes rainbow{
+    to{background-position:300%}
+}
+
+.birthday h2{
+    font-size:35px;
+    margin:20px 0;
+}
+
+.message{
+    max-width:700px;
+    margin:auto;
+    color:#ddd;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.signature{
+    margin-top:30px;
+    color:#aaa;
+}
+
+/* =========================
+   KONFETİ
+========================= */
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:16px;
+    top:-30px;
+    z-index:20;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+    }
+}
+
+/* =========================
+   BALONLAR
+========================= */
+
+.balloon{
+    position:fixed;
+    bottom:-150px;
+    font-size:65px;
+    z-index:15;
+    animation:balloonUp linear forwards;
+    pointer-events:none;
+}
+
+@keyframes balloonUp{
+    to{
+        transform:translateY(-120vh) rotate(15deg);
+    }
+}
+
+/* =========================
+   GİZLİ MESAJ
+========================= */
+
+.secret{
+    margin-top:25px;
+    font-size:13px;
+    color:#555;
+}
+
+.secret:hover{
+    color:#aaa;
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="terminal">
+<div class="stars" id="stars"></div>
 
-    <div id="content">
 
-        <div class="header">
-            ╔════════════════════════════════════════════════════════════╗<br>
-            ║              SYSTEM SECURITY CONSOLE v7.4                ║<br>
-            ╚════════════════════════════════════════════════════════════╝
+<!-- =========================
+     1. AÇILIŞ
+========================= -->
+
+<section class="screen active" id="screen1">
+
+    <div class="intro">
+
+        <div class="small">
+            ⚠ ÖNEMLİ BİR MESAJ VAR ⚠
         </div>
 
-        <div>> Initializing secure environment...</div>
-        <div>> Loading kernel modules...</div>
-        <div>> Checking network interface... <span class="warning">ONLINE</span></div>
-        <div>> Scanning available nodes...</div>
+        <h1>Hey! 👀</h1>
 
-        <br>
+        <p>
+            Bu siteyi herkes açamaz.<br>
+            Çünkü bu site...
+            <b>özel biri için hazırlandı.</b>
+        </p>
 
-        <div id="lines"></div>
-
-        <div class="progressBox">
-            <div id="progress"></div>
-        </div>
-
-        <div id="percent">ACCESS PROCESS: 0%</div>
-
-        <br>
-
-        <div id="status">
-            > Waiting for system response...
-        </div>
-
-        <br>
-
-        <span>root@system:~# </span><span class="cursor"></span>
+        <button class="mainBtn" onclick="nextScreen(2)">
+            🔓 Sürprizi Başlat
+        </button>
 
     </div>
 
-    <div id="fakeData">
-        CONNECTION: SECURE<br>
-        NODE: ACTIVE<br>
-        PACKETS: <span id="packets">0000</span><br>
-        ENCRYPTION: AES-256<br>
-        FIREWALL: <span id="firewall">ACTIVE</span><br>
-        ACCESS: UNKNOWN
+</section>
+
+
+<!-- =========================
+     2. ŞİFRE
+========================= -->
+
+<section class="screen" id="screen2">
+
+    <div class="card">
+
+        <div style="font-size:70px">🔐</div>
+
+        <h2>Gizli Giriş</h2>
+
+        <p>
+            Sisteme devam etmek için<br>
+            küçük bir tahminde bulun.
+        </p>
+
+        <input
+            id="password"
+            class="input"
+            placeholder="Şifreyi yaz..."
+            autocomplete="off"
+        >
+
+        <div id="error" class="error"></div>
+
+        <button class="mainBtn" onclick="checkPassword()">
+            Giriş Yap 🚀
+        </button>
+
+        <div class="secret">
+            İpucu: doğum günüyle alakalı 😉
+        </div>
+
     </div>
 
-</div>
+</section>
 
 
-<div id="final">
+<!-- =========================
+     3. HEDİYELER
+========================= -->
 
-    <h1 id="hackText">ACCESS GRANTED</h1>
+<section class="screen" id="screen3">
 
-    <p id="finalText">
-        System control established...
-    </p>
+    <div>
 
-    <div id="joke">
-        😂 ŞAKA YAPTIK!
+        <h1 class="giftTitle">
+            🎁 3 HEDİYE
+        </h1>
+
+        <p class="giftSub">
+            Ama hangisinin içinde ne olduğunu bilmiyorsun...
+        </p>
+
+        <div class="gifts">
+
+            <div class="gift" onclick="openGift(1,this)">
+                <div class="giftIcon">🎁</div>
+                <span>1. Hediye</span>
+            </div>
+
+            <div class="gift" onclick="openGift(2,this)">
+                <div class="giftIcon">🎁</div>
+                <span>2. Hediye</span>
+            </div>
+
+            <div class="gift" onclick="openGift(3,this)">
+                <div class="giftIcon">🎁</div>
+                <span>3. Hediye</span>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div id="giftMessage" style="min-height:30px;color:#ddd"></div>
+
     </div>
 
-</div>
+</section>
+
+
+<!-- =========================
+     4. SÜRPRİZ
+========================= -->
+
+<section class="screen" id="screen4">
+
+    <div class="surprise">
+
+        <div class="bigEmoji">🥳</div>
+
+        <h2>Bir şey daha var!</h2>
+
+        <p>
+            Bütün hediyeler açıldı ama<br>
+            asıl sürpriz daha başlamadı...
+        </p>
+
+        <br>
+
+        <button class="mainBtn" onclick="nextScreen(5)">
+            🎮 Devam Et
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     5. OYUN
+========================= -->
+
+<section class="screen" id="screen5">
+
+    <div class="gameBox">
+
+        <h2>🎯 Mini Oyun</h2>
+
+        <p>
+            10 saniye içinde hedefe mümkün olduğunca çok tıkla!
+        </p>
+
+        <div class="score">
+            Skor: <b id="score">0</b>
+        </div>
+
+        <div id="gameMessage">
+            Hazırsan başla!
+        </div>
+
+        <br>
+
+        <button class="mainBtn" onclick="startGame()" id="startGameBtn">
+            ▶ Oyunu Başlat
+        </button>
+
+    </div>
+
+</section>
+
+<div class="target" id="target" onclick="hitTarget()"></div>
+
+
+<!-- =========================
+     6. ANILAR
+========================= -->
+
+<section class="screen" id="screen6">
+
+    <div class="photoArea">
+
+        <h2>📸 Küçük Bir Anı Köşesi</h2>
+
+        <p>
+            Buraya kendi fotoğraflarınızı koyabilirsin.
+        </p>
+
+        <div class="photos">
+
+            <div class="photo">
+                <div class="emoji">😂</div>
+                <span>Komik anılar</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">🎮</div>
+                <span>Birlikte oynadığımız günler</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">❤️</div>
+                <span>Güzel anılar</span>
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <button class="mainBtn" onclick="nextScreen(7)">
+            💌 Son Sürpriz
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     7. BÜYÜK FİNAL
+========================= -->
+
+<section class="screen" id="screen7">
+
+    <div class="birthday">
+
+        <div class="cake">
+            🎂
+        </div>
+
+        <h1>İYİ Kİ DOĞDUN!</h1>
+
+        <h2 id="nameText">
+            KARDEŞİM ❤️
+        </h2>
+
+        <div class="message">
+
+            Bugün senin günün! 🎉
+
+            <br><br>
+
+            Bazen kavga ediyoruz,
+            bazen birbirimize sinir oluyoruz,
+            bazen de saçma sapan şeylere gülüyoruz 😂
+
+            <br><br>
+
+            Ama ne olursa olsun,
+            sen benim için çok değerlisin.
+
+            <br><br>
+
+            Yeni yaşında bol bol mutluluk,
+            eğlence, güzel anılar ve
+            istediğin her şeyin gerçekleşmesini diliyorum.
+
+            <br><br>
+
+            <b>İyi ki varsın kardeşim. ❤️</b>
+
+        </div>
+
+        <div class="signature">
+            — Seni seven kardeşin Talha 😎
+        </div>
+
+    </div>
+
+</section>
 
 
 <script>
 
-const lines = [
+/* =================================
+   BURADAN KARDEŞİNİN ADINI DEĞİŞTİR
+================================= */
 
-"> Establishing encrypted connection...",
-"> Searching local network...",
-"> Detecting active devices...",
-"> Device discovered: NODE_01",
-"> Device discovered: NODE_02",
-"> Analyzing security protocols...",
-"> Firewall detected...",
-"> Testing firewall response...",
-"> Firewall response: BYPASSED",
-"> Searching authentication service...",
-"> Authentication service located.",
-"> Requesting administrator privileges...",
-"> Administrator response received.",
-"> Access level: RESTRICTED",
-"> Attempting privilege escalation...",
-"> Privilege escalation: SUCCESS",
-"> Loading encrypted directory...",
-"> Directory found.",
-"> Decrypting security layer...",
-"> Encryption key detected.",
-"> Verifying encryption key...",
-"> Key accepted.",
-"> Accessing protected environment...",
-"> Security checkpoint 01 passed.",
-"> Security checkpoint 02 passed.",
-"> Security checkpoint 03 passed.",
-"> Establishing root session...",
-"> ROOT SESSION INITIALIZED",
-"> Reading system information...",
-"> Collecting system parameters...",
-"> Synchronizing data packets...",
-"> Packet transfer initialized...",
-"> Preparing final access...",
-"> Removing temporary restrictions...",
-"> Final authentication request...",
-"> Authentication accepted.",
-"> SYSTEM ACCESS GRANTED"
+const kardesininAdi = "KARDEŞİM";
 
-];
 
-const linesDiv = document.getElementById("lines");
-const progress = document.getElementById("progress");
-const percent = document.getElementById("percent");
-const status = document.getElementById("status");
-const packets = document.getElementById("packets");
+/* =================================
+   YILDIZLAR
+================================= */
 
-let lineIndex = 0;
-let progressValue = 0;
+for(let i=0;i<100;i++){
 
-function randomPacket(){
+    const star=document.createElement("div");
 
-    let number = Math.floor(Math.random()*9999)
-        .toString()
-        .padStart(4,"0");
+    star.className="star";
 
-    packets.textContent = number;
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+
+    star.style.animationDelay=
+        Math.random()*2+"s";
+
+    star.style.opacity=
+        Math.random();
+
+    document.getElementById("stars").appendChild(star);
 }
 
-function addLine(){
 
-    if(lineIndex >= lines.length){
-        finish();
+/* =================================
+   EKRAN GEÇİŞİ
+================================= */
+
+function nextScreen(number){
+
+    document.querySelectorAll(".screen")
+        .forEach(s=>s.classList.remove("active"));
+
+    document.getElementById(
+        "screen"+number
+    ).classList.add("active");
+
+}
+
+
+/* =================================
+   ŞİFRE
+================================= */
+
+function checkPassword(){
+
+    const value=
+        document.getElementById("password")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const error=
+        document.getElementById("error");
+
+    /*
+       ŞİFRE:
+       doğum günü
+
+       İstersen burayı değiştir.
+    */
+
+    if(
+        value==="dogumgunu" ||
+        value==="doğumgünü" ||
+        value==="birthday" ||
+        value==="iyi ki doğdun"
+    ){
+
+        error.textContent="";
+
+        nextScreen(3);
+
+    }else{
+
+        error.textContent=
+            "❌ Hmm... Bu değil 😏";
+
+    }
+
+}
+
+
+/* ENTER TUŞU */
+
+document.getElementById("password")
+.addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+        checkPassword();
+    }
+
+});
+
+
+/* =================================
+   HEDİYELER
+================================= */
+
+let openedGifts=0;
+
+function openGift(number,element){
+
+    if(element.classList.contains("opened")){
         return;
     }
 
-    const line = document.createElement("div");
+    element.classList.add("opened");
 
-    line.textContent = lines[lineIndex];
+    openedGifts++;
 
-    if(
-        lines[lineIndex].includes("SUCCESS") ||
-        lines[lineIndex].includes("GRANTED") ||
-        lines[lineIndex].includes("BYPASSED")
-    ){
-        line.classList.add("yellow");
+    const message=
+        document.getElementById("giftMessage");
+
+    if(number===1){
+
+        message.innerHTML=
+        "🎮 <b>1. Hediye:</b> Bugün oyun oynamak serbest! 😎";
+
     }
 
-    linesDiv.appendChild(line);
+    if(number===2){
 
-    lineIndex++;
+        message.innerHTML=
+        "🍫 <b>2. Hediye:</b> Tatlı hakkın aktif edildi! 😂";
 
-    progressValue += Math.floor(
-        100 / lines.length
-    );
-
-    if(progressValue > 100){
-        progressValue = 100;
     }
 
-    progress.style.width = progressValue + "%";
-    percent.textContent =
-        "ACCESS PROCESS: " + progressValue + "%";
+    if(number===3){
 
-    randomPacket();
+        message.innerHTML=
+        "❤️ <b>3. Hediye:</b> Dünyanın en iyi kardeşlerinden birisin!";
 
-    document.getElementById("terminal").scrollTop =
-        document.getElementById("terminal").scrollHeight;
+    }
 
-    let delay = 180 + Math.random()*350;
+    if(openedGifts===3){
 
-    setTimeout(addLine,delay);
+        setTimeout(()=>{
+
+            nextScreen(4);
+
+        },1800);
+
+    }
+
 }
 
 
-function finish(){
+/* =================================
+   MİNİ OYUN
+================================= */
 
-    progress.style.width="100%";
-    percent.textContent="ACCESS PROCESS: 100%";
+let score=0;
+let gameRunning=false;
+let gameTimer;
 
-    status.innerHTML =
-        '<span class="red">> CRITICAL: UNAUTHORIZED ACCESS DETECTED</span>';
+function startGame(){
 
-    setTimeout(()=>{
+    score=0;
 
-        status.innerHTML =
-            '<span class="red">> SYSTEM CONTROL ESTABLISHED</span>';
+    gameRunning=true;
 
-    },900);
+    document.getElementById("score")
+        .textContent=score;
 
-    setTimeout(()=>{
+    document.getElementById("startGameBtn")
+        .style.display="none";
 
-        document.getElementById("terminal").style.display="none";
+    document.getElementById("gameMessage")
+        .textContent="HEDEFİ YAKALA! 🔥";
 
-        const final = document.getElementById("final");
+    moveTarget();
 
-        final.style.display="flex";
+    gameTimer=setTimeout(()=>{
 
-    },2200);
+        gameRunning=false;
 
-    setTimeout(()=>{
+        document.getElementById("target")
+            .style.display="none";
 
-        document.getElementById("hackText").style.display="none";
-        document.getElementById("finalText").style.display="none";
+        document.getElementById("gameMessage")
+            .innerHTML=
+            "⏱️ Süre bitti! Skorun: <b>"+
+            score+
+            "</b>";
 
-        document.getElementById("joke").style.display="block";
+        setTimeout(()=>{
 
-        document.getElementById("final").style.background =
-            "radial-gradient(circle,#071f0b,#000)";
+            nextScreen(6);
 
-    },4200);
+        },2200);
+
+    },10000);
+
 }
 
 
-// Rastgele terminal verileri
-setInterval(randomPacket,150);
+function moveTarget(){
+
+    if(!gameRunning)return;
+
+    const target=
+        document.getElementById("target");
+
+    const margin=80;
+
+    const x=
+        Math.random()*
+        (window.innerWidth-margin*2)+margin;
+
+    const y=
+        Math.random()*
+        (window.innerHeight-margin*2)+margin;
+
+    target.style.left=
+        (x-40)+"px";
+
+    target.style.top=
+        (y-40)+"px";
+
+    target.style.display="block";
+
+}
 
 
-// Başlat
-setTimeout(addLine,800);
+function hitTarget(){
+
+    if(!gameRunning)return;
+
+    score++;
+
+    document.getElementById("score")
+        .textContent=score;
+
+    moveTarget();
+
+}
+
+
+/* =================================
+   KONFETİ
+================================= */
+
+function createConfetti(){
+
+    for(let i=0;i<180;i++){
+
+        const c=
+            document.createElement("div");
+
+        c.className="confetti";
+
+        c.style.left=
+            Math.random()*100+"vw";
+
+        c.style.background=
+            [
+                "#ff4ecd",
+                "#65f7ff",
+                "#ffe66d",
+                "#7cff8a",
+                "#a879ff",
+                "#ff704d"
+            ][Math.floor(Math.random()*6)];
+
+        c.style.animationDuration=
+            (2+Math.random()*4)+"s";
+
+        c.style.animationDelay=
+            Math.random()*2+"s";
+
+        document.body.appendChild(c);
+
+        setTimeout(()=>{
+            c.remove();
+        },7000);
+
+    }
+
+}
+
+
+/* =================================
+   BALONLAR
+================================= */
+
+function createBalloons(){
+
+    const emojis=[
+        "🎈",
+        "🎈",
+        "🎈",
+        "🎈",
+        "🎈"
+    ];
+
+    for(let i=0;i<20;i++){
+
+        const b=
+            document.createElement("div");
+
+        b.className="balloon";
+
+        b.textContent=
+            emojis[Math.floor(Math.random()*emojis.length)];
+
+        b.style.left=
+            Math.random()*100+"vw";
+
+        b.style.animationDuration=
+            (5+Math.random()*6)+"s";
+
+        b.style.animationDelay=
+            Math.random()*3+"s";
+
+        document.body.appendChild(b);
+
+        setTimeout(()=>{
+            b.remove();
+        },12000);
+
+    }
+
+}
+
+
+/* =================================
+   FİNALDE İSİM
+================================= */
+
+document.getElementById("nameText")
+    .textContent=
+    kardesininAdi+" ❤️";
+
+
+/* =================================
+   FİNAL ALGILA
+================================= */
+
+const observer=
+    new MutationObserver(()=>{
+
+        const final=
+            document.getElementById("screen7");
+
+        if(final.classList.contains("active")){
+
+            createConfetti();
+            createBalloons();
+
+        }
+
+    });
+
+observer.observe(
+    document.body,
+    {
+        subtree:true,
+        attributes:true,
+        attributeFilter:["class"]
+    }
+);
 
 </script>
 
