@@ -3,17 +3,11 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>🎁 Sana Özel Bir Şey Var!</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 html,body{
     width:100%;
@@ -26,9 +20,9 @@ html,body{
 
 body{
     background:
-        radial-gradient(circle at 20% 20%,#25105e 0%,transparent 35%),
-        radial-gradient(circle at 80% 70%,#09285e 0%,transparent 35%),
-        #050510;
+    radial-gradient(circle at 20% 20%,#28105d,transparent 35%),
+    radial-gradient(circle at 80% 70%,#092c60,transparent 35%),
+    #050510;
 }
 
 button{
@@ -54,14 +48,8 @@ button{
 }
 
 @keyframes twinkle{
-    from{
-        opacity:.2;
-        transform:scale(.7);
-    }
-    to{
-        opacity:1;
-        transform:scale(1.5);
-    }
+    from{opacity:.2;transform:scale(.7)}
+    to{opacity:1;transform:scale(1.5)}
 }
 
 .screen{
@@ -79,9 +67,7 @@ button{
     display:flex;
 }
 
-/* =========================
-   AÇILIŞ
-========================= */
+/* AÇILIŞ */
 
 .intro{
     max-width:800px;
@@ -104,12 +90,8 @@ button{
 }
 
 @keyframes titleGlow{
-    from{
-        filter:drop-shadow(0 0 5px #ff4ecd);
-    }
-    to{
-        filter:drop-shadow(0 0 25px #32d9ff);
-    }
+    from{filter:drop-shadow(0 0 5px #ff4ecd)}
+    to{filter:drop-shadow(0 0 25px #32d9ff)}
 }
 
 .intro p{
@@ -120,7 +102,7 @@ button{
 }
 
 .mainBtn{
-    border:none;
+    border:0;
     padding:17px 35px;
     border-radius:50px;
     font-size:18px;
@@ -135,9 +117,7 @@ button{
     box-shadow:0 0 45px rgba(120,76,255,.8);
 }
 
-/* =========================
-   ŞİFRE
-========================= */
+/* ŞİFRE */
 
 .card{
     width:min(500px,95%);
@@ -184,9 +164,7 @@ button{
     margin-bottom:10px;
 }
 
-/* =========================
-   HEDİYE KUTULARI
-========================= */
+/* HEDİYELER */
 
 .giftTitle{
     font-size:clamp(35px,7vw,65px);
@@ -217,6 +195,7 @@ button{
     flex-direction:column;
     transition:.4s;
     box-shadow:0 15px 40px rgba(0,0,0,.4);
+    cursor:pointer;
 }
 
 .gift:hover{
@@ -238,20 +217,12 @@ button{
 }
 
 @keyframes giftOpen{
-    0%{
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(1.2) rotate(5deg);
-    }
-    100%{
-        transform:scale(1);
-    }
+    0%{transform:scale(1)}
+    50%{transform:scale(1.2) rotate(5deg)}
+    100%{transform:scale(1)}
 }
 
-/* =========================
-   SÜRPRİZ GEÇİŞ
-========================= */
+/* SÜRPRİZ */
 
 .surprise{
     max-width:700px;
@@ -264,9 +235,7 @@ button{
 }
 
 @keyframes bounce{
-    to{
-        transform:translateY(-12px);
-    }
+    to{transform:translateY(-12px)}
 }
 
 .surprise h2{
@@ -280,9 +249,7 @@ button{
     line-height:1.7;
 }
 
-/* =========================
-   SÜRPRİZ ANI MAKİNESİ
-========================= */
+/* ANI MAKİNESİ */
 
 .memoryBox{
     width:min(850px,95%);
@@ -306,28 +273,23 @@ button{
     min-height:260px;
     padding:45px 30px;
     border-radius:30px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.11),
-            rgba(255,255,255,.03)
-        );
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.11),
+        rgba(255,255,255,.03)
+    );
     border:1px solid rgba(255,255,255,.15);
-    box-shadow:
-        0 20px 70px rgba(0,0,0,.45),
-        inset 0 0 40px rgba(255,255,255,.025);
+    box-shadow:0 20px 70px rgba(0,0,0,.45);
     backdrop-filter:blur(15px);
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    transition:.4s;
 }
 
 .memoryEmoji{
     font-size:75px;
     margin-bottom:20px;
-    transition:.4s;
 }
 
 .memoryText{
@@ -347,29 +309,10 @@ button{
     font-size:13px;
 }
 
-.memoryCard.change{
-    animation:memoryChange .5s;
-}
-
-@keyframes memoryChange{
-    0%{
-        opacity:.3;
-        transform:scale(.96);
-    }
-    50%{
-        opacity:.7;
-        transform:scale(1.02);
-    }
-    100%{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
 .memoryButton{
     margin-top:30px;
     padding:16px 32px;
-    border:none;
+    border:0;
     border-radius:50px;
     color:white;
     font-size:18px;
@@ -390,12 +333,10 @@ button{
 }
 
 .secretReveal:hover{
-    color:#fff;
+    color:white;
 }
 
-/* =========================
-   ANILAR
-========================= */
+/* ANILAR */
 
 .photoArea{
     max-width:900px;
@@ -428,12 +369,11 @@ button{
     align-items:center;
     justify-content:center;
     flex-direction:column;
-    overflow:hidden;
     transition:.3s;
 }
 
 .photo:hover{
-    transform:translateY(-8px) rotate(1deg);
+    transform:translateY(-8px);
     box-shadow:0 15px 40px rgba(130,80,255,.25);
 }
 
@@ -446,9 +386,7 @@ button{
     color:#aaa;
 }
 
-/* =========================
-   FİNAL
-========================= */
+/* FİNAL */
 
 .birthday{
     max-width:900px;
@@ -460,12 +398,8 @@ button{
 }
 
 @keyframes cakeFloat{
-    from{
-        transform:translateY(0);
-    }
-    to{
-        transform:translateY(-15px);
-    }
+    from{transform:translateY(0)}
+    to{transform:translateY(-15px)}
 }
 
 .birthday h1{
@@ -484,9 +418,7 @@ button{
 }
 
 @keyframes rainbow{
-    to{
-        background-position:300%;
-    }
+    to{background-position:300%}
 }
 
 .birthday h2{
@@ -507,9 +439,7 @@ button{
     color:#aaa;
 }
 
-/* =========================
-   KONFETİ
-========================= */
+/* KONFETİ */
 
 .confetti{
     position:fixed;
@@ -522,15 +452,11 @@ button{
 
 @keyframes fall{
     to{
-        transform:
-        translateY(110vh)
-        rotate(720deg);
+        transform:translateY(110vh) rotate(720deg);
     }
 }
 
-/* =========================
-   BALONLAR
-========================= */
+/* BALON */
 
 .balloon{
     position:fixed;
@@ -543,15 +469,9 @@ button{
 
 @keyframes balloonUp{
     to{
-        transform:
-        translateY(-120vh)
-        rotate(15deg);
+        transform:translateY(-120vh) rotate(15deg);
     }
 }
-
-/* =========================
-   MOBİL
-========================= */
 
 @media(max-width:600px){
 
@@ -581,9 +501,7 @@ button{
     .photo .emoji{
         font-size:50px;
     }
-
 }
-
 </style>
 </head>
 
@@ -592,9 +510,9 @@ button{
 <div class="stars" id="stars"></div>
 
 
-<!-- =================================================
+<!-- =========================
      1 — AÇILIŞ
-================================================= -->
+========================= -->
 
 <section class="screen active" id="screen1">
 
@@ -612,7 +530,8 @@ button{
             <b>özel biri için hazırlandı.</b>
         </p>
 
-        <button class="mainBtn" onclick="nextScreen(2)">
+        <!-- ÖNEMLİ: BU BUTON ARTIK ID İLE ÇALIŞIYOR -->
+        <button class="mainBtn" id="startButton">
             🔓 Sürprizi Başlat
         </button>
 
@@ -621,17 +540,15 @@ button{
 </section>
 
 
-<!-- =================================================
+<!-- =========================
      2 — ŞİFRE
-================================================= -->
+========================= -->
 
 <section class="screen" id="screen2">
 
     <div class="card">
 
-        <div style="font-size:70px">
-            🔐
-        </div>
+        <div style="font-size:70px">🔐</div>
 
         <h2>Gizli Giriş</h2>
 
@@ -649,7 +566,7 @@ button{
 
         <div id="error" class="error"></div>
 
-        <button class="mainBtn" onclick="checkPassword()">
+        <button class="mainBtn" id="loginButton">
             Giriş Yap 🚀
         </button>
 
@@ -662,9 +579,9 @@ button{
 </section>
 
 
-<!-- =================================================
+<!-- =========================
      3 — HEDİYELER
-================================================= -->
+========================= -->
 
 <section class="screen" id="screen3">
 
@@ -680,17 +597,17 @@ button{
 
         <div class="gifts">
 
-            <div class="gift" onclick="openGift(1,this)">
+            <div class="gift" data-gift="1">
                 <div class="giftIcon">🎁</div>
                 <span>1. Hediye</span>
             </div>
 
-            <div class="gift" onclick="openGift(2,this)">
+            <div class="gift" data-gift="2">
                 <div class="giftIcon">🎁</div>
                 <span>2. Hediye</span>
             </div>
 
-            <div class="gift" onclick="openGift(3,this)">
+            <div class="gift" data-gift="3">
                 <div class="giftIcon">🎁</div>
                 <span>3. Hediye</span>
             </div>
@@ -706,21 +623,17 @@ button{
 </section>
 
 
-<!-- =================================================
-     4 — SÜRPRİZ
-================================================= -->
+<!-- =========================
+     4 — GEÇİŞ
+========================= -->
 
 <section class="screen" id="screen4">
 
     <div class="surprise">
 
-        <div class="bigEmoji">
-            🥳
-        </div>
+        <div class="bigEmoji">🥳</div>
 
-        <h2>
-            Bir şey daha var!
-        </h2>
+        <h2>Bir şey daha var!</h2>
 
         <p>
             Bütün hediyeler açıldı ama<br>
@@ -729,7 +642,7 @@ button{
 
         <br>
 
-        <button class="mainBtn" onclick="nextScreen(5)">
+        <button class="mainBtn" id="continueButton">
             ✨ Devam Et
         </button>
 
@@ -738,20 +651,18 @@ button{
 </section>
 
 
-<!-- =================================================
+<!-- =========================
      5 — ANI MAKİNESİ
-================================================= -->
+========================= -->
 
 <section class="screen" id="screen5">
 
     <div class="memoryBox">
 
-        <h2>
-            ✨ Sürpriz Anı Makinesi
-        </h2>
+        <h2>✨ Sürpriz Anı Makinesi</h2>
 
         <div class="memorySubtitle">
-            Her bastığında sana özel başka bir mesaj ortaya çıkacak.
+            Her bastığında sana özel başka bir mesaj çıkacak.
         </div>
 
         <div class="memoryCard" id="memoryCard">
@@ -770,8 +681,499 @@ button{
 
         </div>
 
-        <button
-            class="memoryButton"
-            id="memoryButton"
-            onclick="next
+        <button class="memoryButton" id="memoryButton">
+            🎁 Sürprizi Aç
+        </button>
+
+        <div class="secretReveal" id="secretButton">
+            buraya da basabilirsin... 👀
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     6 — ANILAR
+========================= -->
+
+<section class="screen" id="screen6">
+
+    <div class="photoArea">
+
+        <h2>📸 Küçük Bir Anı Köşesi</h2>
+
+        <p>
+            Buraya kendi fotoğraflarınızı koyabilirsin.
+        </p>
+
+        <div class="photos">
+
+            <div class="photo">
+                <div class="emoji">😂</div>
+                <span>Komik anılar</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">🎮</div>
+                <span>Birlikte oynadığımız günler</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">❤️</div>
+                <span>Güzel anılar</span>
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <button class="mainBtn" id="finalButton">
+            💌 Son Sürpriz
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     7 — FİNAL
+========================= -->
+
+<section class="screen" id="screen7">
+
+    <div class="birthday">
+
+        <div class="cake">🎂</div>
+
+        <h1>İYİ Kİ DOĞDUN!</h1>
+
+        <h2 id="nameText">KARDEŞİM ❤️</h2>
+
+        <div class="message">
+
+            Bugün senin günün! 🎉
+
+            <br><br>
+
+            Bazen kavga ediyoruz,
+            bazen birbirimize sinir oluyoruz,
+            bazen de saçma sapan şeylere gülüyoruz 😂
+
+            <br><br>
+
+            Ama ne olursa olsun,
+            sen benim için çok değerlisin.
+
+            <br><br>
+
+            Yeni yaşında bol bol mutluluk,
+            eğlence, güzel anılar ve
+            istediğin her şeyin gerçekleşmesini diliyorum.
+
+            <br><br>
+
+            <b>İyi ki varsın kardeşim. ❤️</b>
+
+        </div>
+
+        <div class="signature">
+            — Seni seven kardeşin Talha 😎
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =================================================
+   KARDEŞİNİN ADI
+================================================= */
+
+const kardesininAdi = "KARDEŞİM";
+
+
+/* =================================================
+   YILDIZLAR
+================================================= */
+
+for(let i=0;i<100;i++){
+
+    const star=document.createElement("div");
+
+    star.className="star";
+
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.animationDelay=Math.random()*2+"s";
+    star.style.opacity=Math.random();
+
+    document.getElementById("stars").appendChild(star);
+}
+
+
+/* =================================================
+   EKRAN DEĞİŞTİRME
+================================================= */
+
+function nextScreen(number){
+
+    document.querySelectorAll(".screen").forEach(function(screen){
+        screen.classList.remove("active");
+    });
+
+    const target=document.getElementById("screen"+number);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    window.scrollTo(0,0);
+}
+
+
+/* =================================================
+   🔥 SÜRPRİZİ BAŞLAT
+   BUTON ARTIK GARANTİLİ ŞEKİLDE BURADAN ÇALIŞIYOR
+================================================= */
+
+document.getElementById("startButton").addEventListener("click",function(){
+
+    nextScreen(2);
+
+});
+
+
+/* =================================================
+   ŞİFRE
+================================================= */
+
+function checkPassword(){
+
+    const value=
+        document.getElementById("password")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const error=
+        document.getElementById("error");
+
+    if(
+        value==="dogumgunu" ||
+        value==="doğumgünü" ||
+        value==="birthday" ||
+        value==="iyi ki doğdun"
+    ){
+
+        error.textContent="";
+
+        nextScreen(3);
+
+    }else{
+
+        error.textContent="❌ Hmm... Bu değil 😏";
+
+    }
+}
+
+document.getElementById("loginButton")
+.addEventListener("click",checkPassword);
+
+document.getElementById("password")
+.addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+        checkPassword();
+    }
+
+});
+
+
+/* =================================================
+   HEDİYELER
+================================================= */
+
+let openedGifts=0;
+
+document.querySelectorAll(".gift").forEach(function(gift){
+
+    gift.addEventListener("click",function(){
+
+        if(gift.classList.contains("opened")){
+            return;
+        }
+
+        gift.classList.add("opened");
+
+        openedGifts++;
+
+        const number=
+            Number(gift.dataset.gift);
+
+        const message=
+            document.getElementById("giftMessage");
+
+        if(number===1){
+
+            message.innerHTML=
+            "🎮 <b>1. Hediye:</b> Bugün oyun oynamak serbest! 😎";
+
+        }
+
+        if(number===2){
+
+            message.innerHTML=
+            "🍫 <b>2. Hediye:</b> Tatlı hakkın aktif edildi! 😂";
+
+        }
+
+        if(number===3){
+
+            message.innerHTML=
+            "❤️ <b>3. Hediye:</b> Dünyanın en iyi kardeşlerinden birisin!";
+
+        }
+
+        if(openedGifts===3){
+
+            setTimeout(function(){
+                nextScreen(4);
+            },1800);
+
+        }
+
+    });
+
+});
+
+
+/* =================================================
+   DEVAM ET
+================================================= */
+
+document.getElementById("continueButton")
+.addEventListener("click",function(){
+
+    nextScreen(5);
+
+});
+
+
+/* =================================================
+   ANI MAKİNESİ
+================================================= */
+
+const memories=[
+
+    ["❤️","Ne kadar kavga edersek edelim, sonunda yine kardeşiz."],
+
+    ["😂","Seninle yaşadığımız bazı şeyleri başkasına anlatsak inanmazlar."],
+
+    ["🎮","Birlikte oynadığımız oyunlar ayrı bir dünya."],
+
+    ["🤣","Bazen en saçma şeylere birlikte gülmemiz en güzel anılarımızdan."],
+
+    ["⭐","Belki fark etmiyorsun ama benim için gerçekten çok özelsin."],
+
+    ["🤝","İyi gününde de kötü gününde de yanında olacak bir kardeşin var."],
+
+    ["🎂","Bugün senin günün. O yüzden bugün bütün kurallar biraz askıya alındı. 😎"],
+
+    ["💎","Ve son sürpriz: İyi ki doğdun kardeşim. Seni çok seviyorum! ❤️"]
+
+];
+
+let memoryIndex=0;
+
+document.getElementById("memoryButton")
+.addEventListener("click",function(){
+
+    if(memoryIndex>=memories.length){
+        nextScreen(6);
+        return;
+    }
+
+    const data=memories[memoryIndex];
+
+    document.getElementById("memoryEmoji")
+        .textContent=data[0];
+
+    document.getElementById("memoryText")
+        .textContent=data[1];
+
+    document.getElementById("memoryNumber")
+        .textContent=
+        "SÜRPRİZ "+
+        (memoryIndex+1)+
+        " / "+
+        memories.length;
+
+    memoryIndex++;
+
+    if(memoryIndex===memories.length){
+
+        document.getElementById("memoryButton")
+            .textContent="📸 Anılara Geç";
+
+    }
+
+});
+
+
+/* =================================================
+   GİZLİ SÜRPRİZ
+================================================= */
+
+document.getElementById("secretButton")
+.addEventListener("click",function(){
+
+    document.getElementById("memoryEmoji")
+        .textContent="🕵️";
+
+    document.getElementById("memoryText")
+        .textContent=
+        "Gizli sürprizi buldun! 👀 Sen gerçekten her yere tıklıyorsun. 😂";
+
+    document.getElementById("memoryNumber")
+        .textContent="GİZLİ SÜRPRİZ BULUNDU";
+
+});
+
+
+/* =================================================
+   ANILARDAN FİNALE
+================================================= */
+
+document.getElementById("finalButton")
+.addEventListener("click",function(){
+
+    nextScreen(7);
+
+});
+
+
+/* =================================================
+   İSİM
+================================================= */
+
+document.getElementById("nameText")
+    .textContent=
+    kardesininAdi+" ❤️";
+
+
+/* =================================================
+   KONFETİ
+================================================= */
+
+function createConfetti(){
+
+    for(let i=0;i<180;i++){
+
+        const c=document.createElement("div");
+
+        c.className="confetti";
+
+        c.style.left=Math.random()*100+"vw";
+
+        c.style.background=[
+            "#ff4ecd",
+            "#65f7ff",
+            "#ffe66d",
+            "#7cff8a",
+            "#a879ff",
+            "#ff704d"
+        ][Math.floor(Math.random()*6)];
+
+        c.style.animationDuration=
+            (2+Math.random()*4)+"s";
+
+        c.style.animationDelay=
+            Math.random()*2+"s";
+
+        document.body.appendChild(c);
+
+        setTimeout(function(){
+            c.remove();
+        },7000);
+
+    }
+
+}
+
+
+/* =================================================
+   BALONLAR
+================================================= */
+
+function createBalloons(){
+
+    for(let i=0;i<20;i++){
+
+        const b=document.createElement("div");
+
+        b.className="balloon";
+        b.textContent="🎈";
+
+        b.style.left=Math.random()*100+"vw";
+
+        b.style.animationDuration=
+            (5+Math.random()*6)+"s";
+
+        b.style.animationDelay=
+            Math.random()*3+"s";
+
+        document.body.appendChild(b);
+
+        setTimeout(function(){
+            b.remove();
+        },12000);
+
+    }
+
+}
+
+
+/* =================================================
+   FİNALİ ALGILA
+================================================= */
+
+let finalStarted=false;
+
+const observer=new MutationObserver(function(){
+
+    const final=
+        document.getElementById("screen7");
+
+    if(
+        final.classList.contains("active") &&
+        !finalStarted
+    ){
+
+        finalStarted=true;
+
+        createConfetti();
+        createBalloons();
+
+    }
+
+});
+
+observer.observe(
+    document.body,
+    {
+        subtree:true,
+        attributes:true,
+        attributeFilter:["class"]
+    }
+);
+
+</script>
+
+</body>
+</html>
 ```
