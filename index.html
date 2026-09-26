@@ -1,334 +1,1179 @@
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gelişmiş AI Asistanı & Balon Oyunu</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --panel-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --accent-hover: #0284c7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --user-msg-bg: #2563eb;
-            --ai-msg-bg: #334155;
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🎁 Sana Özel Bir Şey Var!</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
+html,body{
+    width:100%;
+    min-height:100%;
+    font-family:Arial,sans-serif;
+    background:#050510;
+    color:white;
+    overflow-x:hidden;
+}
 
-        /* Balon Alanı */
-        #balloon-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
+body{
+    background:
+    radial-gradient(circle at 20% 20%,#28105d,transparent 35%),
+    radial-gradient(circle at 80% 70%,#092c60,transparent 35%),
+    #050510;
+}
 
-        .balloon {
-            position: absolute;
-            width: 45px;
-            height: 55px;
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            bottom: -60px;
-            cursor: pointer;
-            pointer-events: auto;
-            animation: floatUp 4s ease-out forwards;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
-        }
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
 
-        .balloon::after {
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 8px solid currentColor;
-        }
+.stars{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
 
-        /* Balonların tepede kalmasını sağlayan animasyon */
-        @keyframes floatUp {
-            0% {
-                bottom: -60px;
-                opacity: 0.9;
-            }
-            100% {
-                bottom: calc(100% - 65px); /* Tepede takılı kalır */
-                opacity: 1;
-            }
-        }
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
 
-        .balloon.pop {
-            animation: popAnim 0.2s ease-out forwards !important;
-        }
+@keyframes twinkle{
+    from{opacity:.2;transform:scale(.7)}
+    to{opacity:1;transform:scale(1.5)}
+}
 
-        @keyframes popAnim {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.5; }
-            100% { transform: scale(0); opacity: 0; }
-        }
+.screen{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:25px;
+}
 
-        /* Chat Header */
-        header {
-            background: var(--panel-bg);
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 5;
-        }
+.screen.active{
+    display:flex;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-color);
-        }
+/* AÇILIŞ */
 
-        /* Main Chat Container */
-        .chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            z-index: 5;
-        }
+.intro{
+    max-width:800px;
+}
 
-        .message {
-            display: flex;
-            gap: 16px;
-            max-width: 85%;
-            animation: fadeIn 0.3s ease-in-out;
-        }
+.small{
+    color:#aaa;
+    font-size:14px;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
 
-        .message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
+.intro h1{
+    font-size:clamp(40px,9vw,85px);
+    margin-bottom:20px;
+    background:linear-gradient(90deg,#ff4ecd,#7c5cff,#32d9ff);
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:titleGlow 3s infinite alternate;
+}
 
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
+@keyframes titleGlow{
+    from{filter:drop-shadow(0 0 5px #ff4ecd)}
+    to{filter:drop-shadow(0 0 25px #32d9ff)}
+}
 
-        .user .avatar { background: var(--user-msg-bg); color: #fff; }
-        .ai .avatar { background: var(--accent-color); color: var(--bg-color); }
+.intro p{
+    color:#c9c9d9;
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:35px;
+}
 
-        .bubble {
-            padding: 14px 18px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            background: var(--ai-msg-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-        }
+.mainBtn{
+    border:0;
+    padding:17px 35px;
+    border-radius:50px;
+    font-size:18px;
+    color:white;
+    background:linear-gradient(90deg,#ff3cac,#784cff);
+    box-shadow:0 0 25px rgba(255,60,172,.5);
+    transition:.3s;
+}
 
-        .user .bubble {
-            background: var(--user-msg-bg);
-            color: #fff;
-        }
+.mainBtn:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 45px rgba(120,76,255,.8);
+}
 
-        /* Input Area */
-        .input-area {
-            background: var(--panel-bg);
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            z-index: 5;
-        }
+/* ŞİFRE */
 
-        .input-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            gap: 12px;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px 12px;
-            align-items: center;
-        }
+.card{
+    width:min(500px,95%);
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 50px rgba(100,50,255,.2);
+}
 
-        textarea {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 0.95rem;
-            resize: none;
-            outline: none;
-            height: 24px;
-        }
+.card h2{
+    font-size:35px;
+    margin-bottom:15px;
+}
 
-        .send-btn {
-            background: var(--accent-color);
-            color: var(--bg-color);
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+.card p{
+    color:#bbb;
+    margin-bottom:25px;
+    line-height:1.5;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+.input{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #555;
+    background:#090912;
+    color:white;
+    text-align:center;
+    font-size:18px;
+    outline:none;
+    margin-bottom:15px;
+}
+
+.input:focus{
+    border-color:#9b6cff;
+    box-shadow:0 0 15px rgba(155,108,255,.4);
+}
+
+.error{
+    color:#ff6262;
+    min-height:22px;
+    margin-bottom:10px;
+}
+
+/* HEDİYELER */
+
+.giftTitle{
+    font-size:clamp(35px,7vw,65px);
+    margin-bottom:15px;
+}
+
+.giftSub{
+    color:#bbb;
+    margin-bottom:35px;
+}
+
+.gifts{
+    display:flex;
+    gap:25px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.gift{
+    width:180px;
+    height:210px;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,.15);
+    background:linear-gradient(145deg,#241052,#100b27);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:.4s;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+    cursor:pointer;
+}
+
+.gift:hover{
+    transform:translateY(-12px) rotate(-2deg);
+    box-shadow:0 20px 50px rgba(150,80,255,.4);
+}
+
+.giftIcon{
+    font-size:75px;
+    margin-bottom:10px;
+}
+
+.gift span{
+    color:#bbb;
+}
+
+.gift.opened{
+    animation:giftOpen .6s;
+}
+
+@keyframes giftOpen{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.2) rotate(5deg)}
+    100%{transform:scale(1)}
+}
+
+/* SÜRPRİZ */
+
+.surprise{
+    max-width:700px;
+}
+
+.bigEmoji{
+    font-size:100px;
+    margin-bottom:20px;
+    animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+    to{transform:translateY(-12px)}
+}
+
+.surprise h2{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.surprise p{
+    color:#ccc;
+    font-size:20px;
+    line-height:1.7;
+}
+
+/* ANI MAKİNESİ */
+
+.memoryBox{
+    width:min(850px,95%);
+}
+
+.memoryBox h2{
+    font-size:clamp(35px,6vw,60px);
+    margin-bottom:10px;
+    background:linear-gradient(90deg,#ff5ac8,#8c6cff,#5ce1ff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.memorySubtitle{
+    color:#aaa;
+    font-size:18px;
+    margin-bottom:35px;
+}
+
+.memoryCard{
+    min-height:260px;
+    padding:45px 30px;
+    border-radius:30px;
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.11),
+        rgba(255,255,255,.03)
+    );
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 20px 70px rgba(0,0,0,.45);
+    backdrop-filter:blur(15px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.memoryEmoji{
+    font-size:75px;
+    margin-bottom:20px;
+}
+
+.memoryText{
+    font-size:24px;
+    line-height:1.6;
+    color:#eee;
+    max-width:650px;
+    min-height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.memoryNumber{
+    margin-top:20px;
+    color:#777;
+    font-size:13px;
+}
+
+.memoryButton{
+    margin-top:30px;
+    padding:16px 32px;
+    border:0;
+    border-radius:50px;
+    color:white;
+    font-size:18px;
+    background:linear-gradient(90deg,#ff3cac,#784cff);
+    box-shadow:0 0 25px rgba(255,60,172,.35);
+    transition:.3s;
+}
+
+.memoryButton:hover{
+    transform:scale(1.07);
+}
+
+.secretReveal{
+    margin-top:25px;
+    color:#666;
+    font-size:13px;
+    cursor:pointer;
+}
+
+.secretReveal:hover{
+    color:white;
+}
+
+/* ANILAR */
+
+.photoArea{
+    max-width:900px;
+}
+
+.photoArea h2{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.photoArea p{
+    color:#aaa;
+    margin-bottom:30px;
+}
+
+.photos{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.photo{
+    width:230px;
+    height:280px;
+    border-radius:20px;
+    background:linear-gradient(145deg,#19132e,#0b0b16);
+    border:1px solid rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:.3s;
+}
+
+.photo:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 40px rgba(130,80,255,.25);
+}
+
+.photo .emoji{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.photo span{
+    color:#aaa;
+}
+
+/* FİNAL */
+
+.birthday{
+    max-width:900px;
+}
+
+.cake{
+    font-size:130px;
+    animation:cakeFloat 2s infinite alternate;
+}
+
+@keyframes cakeFloat{
+    from{transform:translateY(0)}
+    to{transform:translateY(-15px)}
+}
+
+.birthday h1{
+    font-size:clamp(45px,9vw,100px);
+    background:linear-gradient(
+        90deg,
+        #ff4ecd,
+        #ffe66d,
+        #65f7ff,
+        #9d6cff
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:rainbow 4s linear infinite;
+    background-size:300%;
+}
+
+@keyframes rainbow{
+    to{background-position:300%}
+}
+
+.birthday h2{
+    font-size:35px;
+    margin:20px 0;
+}
+
+.message{
+    max-width:700px;
+    margin:auto;
+    color:#ddd;
+    font-size:20px;
+    line-height:1.8;
+}
+
+.signature{
+    margin-top:30px;
+    color:#aaa;
+}
+
+/* KONFETİ */
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:16px;
+    top:-30px;
+    z-index:20;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+
+/* BALON */
+
+.balloon{
+    position:fixed;
+    bottom:-150px;
+    font-size:65px;
+    z-index:15;
+    animation:balloonUp linear forwards;
+    pointer-events:none;
+}
+
+@keyframes balloonUp{
+    to{
+        transform:translateY(-120vh) rotate(15deg);
+    }
+}
+
+@media(max-width:600px){
+
+    .gift{
+        width:140px;
+        height:180px;
+    }
+
+    .giftIcon{
+        font-size:55px;
+    }
+
+    .memoryCard{
+        padding:30px 18px;
+        min-height:280px;
+    }
+
+    .memoryText{
+        font-size:19px;
+    }
+
+    .photo{
+        width:145px;
+        height:190px;
+    }
+
+    .photo .emoji{
+        font-size:50px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div id="balloon-container"></div>
+<div class="stars" id="stars"></div>
 
-    <header>
-        <div class="logo">
-            <i class="fa-solid fa-robot"></i>
-            <span>Nova AI Asistanı</span>
+
+<!-- =========================
+     1 — AÇILIŞ
+========================= -->
+
+<section class="screen active" id="screen1">
+
+    <div class="intro">
+
+        <div class="small">
+            ⚠ ÖNEMLİ BİR MESAJ VAR ⚠
         </div>
-        <span style="font-size:0.8rem; color:var(--text-muted)">Mesaj atınca balonlar çıkar, patlatabilirsin! 🎈</span>
-    </header>
 
-    <div class="chat-container" id="chatContainer">
-        <div class="message ai">
-            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-            <div class="bubble">
-                Merhaba! Sorularını sorabilirsin. Her mesaj yazdığında yukarı uçan ve tepede bekleyen renkli balonlar çıkacak, üzerlerine tıklayarak patlatabilirsin!
+        <h1>Hey! 👀</h1>
+
+        <p>
+            Bu siteyi herkes açamaz.<br>
+            Çünkü bu site...
+            <b>özel biri için hazırlandı.</b>
+        </p>
+
+        <!-- ÖNEMLİ: BU BUTON ARTIK ID İLE ÇALIŞIYOR -->
+        <button class="mainBtn" id="startButton">
+            🔓 Sürprizi Başlat
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     2 — ŞİFRE
+========================= -->
+
+<section class="screen" id="screen2">
+
+    <div class="card">
+
+        <div style="font-size:70px">🔐</div>
+
+        <h2>Gizli Giriş</h2>
+
+        <p>
+            Sisteme devam etmek için<br>
+            küçük bir tahminde bulun.
+        </p>
+
+        <input
+            id="password"
+            class="input"
+            placeholder="Şifreyi yaz..."
+            autocomplete="off"
+        >
+
+        <div id="error" class="error"></div>
+
+        <button class="mainBtn" id="loginButton">
+            Giriş Yap 🚀
+        </button>
+
+        <div class="secretReveal">
+            İpucu: doğum günüyle alakalı 😉
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     3 — HEDİYELER
+========================= -->
+
+<section class="screen" id="screen3">
+
+    <div>
+
+        <h1 class="giftTitle">
+            🎁 3 HEDİYE
+        </h1>
+
+        <p class="giftSub">
+            Ama hangisinin içinde ne olduğunu bilmiyorsun...
+        </p>
+
+        <div class="gifts">
+
+            <div class="gift" data-gift="1">
+                <div class="giftIcon">🎁</div>
+                <span>1. Hediye</span>
             </div>
+
+            <div class="gift" data-gift="2">
+                <div class="giftIcon">🎁</div>
+                <span>2. Hediye</span>
+            </div>
+
+            <div class="gift" data-gift="3">
+                <div class="giftIcon">🎁</div>
+                <span>3. Hediye</span>
+            </div>
+
         </div>
+
+        <br>
+
+        <div id="giftMessage" style="min-height:30px;color:#ddd"></div>
+
     </div>
 
-    <div class="input-area">
-        <div class="input-wrapper">
-            <textarea id="userInput" placeholder="Bir şeyler yazın..."></textarea>
-            <button class="send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
+</section>
+
+
+<!-- =========================
+     4 — GEÇİŞ
+========================= -->
+
+<section class="screen" id="screen4">
+
+    <div class="surprise">
+
+        <div class="bigEmoji">🥳</div>
+
+        <h2>Bir şey daha var!</h2>
+
+        <p>
+            Bütün hediyeler açıldı ama<br>
+            asıl sürpriz daha başlamadı...
+        </p>
+
+        <br>
+
+        <button class="mainBtn" id="continueButton">
+            ✨ Devam Et
+        </button>
+
     </div>
 
-    <script>
-        const API_KEY = "YOUR_GEMINI_API_KEY"; // Buraya Google AI Studio'dan aldığın ücretsiz Gemini API anahtarını koyabilirsin.
+</section>
 
-        const chatContainer = document.getElementById('chatContainer');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const balloonContainer = document.getElementById('balloon-container');
 
-        const balloonColors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+<!-- =========================
+     5 — ANI MAKİNESİ
+========================= -->
 
-        sendBtn.addEventListener('click', sendMessage);
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+<section class="screen" id="screen5">
 
-        async function sendMessage() {
-            const text = userInput.value.trim();
-            if (!text) return;
+    <div class="memoryBox">
 
-            userInput.value = '';
-            appendMessage('user', text);
+        <h2>✨ Sürpriz Anı Makinesi</h2>
 
-            // Balonları fırlat!
-            createBalloons(5);
+        <div class="memorySubtitle">
+            Her bastığında sana özel başka bir mesaj çıkacak.
+        </div>
 
-            const aiMsg = appendMessage('ai', 'Düşünüyor...');
-            const bubble = aiMsg.querySelector('.bubble');
+        <div class="memoryCard" id="memoryCard">
 
-            try {
-                if(API_KEY !== "YOUR_GEMINI_API_KEY") {
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
-                    });
-                    const data = await response.json();
-                    bubble.innerText = data.candidates[0].content.parts[0].text;
-                } else {
-                    // API Key girilmediyse hazır cevap gösterir
-                    setTimeout(() => {
-                        bubble.innerText = `"${text}" sorunu aldım! (Tam yapay zeka cevabı almak için koddaki API_KEY kısmına kendi anahtarını eklemelisin).`;
-                    }, 1000);
-                }
-            } catch (err) {
-                bubble.innerText = "Bir hata oluştu, lütfen API anahtarını kontrol et.";
-            }
+            <div class="memoryEmoji" id="memoryEmoji">
+                🎁
+            </div>
+
+            <div class="memoryText" id="memoryText">
+                Hazırsan ilk sürprizi aç...
+            </div>
+
+            <div class="memoryNumber" id="memoryNumber">
+                SÜRPRİZ 0 / 8
+            </div>
+
+        </div>
+
+        <button class="memoryButton" id="memoryButton">
+            🎁 Sürprizi Aç
+        </button>
+
+        <div class="secretReveal" id="secretButton">
+            buraya da basabilirsin... 👀
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     6 — ANILAR
+========================= -->
+
+<section class="screen" id="screen6">
+
+    <div class="photoArea">
+
+        <h2>📸 Küçük Bir Anı Köşesi</h2>
+
+        <p>
+            Buraya kendi fotoğraflarınızı koyabilirsin.
+        </p>
+
+        <div class="photos">
+
+            <div class="photo">
+                <div class="emoji">😂</div>
+                <span>Komik anılar</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">🎮</div>
+                <span>Birlikte oynadığımız günler</span>
+            </div>
+
+            <div class="photo">
+                <div class="emoji">❤️</div>
+                <span>Güzel anılar</span>
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <button class="mainBtn" id="finalButton">
+            💌 Son Sürpriz
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     7 — FİNAL
+========================= -->
+
+<section class="screen" id="screen7">
+
+    <div class="birthday">
+
+        <div class="cake">🎂</div>
+
+        <h1>İYİ Kİ DOĞDUN!</h1>
+
+        <h2 id="nameText">KARDEŞİM ❤️</h2>
+
+        <div class="message">
+
+            Bugün senin günün! 🎉
+
+            <br><br>
+
+            Bazen kavga ediyoruz,
+            bazen birbirimize sinir oluyoruz,
+            bazen de saçma sapan şeylere gülüyoruz 😂
+
+            <br><br>
+
+            Ama ne olursa olsun,
+            sen benim için çok değerlisin.
+
+            <br><br>
+
+            Yeni yaşında bol bol mutluluk,
+            eğlence, güzel anılar ve
+            istediğin her şeyin gerçekleşmesini diliyorum.
+
+            <br><br>
+
+            <b>İyi ki varsın kardeşim. ❤️</b>
+
+        </div>
+
+        <div class="signature">
+            — Seni seven kardeşin Talha 😎
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =================================================
+   KARDEŞİNİN ADI
+================================================= */
+
+const kardesininAdi = "KARDEŞİM";
+
+
+/* =================================================
+   YILDIZLAR
+================================================= */
+
+for(let i=0;i<100;i++){
+
+    const star=document.createElement("div");
+
+    star.className="star";
+
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.animationDelay=Math.random()*2+"s";
+    star.style.opacity=Math.random();
+
+    document.getElementById("stars").appendChild(star);
+}
+
+
+/* =================================================
+   EKRAN DEĞİŞTİRME
+================================================= */
+
+function nextScreen(number){
+
+    document.querySelectorAll(".screen").forEach(function(screen){
+        screen.classList.remove("active");
+    });
+
+    const target=document.getElementById("screen"+number);
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    window.scrollTo(0,0);
+}
+
+
+/* =================================================
+   🔥 SÜRPRİZİ BAŞLAT
+   BUTON ARTIK GARANTİLİ ŞEKİLDE BURADAN ÇALIŞIYOR
+================================================= */
+
+document.getElementById("startButton").addEventListener("click",function(){
+
+    nextScreen(2);
+
+});
+
+
+/* =================================================
+   ŞİFRE
+================================================= */
+
+function checkPassword(){
+
+    const value=
+        document.getElementById("password")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const error=
+        document.getElementById("error");
+
+    if(
+        value==="dogumgunu" ||
+        value==="doğumgünü" ||
+        value==="birthday" ||
+        value==="iyi ki doğdun"
+    ){
+
+        error.textContent="";
+
+        nextScreen(3);
+
+    }else{
+
+        error.textContent="❌ Hmm... Bu değil 😏";
+
+    }
+}
+
+document.getElementById("loginButton")
+.addEventListener("click",checkPassword);
+
+document.getElementById("password")
+.addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+        checkPassword();
+    }
+
+});
+
+
+/* =================================================
+   HEDİYELER
+================================================= */
+
+let openedGifts=0;
+
+document.querySelectorAll(".gift").forEach(function(gift){
+
+    gift.addEventListener("click",function(){
+
+        if(gift.classList.contains("opened")){
+            return;
         }
 
-        function appendMessage(sender, text) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${sender}`;
-            msgDiv.innerHTML = `
-                <div class="avatar"><i class="fa-solid fa-${sender === 'user' ? 'user' : 'robot'}"></i></div>
-                <div class="bubble">${text}</div>
-            `;
-            chatContainer.appendChild(msgDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            return msgDiv;
+        gift.classList.add("opened");
+
+        openedGifts++;
+
+        const number=
+            Number(gift.dataset.gift);
+
+        const message=
+            document.getElementById("giftMessage");
+
+        if(number===1){
+
+            message.innerHTML=
+            "🎮 <b>1. Hediye:</b> Bugün oyun oynamak serbest! 😎";
+
         }
 
-        // Balon Oluşturma Fonksiyonu
-        function createBalloons(count) {
-            for (let i = 0; i < count; i++) {
-                setTimeout(() => {
-                    const balloon = document.createElement('div');
-                    balloon.className = 'balloon';
-                    
-                    const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
-                    balloon.style.backgroundColor = color;
-                    balloon.style.color = color;
-                    balloon.style.left = Math.random() * 85 + 5 + '%';
+        if(number===2){
 
-                    // Tıklayınca patlama olayı
-                    balloon.addEventListener('click', () => {
-                        balloon.classList.add('pop');
-                        setTimeout(() => balloon.remove(), 200);
-                    });
+            message.innerHTML=
+            "🍫 <b>2. Hediye:</b> Tatlı hakkın aktif edildi! 😂";
 
-                    balloonContainer.appendChild(balloon);
-                }, i * 300);
-            }
         }
-    </script>
+
+        if(number===3){
+
+            message.innerHTML=
+            "❤️ <b>3. Hediye:</b> Dünyanın en iyi kardeşlerinden birisin!";
+
+        }
+
+        if(openedGifts===3){
+
+            setTimeout(function(){
+                nextScreen(4);
+            },1800);
+
+        }
+
+    });
+
+});
+
+
+/* =================================================
+   DEVAM ET
+================================================= */
+
+document.getElementById("continueButton")
+.addEventListener("click",function(){
+
+    nextScreen(5);
+
+});
+
+
+/* =================================================
+   ANI MAKİNESİ
+================================================= */
+
+const memories=[
+
+    ["❤️","Ne kadar kavga edersek edelim, sonunda yine kardeşiz."],
+
+    ["😂","Seninle yaşadığımız bazı şeyleri başkasına anlatsak inanmazlar."],
+
+    ["🎮","Birlikte oynadığımız oyunlar ayrı bir dünya."],
+
+    ["🤣","Bazen en saçma şeylere birlikte gülmemiz en güzel anılarımızdan."],
+
+    ["⭐","Belki fark etmiyorsun ama benim için gerçekten çok özelsin."],
+
+    ["🤝","İyi gününde de kötü gününde de yanında olacak bir kardeşin var."],
+
+    ["🎂","Bugün senin günün. O yüzden bugün bütün kurallar biraz askıya alındı. 😎"],
+
+    ["💎","Ve son sürpriz: İyi ki doğdun kardeşim. Seni çok seviyorum! ❤️"]
+
+];
+
+let memoryIndex=0;
+
+document.getElementById("memoryButton")
+.addEventListener("click",function(){
+
+    if(memoryIndex>=memories.length){
+        nextScreen(6);
+        return;
+    }
+
+    const data=memories[memoryIndex];
+
+    document.getElementById("memoryEmoji")
+        .textContent=data[0];
+
+    document.getElementById("memoryText")
+        .textContent=data[1];
+
+    document.getElementById("memoryNumber")
+        .textContent=
+        "SÜRPRİZ "+
+        (memoryIndex+1)+
+        " / "+
+        memories.length;
+
+    memoryIndex++;
+
+    if(memoryIndex===memories.length){
+
+        document.getElementById("memoryButton")
+            .textContent="📸 Anılara Geç";
+
+    }
+
+});
+
+
+/* =================================================
+   GİZLİ SÜRPRİZ
+================================================= */
+
+document.getElementById("secretButton")
+.addEventListener("click",function(){
+
+    document.getElementById("memoryEmoji")
+        .textContent="🕵️";
+
+    document.getElementById("memoryText")
+        .textContent=
+        "Gizli sürprizi buldun! 👀 Sen gerçekten her yere tıklıyorsun. 😂";
+
+    document.getElementById("memoryNumber")
+        .textContent="GİZLİ SÜRPRİZ BULUNDU";
+
+});
+
+
+/* =================================================
+   ANILARDAN FİNALE
+================================================= */
+
+document.getElementById("finalButton")
+.addEventListener("click",function(){
+
+    nextScreen(7);
+
+});
+
+
+/* =================================================
+   İSİM
+================================================= */
+
+document.getElementById("nameText")
+    .textContent=
+    kardesininAdi+" ❤️";
+
+
+/* =================================================
+   KONFETİ
+================================================= */
+
+function createConfetti(){
+
+    for(let i=0;i<180;i++){
+
+        const c=document.createElement("div");
+
+        c.className="confetti";
+
+        c.style.left=Math.random()*100+"vw";
+
+        c.style.background=[
+            "#ff4ecd",
+            "#65f7ff",
+            "#ffe66d",
+            "#7cff8a",
+            "#a879ff",
+            "#ff704d"
+        ][Math.floor(Math.random()*6)];
+
+        c.style.animationDuration=
+            (2+Math.random()*4)+"s";
+
+        c.style.animationDelay=
+            Math.random()*2+"s";
+
+        document.body.appendChild(c);
+
+        setTimeout(function(){
+            c.remove();
+        },7000);
+
+    }
+
+}
+
+
+/* =================================================
+   BALONLAR
+================================================= */
+
+function createBalloons(){
+
+    for(let i=0;i<20;i++){
+
+        const b=document.createElement("div");
+
+        b.className="balloon";
+        b.textContent="🎈";
+
+        b.style.left=Math.random()*100+"vw";
+
+        b.style.animationDuration=
+            (5+Math.random()*6)+"s";
+
+        b.style.animationDelay=
+            Math.random()*3+"s";
+
+        document.body.appendChild(b);
+
+        setTimeout(function(){
+            b.remove();
+        },12000);
+
+    }
+
+}
+
+
+/* =================================================
+   FİNALİ ALGILA
+================================================= */
+
+let finalStarted=false;
+
+const observer=new MutationObserver(function(){
+
+    const final=
+        document.getElementById("screen7");
+
+    if(
+        final.classList.contains("active") &&
+        !finalStarted
+    ){
+
+        finalStarted=true;
+
+        createConfetti();
+        createBalloons();
+
+    }
+
+});
+
+observer.observe(
+    document.body,
+    {
+        subtree:true,
+        attributes:true,
+        attributeFilter:["class"]
+    }
+);
+
+</script>
+
 </body>
 </html>
+```
