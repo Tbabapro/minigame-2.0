@@ -662,74 +662,30 @@ button{
 
 
 <!-- =================================================
-     3 — HEDİYELER
+     3 — CEREN'E ÖZEL
 ================================================= -->
 
 <section class="screen" id="screen3">
 
-    <div>
+    <div class="memoryBox">
 
-        <h1 class="giftTitle">
-            🎁 3 HEDİYE
-        </h1>
+        <h2>💗 Ceren'e Özel Bir Şey Var</h2>
 
-        <p class="giftSub">
-            Ama hangisinin içinde ne olduğunu bilmiyorsun...
-        </p>
-
-        <div class="gifts">
-
-            <div class="gift" onclick="openGift(1,this)">
-                <div class="giftIcon">🎁</div>
-                <span>1. Hediye</span>
-            </div>
-
-            <div class="gift" onclick="openGift(2,this)">
-                <div class="giftIcon">🎁</div>
-                <span>2. Hediye</span>
-            </div>
-
-            <div class="gift" onclick="openGift(3,this)">
-                <div class="giftIcon">🎁</div>
-                <span>3. Hediye</span>
-            </div>
-
+        <div class="memorySubtitle">
+            Buraya kadar geldiysen küçük bir sırrı keşfetmeye hazırsın...
         </div>
 
-        <br>
+        <div class="memoryCard">
+            <div class="memoryEmoji">🌷</div>
 
-        <div id="giftMessage" style="min-height:30px;color:#ddd"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =================================================
-     4 — SÜRPRİZ
-================================================= -->
-
-<section class="screen" id="screen4">
-
-    <div class="surprise">
-
-        <div class="bigEmoji">
-            🥳
+            <div class="memoryText">
+                Ceren, bu siteyi sana özel hazırladım.
+                Çünkü senin benim için sıradan biri olmadığını söylemek istedim. ❤️
+            </div>
         </div>
 
-        <h2>
-            Bir şey daha var!
-        </h2>
-
-        <p>
-            Bütün hediyeler açıldı ama<br>
-            asıl sürpriz daha başlamadı...
-        </p>
-
-        <br>
-
-        <button class="mainBtn" onclick="nextScreen(5)">
-            ✨ Devam Et
+        <button class="memoryButton" onclick="nextScreen(4)">
+            💌 Devam Et
         </button>
 
     </div>
@@ -738,33 +694,60 @@ button{
 
 
 <!-- =================================================
-     5 — ANI MAKİNESİ
+     4 — MESAJ
+================================================= -->
+
+<section class="screen" id="screen4">
+
+    <div class="surprise">
+
+        <div class="bigEmoji">💖</div>
+
+        <h2>Ceren, sana bir şey söyleyeceğim...</h2>
+
+        <p>
+            Seni gördüğümde nedense yüzüm gülüyor. 😊<br><br>
+            Belki bunu söylemek biraz cesaret istiyor ama
+            senden hoşlanıyorum. ❤️
+        </p>
+
+        <br>
+
+        <button class="mainBtn" onclick="nextScreen(5)">
+            ✨ Bir Şey Daha Var
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     5 — Ceren Mesajları
 ================================================= -->
 
 <section class="screen" id="screen5">
 
     <div class="memoryBox">
 
-        <h2>
-            ✨ Sürpriz Anı Makinesi
-        </h2>
+        <h2>💌 Sana Söylemek İstediklerim</h2>
 
         <div class="memorySubtitle">
-            Her bastığında sana özel başka bir mesaj ortaya çıkacak.
+            Her bastığında Ceren'e özel başka bir mesaj göreceksin.
         </div>
 
         <div class="memoryCard" id="memoryCard">
 
             <div class="memoryEmoji" id="memoryEmoji">
-                🎁
+                🌸
             </div>
 
             <div class="memoryText" id="memoryText">
-                Hazırsan ilk sürprizi aç...
+                Hazırsan ilk mesajı aç...
             </div>
 
             <div class="memoryNumber" id="memoryNumber">
-                SÜRPRİZ 0 / 8
+                MESAJ 0 / 8
             </div>
 
         </div>
@@ -774,14 +757,14 @@ button{
             id="memoryButton"
             onclick="nextMemory()"
         >
-            🎁 Sürprizi Aç
+            💌 Mesajı Aç
         </button>
 
         <div
             class="secretReveal"
             onclick="secretMemory()"
         >
-            buraya da basabilirsin... 👀
+            gizli mesaja da bakabilirsin... 👀
         </div>
 
     </div>
@@ -790,36 +773,35 @@ button{
 
 
 <!-- =================================================
-     6 — ANILAR
+     6 — KÜÇÜK BİR NOT
 ================================================= -->
 
 <section class="screen" id="screen6">
 
     <div class="photoArea">
 
-        <h2>
-            📸 Küçük Bir Anı Köşesi
-        </h2>
+        <h2>🌷 Ceren İçin Küçük Bir Not</h2>
 
         <p>
-            Buraya kendi fotoğraflarınızı koyabilirsin.
+            Bazen bir insanın hayatına girmesi için büyük bir sebep gerekmez.
+            Bazen sadece onu görünce mutlu olmak yeterlidir.
         </p>
 
         <div class="photos">
 
             <div class="photo">
-                <div class="emoji">😂</div>
-                <span>Komik anılar</span>
+                <div class="emoji">😊</div>
+                <span>Gülüşün</span>
             </div>
 
             <div class="photo">
-                <div class="emoji">🎮</div>
-                <span>Birlikte oynadığımız günler</span>
+                <div class="emoji">🌸</div>
+                <span>Güzel enerjin</span>
             </div>
 
             <div class="photo">
                 <div class="emoji">❤️</div>
-                <span>Güzel anılar</span>
+                <span>Bende bıraktığın his</span>
             </div>
 
         </div>
@@ -827,7 +809,7 @@ button{
         <br><br>
 
         <button class="mainBtn" onclick="nextScreen(7)">
-            💌 Son Sürpriz
+            💖 Son Mesaj
         </button>
 
     </div>
@@ -844,48 +826,46 @@ button{
     <div class="birthday">
 
         <div class="cake">
-            🎂
+            🌹
         </div>
 
         <h1>
-            İYİ Kİ DOĞDUN!
+            CEREN ❤️
         </h1>
 
-        <h2 id="nameText">
-            KARDEŞİM ❤️
+        <h2>
+            Sana söylemek istediğim şey bu kadar basit...
         </h2>
 
         <div class="message">
 
-            Bugün senin günün! 🎉
+            Senden hoşlanıyorum. ❤️
 
             <br><br>
 
-            Bazen kavga ediyoruz,
-            bazen birbirimize sinir oluyoruz,
-            bazen de saçma sapan şeylere gülüyoruz 😂
+            Bunu sana yüz yüze söylemek belki biraz zor olurdu,
+            o yüzden duygularımı böyle küçük bir siteye sığdırmak istedim. 😊
 
             <br><br>
 
-            Ama ne olursa olsun,
-            sen benim için çok değerlisin.
+            Senden hiçbir şey beklemiyorum.
+            Sadece bunu bilmeni istedim.
 
             <br><br>
 
-            Yeni yaşında bol bol mutluluk,
-            eğlence, güzel anılar ve
-            istediğin her şeyin gerçekleşmesini diliyorum.
+            Umarım bu site yüzünde küçük de olsa
+            bir gülümseme oluşturur. 🌸
 
             <br><br>
 
             <b>
-                İyi ki varsın kardeşim. ❤️
+                İyi ki varsın Ceren. ❤️
             </b>
 
         </div>
 
         <div class="signature">
-            — Seni seven kardeşin Talha 😎
+            — Talha
         </div>
 
     </div>
@@ -894,13 +874,6 @@ button{
 
 
 <script>
-
-/* =================================================
-   KARDEŞİNİN ADI
-================================================= */
-
-const kardesininAdi = "KARDEŞİM";
-
 
 /* =================================================
    YILDIZLAR
@@ -971,7 +944,7 @@ function checkPassword(){
         document.getElementById("error");
 
     if(
-        value==="merve"
+        value==="ceren"
     ){
 
         error.textContent="";
@@ -1000,100 +973,49 @@ document
 
 
 /* =================================================
-   HEDİYELER
-================================================= */
-
-let openedGifts=0;
-
-function openGift(number,element){
-
-    if(element.classList.contains("opened")){
-        return;
-    }
-
-    element.classList.add("opened");
-
-    openedGifts++;
-
-    const message=
-        document.getElementById("giftMessage");
-
-    if(number===1){
-
-        message.innerHTML=
-        "🎮 <b>1. Hediye:</b> Bugün oyun oynamak serbest! 😎";
-
-    }
-
-    if(number===2){
-
-        message.innerHTML=
-        "🍫 <b>2. Hediye:</b> Tatlı hakkın aktif edildi! 😂";
-
-    }
-
-    if(number===3){
-
-        message.innerHTML=
-        "❤️ <b>3. Hediye:</b> Dünyanın en iyi kardeşlerinden birisin!";
-
-    }
-
-    if(openedGifts===3){
-
-        setTimeout(()=>{
-            nextScreen(4);
-        },1800);
-
-    }
-
-}
-
-
-/* =================================================
-   ANI MAKİNESİ
+   CEREN MESAJLARI
 ================================================= */
 
 const memories=[
 
     {
+        emoji:"🌸",
+        text:"Ceren, seni gördüğümde günümün daha güzel geçtiğini fark ediyorum."
+    },
+
+    {
+        emoji:"😊",
+        text:"Gülüşünde gerçekten çok güzel bir şey var."
+    },
+
+    {
+        emoji:"💗",
+        text:"Belki farkında değilsin ama seni düşündüğüm oluyor."
+    },
+
+    {
+        emoji:"🌷",
+        text:"Seninle konuştuğum zamanlar benim için gerçekten güzel."
+    },
+
+    {
+        emoji:"✨",
+        text:"Seni diğer insanlardan biraz farklı görüyorum."
+    },
+
+    {
         emoji:"❤️",
-        text:"Ne kadar kavga edersek edelim, sonunda yine kardeşiz."
+        text:"Bunu söylemek istedim: Senden hoşlanıyorum."
     },
 
     {
-        emoji:"😂",
-        text:"Seninle yaşadığımız bazı şeyleri başkasına anlatsak inanmazlar."
+        emoji:"🥹",
+        text:"Bunu okurken umarım yüzünde küçük bir gülümseme vardır."
     },
 
     {
-        emoji:"🎮",
-        text:"Birlikte oynadığımız oyunlar ayrı bir dünya."
-    },
-
-    {
-        emoji:"🤣",
-        text:"Bazen en saçma şeylere birlikte gülmemiz en güzel anılarımızdan."
-    },
-
-    {
-        emoji:"⭐",
-        text:"Belki fark etmiyorsun ama benim için gerçekten çok özelsin."
-    },
-
-    {
-        emoji:"🤝",
-        text:"İyi gününde de kötü gününde de yanında olacak bir kardeşin var."
-    },
-
-    {
-        emoji:"🎂",
-        text:"Bugün senin günün. O yüzden bugün bütün kurallar biraz askıya alındı. 😎"
-    },
-
-    {
-        emoji:"💎",
-        text:"Ve son sürpriz: İyi ki doğdun kardeşim. Seni çok seviyorum! ❤️"
+        emoji:"💖",
+        text:"Son mesaj: Umarım bu küçük sürprizi sevmişsindir, Ceren."
     }
 
 ];
@@ -1133,7 +1055,7 @@ function nextMemory(){
         memory.text;
 
     number.textContent=
-        "SÜRPRİZ "+
+        "MESAJ "+
         (memoryIndex+1)+
         " / "+
         memories.length;
@@ -1143,7 +1065,7 @@ function nextMemory(){
     if(memoryIndex>=memories.length){
 
         button.textContent=
-            "📸 Anılara Geç";
+            "🌷 Sonraki";
 
         button.onclick=function(){
 
@@ -1157,7 +1079,7 @@ function nextMemory(){
 
 
 /* =================================================
-   GİZLİ SÜRPRİZ
+   GİZLİ MESAJ
 ================================================= */
 
 function secretMemory(){
@@ -1176,24 +1098,44 @@ function secretMemory(){
 
     card.classList.add("change");
 
-    emoji.textContent="🕵️";
+    emoji.textContent="💌";
 
     text.textContent=
-        "Gizli sürprizi buldun! 👀 Sen gerçekten her yere tıklıyorsun. 😂";
+        "Gizli mesajı buldun! Ceren, gerçekten senden hoşlanıyorum. ❤️";
 
     number.textContent=
-        "GİZLİ SÜRPRİZ BULUNDU";
+        "GİZLİ MESAJ BULUNDU";
 
 }
 
 
 /* =================================================
-   FİNAL İSMİ
+   FİNAL
 ================================================= */
 
-document.getElementById("nameText")
-    .textContent=
-    kardesininAdi+" ❤️";
+const observer=
+    new MutationObserver(()=>{
+
+        const final=
+            document.getElementById("screen7");
+
+        if(final.classList.contains("active")){
+
+            createConfetti();
+            createBalloons();
+
+        }
+
+    });
+
+observer.observe(
+    document.body,
+    {
+        subtree:true,
+        attributes:true,
+        attributeFilter:["class"]
+    }
+);
 
 
 /* =================================================
@@ -1273,35 +1215,6 @@ function createBalloons(){
     }
 
 }
-
-
-/* =================================================
-   FİNALİ ALGILA
-================================================= */
-
-const observer=
-    new MutationObserver(()=>{
-
-        const final=
-            document.getElementById("screen7");
-
-        if(final.classList.contains("active")){
-
-            createConfetti();
-            createBalloons();
-
-        }
-
-    });
-
-observer.observe(
-    document.body,
-    {
-        subtree:true,
-        attributes:true,
-        attributeFilter:["class"]
-    }
-);
 
 </script>
 
