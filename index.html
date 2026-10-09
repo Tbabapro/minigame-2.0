@@ -1,1 +1,711 @@
-aa
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>😂 Kahkaha Makinesi</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg:#100d24;
+  --card:#211b3d;
+  --pink:#ff4fa3;
+  --yellow:#ffe45c;
+  --blue:#58e4ff;
+  --text:#fff8ff;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Fredoka',system-ui,sans-serif;
+  overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:active{transform:scale(.96)}
+header{
+  padding:18px 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid #ffffff17;
+  background:#100d24ee;
+  position:sticky;top:0;z-index:5;
+  backdrop-filter:blur(12px);
+}
+.logo{font-size:22px;font-weight:700}
+.logo span{color:var(--yellow)}
+header a{color:white;text-decoration:none;margin-left:14px}
+.hero{
+  padding:70px 18px 48px;
+  text-align:center;
+  background:
+  radial-gradient(ellipse at 20% 30%,#ff4fa329,transparent 35%),
+  radial-gradient(ellipse at 80% 10%,#58e4ff24,transparent 35%);
+}
+.pill{
+  display:inline-block;
+  border:1px solid #ffffff35;
+  border-radius:40px;
+  padding:8px 15px;
+  color:var(--yellow);
+  background:#ffffff09;
+}
+h1{
+  font-size:clamp(40px,8vw,82px);
+  line-height:1.05;
+  margin:22px 0;
+  letter-spacing:-2px;
+}
+h1 span{
+  color:var(--yellow);
+  text-shadow:0 0 35px #ffe45c36;
+}
+.hero p{font-size:18px;color:#c9c2e5;line-height:1.7}
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 19px;
+  background:var(--yellow);
+  color:#21172a;
+  font-weight:700;
+  box-shadow:0 5px 0 #b99d26;
+  transition:.15s;
+}
+.btn:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.btn.pink{background:var(--pink);color:white;box-shadow:0 5px 0 #a51e60}
+.btn.blue{background:var(--blue);box-shadow:0 5px 0 #248b9d}
+.btn.dark{background:#393153;color:white;box-shadow:0 5px 0 #171326}
+.stats{
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin-top:28px
+}
+.stat{padding:12px 18px;background:#ffffff0b;border:1px solid #ffffff16;border-radius:14px}
+.stat b{color:var(--yellow)}
+main{max-width:1120px;margin:auto;padding:25px 18px 70px}
+.section-title{font-size:30px;margin:42px 0 20px}
+.section-title small{font-size:14px;color:#aaa1cb;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{
+  background:linear-gradient(145deg,#282044,#1b1732);
+  border:1px solid #ffffff17;
+  border-radius:22px;padding:22px;
+  min-width:0;overflow:hidden;
+  transition:.2s;
+}
+.card:hover{border-color:#ff4fa36e;transform:translateY(-3px)}
+.emoji{font-size:42px}
+.card h3{font-size:22px;margin:10px 0}
+.card p{color:#c7bfdf;line-height:1.6;min-height:48px}
+.result{
+  display:none;margin-top:16px;padding:17px;
+  background:#100d24;border:1px solid #ffffff18;
+  border-radius:14px;line-height:1.7;
+  overflow-wrap:anywhere;
+}
+.result.show{display:block;animation:pop .25s}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.big-result{font-size:21px;color:var(--yellow);font-weight:600}
+.meter{height:13px;background:#ffffff13;border-radius:30px;overflow:hidden;margin:15px 0}
+.meter div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));transition:width .7s}
+.joke-box{
+  background:linear-gradient(135deg,#ff4fa322,#58e4ff12);
+  border:1px solid #ffffff20;border-radius:22px;padding:25px;
+}
+.joke-text{font-size:24px;line-height:1.7;min-height:90px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+input{
+  width:100%;background:#100d24;color:white;
+  border:1px solid #ffffff28;border-radius:12px;
+  padding:13px;margin:8px 0 14px;outline:none
+}
+input:focus{border-color:var(--blue)}
+.game-screen{
+  text-align:center;min-height:180px;padding:18px;
+  border-radius:16px;background:#100d24;margin-top:15px
+}
+#potato{font-size:85px;display:inline-block;transition:.2s}
+footer{text-align:center;padding:35px 15px;color:#aaa1cb;border-top:1px solid #ffffff15}
+#toast{
+  position:fixed;bottom:22px;left:50%;
+  transform:translate(-50%,20px);
+  background:#ffe45c;color:#20172b;
+  padding:13px 20px;border-radius:14px;font-weight:700;
+  opacity:0;pointer-events:none;transition:.3s;z-index:20;
+  width:max-content;max-width:90%;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{
+  position:fixed;z-index:30;top:-30px;pointer-events:none;
+  animation:fall 2.5s linear forwards;
+}
+@keyframes fall{to{transform:translateY(110vh) rotate(800deg);opacity:0}}
+.hidden{display:none!important}
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  header{padding:15px 4%}
+  header a{margin-left:6px;font-size:13px}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:45px}
+  h1{letter-spacing:-1px}
+  .card p{min-height:0}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">😂 KAHKAHA<span> MAKİNESİ</span></div>
+  <nav>
+    <a href="#saka">Şakalar</a>
+    <a href="#testler">Testler</a>
+    <a href="#oyunlar">Oyunlar</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="pill">⚠️ Aşırı saçmalık içerir!</div>
+  <h1>Gülmeye hazır mısın?<br><span>Yoksa hazır ol!</span></h1>
+  <p>Burada mantık izne çıktı. Ciddiyet kovuldu.<br>
+  Muzlar kayıyor, patatesler konuşuyor. 😂</p>
+  <button class="btn" onclick="randomFun()">🎲 Beni şaşırt!</button>
+  <button class="btn pink" onclick="confetti()">🎉 Ortalığı karıştır</button>
+
+  <div class="stats">
+    <div class="stat">🤣 Kahkaha puanın: <b id="points">0</b></div>
+    <div class="stat">🎯 Yapılan etkinlik: <b id="activities">0</b></div>
+    <div class="stat">👑 Rütben: <b id="rank">Yeni komik</b></div>
+  </div>
+</section>
+
+<main>
+  <h2 class="section-title" id="saka">🤣 Şaka fabrikası <small>— Beyin hücreleri dikkat!</small></h2>
+
+  <section class="joke-box">
+    <div class="joke-text" id="joke">Bugünün şakası hazırlanıyor... 🤔</div>
+    <button class="btn" onclick="newJoke()">😂 Başka şaka söyle</button>
+    <button class="btn dark" onclick="copyJoke()">📋 Şakayı kopyala</button>
+    <div id="jokeCount" style="margin-top:15px;color:#bcb3d9">Şaka sayacı: 0</div>
+  </section>
+
+  <h2 class="section-title" id="testler">🧪 Komik laboratuvar <small>— Kendini test et</small></h2>
+  <div class="grid">
+
+    <article class="card">
+      <div class="emoji">🤡</div>
+      <h3>Saçmalık ölçer</h3>
+      <p>İçindeki saçmalık oranını öğren. Sonuçlar bilimsel değildir. Patatesler onaylamıştır.</p>
+      <button class="btn pink" onclick="sillyTest()">Testi başlat</button>
+      <div class="result" id="sillyResult"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🧠</div>
+      <h3>Beyin testi</h3>
+      <p>Çok basit bir soru. Ama acele etme, beynin şu an yemek molasında olabilir.</p>
+      <p><b>Bir horoz çatının üstüne yumurta bırakırsa yumurta hangi tarafa düşer?</b></p>
+      <button class="btn blue" onclick="brainAnswer(1)">Sağa 🫡</button>
+      <button class="btn dark" onclick="brainAnswer(2)">Sola 😎</button>
+      <button class="btn pink" onclick="brainAnswer(3)">Horoz yumurtlamaz 😂</button>
+      <div class="result" id="brainResult"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🔮</div>
+      <h3>Geleceğini öğren</h3>
+      <p>Gelecekte başına gelecek aşırı önemli ve tamamen saçma olayları gör.</p>
+      <button class="btn" onclick="future()">Geleceğe bak 🔮</button>
+      <div class="result" id="futureResult"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🐸</div>
+      <h3>Hangi saçma hayvansın?</h3>
+      <p>Ruh hayvanın bir kartal mı, yoksa mesleği tost yemek olan bir kurbağa mı?</p>
+      <button class="btn blue" onclick="animalTest()">Kimliğimi açıkla</button>
+      <div class="result" id="animalResult"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">💌</div>
+      <h3>Bahane üretici</h3>
+      <p>Bir yere geç mi kaldın? Ödevin mi yok? İşte tamamen mantıksız bahaneler!</p>
+      <button class="btn pink" onclick="excuse()">Bana bahane ver</button>
+      <div class="result" id="excuseResult"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🗣️</div>
+      <h3>Havalı lakap makinesi</h3>
+      <p>Arkadaş grubunun efsane lakabını bul. İtirazlar patates mahkemesine yapılır.</p>
+      <input id="nickname" maxlength="25" placeholder="Adını yaz...">
+      <button class="btn" onclick="nicknameTest()">Lakap bul 😎</button>
+      <div class="result" id="nicknameResult"></div>
+    </article>
+
+  </div>
+
+  <h2 class="section-title" id="oyunlar">🎮 Saçma sapan oyunlar</h2>
+  <div class="grid">
+
+    <article class="card">
+      <div class="emoji">🥔</div>
+      <h3>Patatesi ez!</h3>
+      <p>Patatese tıkla. Zavallı patates ne olduğunu anlamadan rekorunu kır.</p>
+      <div class="game-screen">
+        <div id="potato">🥔</div>
+        <div style="font-size:20px;margin:10px">Puan: <b id="potatoScore">0</b></div>
+        <div id="potatoInfo">Başlamak için patatese tıkla!</div>
+        <button class="btn dark" onclick="resetPotato()">Sıfırla</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🎯</div>
+      <h3>Hızlı tıklama savaşı</h3>
+      <p>10 saniyede olabildiğince çok tıkla. Parmağın sana dava açabilir.</p>
+      <div class="game-screen">
+        <div style="font-size:35px" id="clickScore">0</div>
+        <p id="clickInfo">Hazır mısın?</p>
+        <button class="btn pink" id="clickButton" onclick="clickGame()">🚀 TIKLA!</button>
+        <button class="btn dark" id="startClick" onclick="startClickGame()">Başlat (10 sn)</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🧩</div>
+      <h3>Saçma bilmece</h3>
+      <p>Cevabı bulabilirsen bir kahkaha puanı kazanırsın. Bulamazsan da kazanırsın. Çok adiliz.</p>
+      <div class="game-screen">
+        <div id="riddle" style="font-size:20px">Hangi bağda üzüm yetişmez?</div>
+        <input id="riddleInput" placeholder="Cevabını yaz...">
+        <button class="btn blue" onclick="checkRiddle()">Cevabı kontrol et</button>
+        <div id="riddleResult" class="result"></div>
+        <button class="btn dark" onclick="nextRiddle()">Başka bilmece</button>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="section-title">🎁 Gizli sürpriz odası</h2>
+  <div class="two">
+    <article class="card">
+      <div class="emoji">🚨</div>
+      <h3>ASLA BASMA butonu</h3>
+      <p>Gerçekten basma. Ciddiyim. Sakın. Ben olsam basmazdım. Kesinlikle basma.</p>
+      <button class="btn pink" onclick="neverButton()">🚫 BASMA!!!</button>
+      <div id="neverResult" class="result"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">👑</div>
+      <h3>Gizli patron</h3>
+      <p>Bu sitede kim patron? Bir butona basarak gerçeği öğren.</p>
+      <button class="btn" onclick="boss()">Patronu açıkla</button>
+      <div id="bossResult" class="result"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">📢</div>
+      <h3>Saçmalık bildirimi</h3>
+      <p>Siteye ciddi bir şey söyle. Site sana ciddi olmayan bir cevap versin.</p>
+      <input id="seriousText" maxlength="100" placeholder="Örn. Dünya neden dönüyor?">
+      <button class="btn blue" onclick="reply()">Cevabı öğren</button>
+      <div id="replyResult" class="result"></div>
+    </article>
+
+    <article class="card">
+      <div class="emoji">🎰</div>
+      <h3>Kahkaha piyangosu</h3>
+      <p>Şansını dene. Büyük ödül: şöhret, ihtişam ve bir adet görünmez tost.</p>
+      <button class="btn pink" onclick="lottery()">Çekilişe katıl</button>
+      <div id="lotteryResult" class="result"></div>
+    </article>
+  </div>
+
+  <section class="joke-box" style="margin-top:30px;text-align:center">
+    <div style="font-size:50px">🏆</div>
+    <h2>Komiklik karnen</h2>
+    <p id="report">Henüz yeni geldin. Hadi biraz saçmala!</p>
+    <div class="meter"><div id="meterBar"></div></div>
+    <button class="btn" onclick="showReport()">Karnemi göster</button>
+    <button class="btn dark" onclick="resetAll()">Her şeyi sıfırla</button>
+  </section>
+</main>
+
+<footer>
+  <div style="font-size:30px">😂 🥔 🍌 🐸</div>
+  <p>Kahkaha Makinesi © 2026 — Ciddiyetin yasak olduğu yer.</p>
+  <p>Bu sitedeki patatesler tamamen hayal ürünüdür. Gerçek patateslere saygımız sonsuzdur.</p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let points = 0;
+let activities = 0;
+let jokeNumber = 0;
+let potatoScore = 0;
+let potatoClicks = 0;
+let potatoTimer = null;
+let clicking = false;
+let clickScore = 0;
+let clickTime = 10;
+let clickInterval = null;
+let riddleIndex = 0;
+let seenJokes = [];
+
+const jokes = [
+["Öğretmen: Neden geç kaldın?","Öğrenci: Saatim geri kalmış öğretmenim. Ben ileri gittim."],
+["Bilgisayar neden doktora gitmiş?","Çünkü virüs kapmış! 🤧"],
+["Kitap neden üzgünmüş?","Çünkü başına çok şey gelmiş."],
+["Domates neden kızarmış?","Salatalığı duşta görmüş! 🍅"],
+["En tembel sayı hangisi?","Sıfır. Çünkü bütün gün yuvarlanıyor."],
+["Matematik kitabı neden ağlamış?","Çok problemi varmış. 😭"],
+["Kedi bilgisayarda ne yapıyormuş?","Fare kovalıyormuş. 🐱"],
+["Muz neden doktora gitmiş?","Çünkü kabuğunda bir sorun varmış."],
+["Tavuk neden karşıya geçmiş?","Çünkü bu tarafta internet çekmiyormuş."],
+["Elektrikçi neden mutluymuş?","Çünkü hayatı aydınlıkmış."],
+["Balıklar neden konuşmaz?","Çünkü ağızları hep su dolu! 🐟"],
+["Saat neden yorulmuş?","Çünkü sürekli çalışıyormuş."],
+["Bir bilgisayar diğerine ne demiş?","Biraz RAM ver, kafam doldu!"],
+["Kalem neden okula gitmiş?","Kendini geliştirmek için."],
+["Patates neden ünlü olmuş?","Çünkü herkes onu kızartıyormuş! 🥔"],
+["Ördek internete nasıl bağlanır?","Wi-FİŞ! 🦆"],
+["Robot neden tatile çıkmış?","Şarjı bitmiş."],
+["Ay neden okula gitmemiş?","Gece vardiyasında çalışıyormuş."],
+["Çöp kutusu neden gururluymuş?","Herkes ona bir şey atıyormuş."],
+["Telefon neden gözlük takmış?","Ekranı bulanık görüyormuş."],
+["Bir duvar diğerine ne demiş?","Köşede buluşalım."],
+["Asansör neden iyi bir arkadaşmış?","Seni hep yukarı çıkarırmış."],
+["Karpuz neden bilgisayar kullanmış?","Çekirdeklerini yedeklemek için."],
+["Tost neden çok havalıymış?","Çünkü çok kızarmış!"],
+["Penguen neden buzdolabı almış?","Evinde zaten kış varmış."]
+];
+
+const excuses = [
+"Ödevimi yaptım ama defterim kendi başına tatile çıktı.",
+"Kalemimle aramız bozuldu, yazmayı reddetti.",
+"Alarm çaldı ama ben onu rüyamda susturdum.",
+"Çantam çok ağırdı, fizik kurallarına yenildim.",
+"Kedim ödevimi yemedi, sadece akademik olarak inceledi.",
+"Wi-Fi çekmediği için beynim çevrimdışı kaldı.",
+"Zaman makinem bozuldu, dün gelemedim.",
+"Ödevimi görünmez mürekkeple yaptım. Görünmüyor olması normal.",
+"Patatesim acil toplantı yaptı, katılmak zorundaydım.",
+"Ben geç kalmadım, dünya çok hızlı döndü."
+];
+
+const futures = [
+"Yarın bir kalem bulacaksın. Kalem seni bulduğunu iddia edecek.",
+"Yakında çok büyük bir karar vereceksin: tost mu, sandviç mi?",
+"Bir günlüğüne patateslerin kralı olacaksın. Tahtın kızartma tavası.",
+"Üç gün içinde birinin sana 'N'apıyorsun?' diyeceği kesin.",
+"Gelecekte çok zengin olacaksın. Tam 7 tane görünmez altının olacak.",
+"Yarın ayağın bir yere çarpacak. Ayak parmağın istifa dilekçesi yazacak.",
+"Bir muzla karşılaşacaksın. Aranızda unutulmaz bir bağ oluşacak.",
+"Çok yakında buzdolabını açıp neden açtığını unutacaksın. Kader!"
+];
+
+const animals = [
+["🦆","Wi-Fi Ördeği","Her ortama bağlanırsın ama bazen bağlantın kopar."],
+["🥔","Asil Patates","Dışarıdan sakin, içeriden tam bir kaos makinesisin."],
+["🐸","Profesör Kurbağa","Çok bilgilisin. Özellikle zıplama konusunda."],
+["🐱","Gizli Ajan Kedi","Her şeyi biliyormuş gibi bakıp hiçbir şeyi anlatmazsın."],
+["🦥","Ultra Tembel","İşlerini yaparsın. Ama önce 6 saat dinlenmen gerekir."],
+["🦖","Mini Dinozor","Küçüksün ama dramaların devasa."],
+["🍌","Kaygan Muz","İnsanları güldürürsün. Bazen farkında olmadan."],
+["🐔","DJ Tavuk","Parti varsa sen varsın. Müzik yoksa da gıdaklarsın."]
+];
+
+const riddles = [
+{q:"Hangi bağda üzüm yetişmez?",a:["kravat","ayakkabı bağı","bağcık"],show:"Ayakkabı bağı! 👟"},
+{q:"Hangi kalemle yazı yazılmaz?",a:["kale","futbol kalemi","kale kalemi"],show:"Futbol kalesi! ⚽"},
+{q:"Hangi masa yemek yemez?",a:["çarpım tablosu","matematik"],show:"Çarpım tablosu! ➗"},
+{q:"Hangi yüz yıkanmaz?",a:["deniz yüzü","kitap yüzü","kağıt yüzü"],show:"Kitabın yüzü! 📚"},
+{q:"Hangi ayda 28 gün vardır?",a:["hepsi","bütün aylar","her ay"],show:"Bütün aylarda! 📅"},
+{q:"Hangi diş fırçalanmaz?",a:["tarak dişi","testere dişi","dişli"],show:"Tarak dişi! 🪮"}
+];
+
+function award(n=1){
+  points += n;
+  activities++;
+  $("points").textContent = points;
+  $("activities").textContent = activities;
+  $("rank").textContent = points>=100 ? "Kahkaha Efsanesi 👑" :
+    points>=50 ? "Şaka Ustası 🏆" :
+    points>=20 ? "Komiklik Profesörü 🤓" :
+    points>=5 ? "Muz Uzmanı 🍌" : "Yeni komik";
+  $("meterBar").style.width = Math.min(100,points)+"%";
+}
+
+function toast(msg){
+  $("toast").textContent=msg;
+  $("toast").classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>$("toast").classList.remove("show"),2400);
+}
+
+function showResult(id,html){
+  $(id).innerHTML=html;
+  $(id).classList.add("show");
+}
+
+function newJoke(){
+  if(seenJokes.length===jokes.length) seenJokes=[];
+  let available=jokes.map((_,i)=>i).filter(i=>!seenJokes.includes(i));
+  let index=available[Math.floor(Math.random()*available.length)];
+  seenJokes.push(index);
+  $("joke").innerHTML="<b>"+jokes[index][0]+"</b><br>"+jokes[index][1];
+  jokeNumber++;
+  $("jokeCount").textContent="Şaka sayacı: "+jokeNumber;
+  award();
+}
+
+async function copyJoke(){
+  let text=$("joke").innerText;
+  try{
+    await navigator.clipboard.writeText(text);
+    toast("Şaka kopyalandı! Arkadaşlarını hazırla 😂");
+  }catch(e){
+    toast("Şakanı seçip Ctrl+C ile kopyalayabilirsin!");
+  }
+}
+
+function sillyTest(){
+  let n=Math.floor(Math.random()*101);
+  let msg=n>85?"🚨 ACİL! Beynin muz moduna geçti!":
+    n>65?"🤣 İleri seviye saçmalık. Patatesler senden korkuyor.":
+    n>35?"😎 Normal görünüyorsun ama içinde bir ördek var.":
+    "🤓 Şimdilik sakinsin. Ama bu site seni değiştirecek!";
+  showResult("sillyResult","<div class='big-result'>Saçmalık oranı: %"+n+"</div><div class='meter'><div style='width:"+n+"%'></div></div>"+msg);
+  award(2);
+}
+
+function brainAnswer(n){
+  showResult("brainResult",n===3?
+    "🎉 DOĞRU! Horoz yumurtlamaz! Beynin bugün çalışıyor. 🧠":
+    "❌ Olmadı! Horoz yumurtlamaz ki! Yumurtayı tavuğa bırak. 😂");
+  if(n===3)award(3);else award();
+}
+
+function future(){
+  showResult("futureResult","🔮 "+futures[Math.floor(Math.random()*futures.length)]);
+  award(2);
+}
+
+function animalTest(){
+  let a=animals[Math.floor(Math.random()*animals.length)];
+  showResult("animalResult","<div class='big-result' style='font-size:30px'>"+a[0]+" "+a[1]+"</div>"+a[2]);
+  award(2);
+}
+
+function excuse(){
+  showResult("excuseResult","<div class='big-result'>"+excuses[Math.floor(Math.random()*excuses.length)]+"</div>");
+  award();
+}
+
+const nickWords=["Efsane","Turbo","Profesör","Gizemli","Mega","Kozmik","Çılgın","Ultra","Gölge","Galaktik"];
+const nickEnds=["Patates","Muz","Ördek","Tost","Karpuz","Kurbağa","Kedi","Bisküvi","Lahana","Dinozor"];
+
+function nicknameTest(){
+  let name=$("nickname").value.trim();
+  if(!name){toast("Önce adını yaz! 👀");return}
+  let title=nickWords[Math.floor(Math.random()*nickWords.length)]+" "+nickEnds[Math.floor(Math.random()*nickEnds.length)];
+  showResult("nicknameResult","<div class='big-result'>"+escapeHTML(name)+" = "+title+" 😎</div>Bu lakapla artık mahallede tanınıyorsun!");
+  award(2);
+}
+
+function escapeHTML(s){
+  return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function randomFun(){
+  let actions=[newJoke,sillyTest,future,animalTest,excuse,neverButton];
+  actions[Math.floor(Math.random()*actions.length)]();
+  toast("🎲 Sürpriz etkinlik tamamlandı!");
+  document.querySelector("#saka").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function confetti(){
+  const emojis=["😂","🤣","🥔","🍌","🎉","🐸","✨","🦆"];
+  for(let i=0;i<45;i++){
+    let el=document.createElement("div");
+    el.className="confetti";
+    el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(18+Math.random()*25)+"px";
+    el.style.animationDuration=(1.5+Math.random()*2)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4000);
+  }
+  award();
+  toast("🎉 KAOS BAŞLADI!");
+}
+
+function resetPotato(){
+  clearInterval(potatoTimer);
+  potatoScore=0;potatoClicks=0;
+  $("potatoScore").textContent=0;
+  $("potato").textContent="🥔";
+  $("potatoInfo").textContent="Başlamak için patatese tıkla!";
+}
+
+$("potato").addEventListener("click",()=>{
+  if(potatoClicks===0){
+    potatoTimer=setInterval(()=>{
+      potatoClicks++;
+      if(potatoClicks>=10){
+        clearInterval(potatoTimer);
+        $("potato").textContent="💀";
+        $("potatoInfo").textContent="Patates pes etti! Skorun: "+potatoScore;
+        toast("Patates oyununu bitirdin!");
+        award(Math.max(1,Math.floor(potatoScore/5)));
+      }
+    },1000);
+  }
+  if(potatoClicks>=10)return;
+  potatoScore++;
+  $("potatoScore").textContent=potatoScore;
+  $("potato").textContent=["🥔","🥔","🍟","🥔","😵"][Math.floor(Math.random()*5)];
+  $("potatoInfo").textContent="Patates şaşkın! Devam et! 😂";
+});
+
+function startClickGame(){
+  if(clicking)return;
+  clicking=true;clickScore=0;clickTime=10;
+  $("clickScore").textContent=0;
+  $("clickInfo").textContent="10 saniyen var! HAYDİ!";
+  $("clickButton").disabled=false;
+  $("startClick").disabled=true;
+  clickInterval=setInterval(()=>{
+    clickTime--;
+    $("clickInfo").textContent="Kalan süre: "+clickTime+" saniye!";
+    if(clickTime<=0){
+      clearInterval(clickInterval);
+      clicking=false;
+      $("clickButton").disabled=true;
+      $("startClick").disabled=false;
+      $("clickInfo").textContent="Bitti! "+clickScore+" kez tıkladın. "+(clickScore>=30?"Parmakların roket olmuş! 🚀":"Bir dahaki sefere daha hızlı!");
+      award(Math.max(1,Math.floor(clickScore/5)));
+    }
+  },1000);
+}
+
+function clickGame(){
+  if(!clicking)return;
+  clickScore++;
+  $("clickScore").textContent=clickScore;
+}
+
+function nextRiddle(){
+  riddleIndex=(riddleIndex+1)%riddles.length;
+  $("riddle").textContent=riddles[riddleIndex].q;
+  $("riddleInput").value="";
+  $("riddleResult").classList.remove("show");
+}
+
+function checkRiddle(){
+  let ans=$("riddleInput").value.trim().toLocaleLowerCase("tr");
+  if(!ans){toast("Bir cevap yaz! 😄");return}
+  let r=riddles[riddleIndex];
+  if(r.a.some(a=>ans.includes(a))){
+    showResult("riddleResult","🎉 Bildin! "+r.show);
+    award(3);
+  }else{
+    showResult("riddleResult","😂 Olmadı! İpucu: "+r.show+" Bir sonraki bilmeceyi de deneyebilirsin.");
+    award();
+  }
+}
+
+let neverCount=0;
+function neverButton(){
+  neverCount++;
+  const messages=[
+    "😱 UYARI! Yasak butona basıldı. Patates polisi yolda!",
+    "🚨 SİSTEM HATASI: Fazla merak tespit edildi.",
+    "🥔 Patatesler toplandı ve seni kendi aralarında konuşuyorlar.",
+    "😂 Bu butonun görevi yoktu. Sen yine de bastın.",
+    "🏆 Tebrikler! Yasak butona basma uzmanı oldun!",
+    "👀 Biri sana bakıyor... Şaka şaka, ekranına bakıyoruz.",
+    "🧠 Beynin 'NEDEN BASTIN?' diye soruyor.",
+    "🍌 Muz konseyi seni fahri üye ilan etti."
+  ];
+  showResult("neverResult",messages[Math.min(neverCount-1,messages.length-1)]+"<br><br>Butona basılma sayısı: "+neverCount);
+  award();
+  if(neverCount%3===0)confetti();
+}
+
+function boss(){
+  showResult("bossResult","👑 SİTENİN GERÇEK PATRONU: "+(points>10?"SENSİN, KAHKAHA KRALI!":"PATATES! 🥔")+"<br>İnsanlar çalışıyor, patatesler yönetiyor.");
+  award(2);
+}
+
+const replies=[
+"Çünkü evrenin Wi-Fi şifresi yanlış girilmiş.",
+"Bu sorunun cevabını patates biliyor. Ama konuşmuyor.",
+"Çok güzel soru! Cevap: Muz. Sonraki soru?",
+"Sistem düşündü... Sistem yoruldu... Sistem uyudu. 😴",
+"Bilim insanları bu soruyu görünce tatile çıkmış.",
+"Çünkü öyle. Bilimsel açıklama tamamlandı. 🧑‍🔬",
+"Önce bir tost yiyelim, sonra bunu konuşuruz.",
+"Bu bilgi gizli. 3 ördek ve 1 lahana tarafından korunuyor."
+];
+
+function reply(){
+  let val=$("seriousText").value.trim();
+  if(!val){toast("Önce bir şey yaz! 😂");return}
+  showResult("replyResult","<b>Sen:</b> "+escapeHTML(val)+"<br><br><b>Kahkaha Makinesi:</b> "+replies[Math.floor(Math.random()*replies.length)]);
+  award(2);
+}
+
+function lottery(){
+  let r=Math.random();
+  let msg=r<.08?"🎉 BÜYÜK ÖDÜL! Görünmez tost kazandın! 🥪":
+    r<.3?"🏆 Tebrikler! 1 adet sanal patates! 🥔":
+    r<.6?"🍌 Muz çıktı! Ama biraz kaygan.":
+    "😂 Boş çıktı! Ama kahkaha kazandın.";
+  showResult("lotteryResult",msg);
+  award(r<.08?10:2);
+  if(r<.08)confetti();
+}
+
+function showReport(){
+  let msg=points>=100?"👑 EFSANESİN! Kahkaha imparatorluğu kurabilirsin.":
+    points>=50?"🏆 ŞAKA USTASI! Patatesler senden imza istiyor.":
+    points>=20?"🤓 KOMİKLİK PROFESÖRÜ! Beynin muz kabuğunda kaymış.":
+    points>=5?"🍌 MUZ ÇIRAĞI! Yükselmeye devam et.":
+    "🥔 ÇIRAK PATATES! Hadi daha çok etkinlik yap!";
+  $("report").textContent=msg+" Toplam puanın: "+points+".";
+  $("meterBar").style.width=Math.min(100,points)+"%";
+}
+
+function resetAll(){
+  if(!confirm("Tüm kahkaha puanlarını sıfırlamak istiyor musun?"))return;
+  points=0;activities=0;jokeNumber=0;seenJokes=[];
+  $("points").textContent=0;
+  $("activities").textContent=0;
+  $("rank").textContent="Yeni komik";
+  $("jokeCount").textContent="Şaka sayacı: 0";
+  $("meterBar").style.width="0%";
+  $("report").textContent="Her şey sıfırlandı. Yeni bir kahkaha macerası başlasın!";
+  resetPotato();
+  toast("Her şey sıfırlandı! 🧹");
+}
+
+newJoke();
+</script>
+</body>
+</html>
