@@ -4,286 +4,302 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bilgi Arenası 🎁</title>
+<title>Talha'yı Ne Kadar Tanıyorsun?</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;padding:20px;min-height:100vh;
- font-family:Arial,sans-serif;color:white;text-align:center;
- background:radial-gradient(circle at top,#39246f,#0a0b18 75%);
-}
-.container{
- max-width:720px;margin:25px auto;padding:25px;
- background:#17172c;border:1px solid #7963d9;
- border-radius:26px;box-shadow:0 0 40px #7355ff30;
-}
+body{margin:0;padding:18px;min-height:100vh;font-family:Arial,sans-serif;color:white;background:radial-gradient(circle at top,#482477,#111027 70%)}
+.container{max-width:720px;margin:22px auto;background:#19172f;border:1px solid #8067e9;border-radius:25px;padding:25px;box-shadow:0 0 35px #7854ff30}
+header{text-align:center}
 .logo{font-size:58px}
-h1{font-size:clamp(28px,5vw,42px);color:#cbbaff}
-.subtitle{color:#c6c0dc;line-height:1.6}
-button{
- border:0;border-radius:13px;padding:14px 18px;margin:7px;
- font-size:16px;font-weight:bold;cursor:pointer;
- transition:.2s;
-}
+h1{font-size:clamp(27px,5vw,39px);color:#d5c5ff;margin:12px 0}
+.subtitle{color:#c8c0df;line-height:1.6}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+.stat{background:#292440;padding:12px 16px;border-radius:12px}
+button{border:0;border-radius:12px;padding:14px 18px;margin:6px;font-size:15px;font-weight:bold;cursor:pointer;transition:.2s}
 button:hover{transform:translateY(-2px)}
-.primary{background:linear-gradient(100deg,#8056f5,#bd55e8);color:white}
+.primary{background:linear-gradient(100deg,#8056f5,#c04fe8);color:white}
 .secondary{background:#302b48;color:white}
 .hidden{display:none!important}
-.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
-.stat{background:#282440;padding:12px 17px;border-radius:13px;color:#e1d5ff}
-.bar{height:10px;background:#302744;border-radius:20px;overflow:hidden}
+.bar{height:9px;background:#302744;border-radius:20px;overflow:hidden;margin-top:12px}
 #barFill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#ff70d9);transition:.3s}
-#question{font-size:23px;line-height:1.5;margin:25px 0}
-#progress{color:#d2baff;font-weight:bold}
-.option{
- display:block;width:100%;margin:10px 0;text-align:left;
- background:#292641;color:white;border:1px solid #51476e;
-}
-.option:hover{background:#413462}
+#progress{color:#d0baff;font-weight:bold}
+#question{font-size:22px;line-height:1.5;margin:25px 0}
+.option{display:block;width:100%;margin:10px 0;text-align:left;background:#292641;color:white;border:1px solid #51476e}
+.option:hover{background:#423365}
 .option:disabled{opacity:1;cursor:default}
 .option.correct{background:#176b4a;border-color:#43e5a0}
 .option.wrong{background:#7d2b46;border-color:#ff7398}
-#feedback{min-height:28px;font-weight:bold;margin:15px}
-.reward{
- margin:22px 0;padding:22px 12px;border-radius:20px;
- border:1px solid #e8c56b;
- background:linear-gradient(145deg,#47331e,#29203d);
- animation:appear .5s ease-out;
-}
-.rewardIcon{font-size:58px;animation:bounce 1s infinite alternate}
-@keyframes appear{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-@keyframes bounce{to{transform:translateY(-7px) rotate(5deg)}}
-.small{font-size:13px;color:#a9a1c3}
-#rank{color:#ffe18a}
-@media(max-width:450px){.container{padding:16px}.option{font-size:15px}}
+#feedback{min-height:25px;margin:15px;font-weight:bold}
+#result{font-size:30px;color:#ffe18a}
+.reward{margin:20px 0;padding:22px;background:linear-gradient(135deg,#352558,#24203f);border:1px solid #8a6ee9;border-radius:18px}
+#rewardIcon{font-size:50px}
+.small{font-size:13px;color:#aaa1c5;line-height:1.6}
+footer{text-align:center;color:#8e85a9;font-size:12px;margin-top:22px}
+@media(max-width:480px){.container{padding:17px;margin:5px auto}#question{font-size:19px}}
 </style>
 </head>
 <body>
 <div class="container">
- <div class="logo">🧠✨</div>
- <h1>Bilgi Arenası</h1>
- <p class="subtitle">12 soru, sürpriz ödüller ve bol eğlence!<br>Her testte yeni sorular seni bekliyor.</p>
+<header>
+<div class="logo">🕵️‍♂️</div>
+<h1>Talha'yı Ne Kadar Tanıyorsun?</h1>
+<p class="subtitle">Talha hakkında ne kadar şey biliyorsun? Kendini kanıtla, puanları topla ve sürpriz ödülleri aç! ✨</p>
+</header>
 
- <div id="home">
-  <div class="stats">
-   <div class="stat">🎯 12 soru</div>
-   <div class="stat">⭐ 10 puan</div>
-   <div class="stat">🎁 Sürprizler</div>
-  </div>
-  <p>Bilim, oyunlar, mantık, teknoloji ve genel kültür!</p>
-  <p>Hepsini bilmek zorunda değilsin. Eğlenmeye hazır ol! 😎</p>
-  <button class="primary" onclick="startQuiz()">🚀 Teste Başla</button>
- </div>
+<div class="stats">
+<div class="stat">🏆 En iyi: <b id="best">0</b></div>
+<div class="stat">🪙 Toplam puan: <b id="total">0</b></div>
+<div class="stat">📚 Sorular: <b id="poolCount">0</b></div>
+</div>
 
- <div id="quiz" class="hidden">
-  <p id="progress"></p>
-  <div class="bar"><div id="barFill"></div></div>
-  <h2 id="question"></h2>
-  <div id="options"></div>
-  <div id="feedback"></div>
-  <button id="next" class="primary hidden" onclick="nextQuestion()">Sonraki ➜</button>
- </div>
+<section id="startScreen" style="text-align:center">
+<div class="reward">
+<div style="font-size:43px">🎁</div>
+<h2>Talha'yı tanımaya hazır mısın?</h2>
+<p class="subtitle">Her testte 12 soru var. Bildiğin sorularla puan topla, yeni sürprizleri keşfet!</p>
+</div>
+<button class="primary" onclick="startQuiz()">🚀 Teste Başla</button>
+<button class="secondary" onclick="showHelp()">❓ Nasıl oynanır?</button>
+<p id="help" class="small hidden">Her doğru cevap 10 puan kazandırır. Yanlış cevap puan kazandırmaz. Sorular farklı sıralarda gelir. Daha önce gördüğün sorular mümkün olduğunca tekrar gösterilmez.</p>
+</section>
 
- <div id="resultScreen" class="hidden">
-  <h2>🎉 Test Tamamlandı!</h2>
-  <p id="result" style="font-size:28px;color:#ffe18a"></p>
-  <h2 id="rank"></h2>
-  <p id="message"></p>
-  <div class="reward">
-   <div class="rewardIcon" id="rewardIcon">🎁</div>
-   <h2 id="rewardTitle">Sürpriz ödülün!</h2>
-   <p id="rewardText"></p>
-  </div>
-  <button class="primary" onclick="startQuiz()">🔄 Yeni Test</button>
-  <button class="secondary" onclick="copyResult()">📋 Sonucu Kopyala</button>
- </div>
+<section id="quizScreen" class="hidden">
+<div id="progress">Soru 1 / 12</div>
+<div class="bar"><div id="barFill"></div></div>
+<h2 id="question"></h2>
+<div id="options"></div>
+<div id="feedback"></div>
+<div style="text-align:center">
+<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">Sonraki ➜</button>
+</div>
+</section>
 
- <p class="small">Her test yeni bir macera! 🌟</p>
+<section id="resultScreen" class="hidden" style="text-align:center">
+<div style="font-size:55px" id="resultEmoji">🏆</div>
+<h2>Test tamamlandı!</h2>
+<div id="result"></div>
+<p id="resultMessage" class="subtitle"></p>
+<div class="reward">
+<div id="rewardIcon">🎁</div>
+<h2 id="rewardTitle">Sürpriz ödül!</h2>
+<p id="rewardText"></p>
+</div>
+<button class="primary" onclick="startQuiz()">🔄 Yeni Test</button>
+<button class="secondary" onclick="copyResult()">📋 Sonucumu Kopyala</button>
+<button class="secondary" onclick="showHome()">🏠 Ana Sayfa</button>
+<p id="copyMessage" class="small"></p>
+</section>
+
+<footer>Talha'nın özel bilgi testi 💜</footer>
 </div>
 
 <script>
-const bank=[
-{q:"Güneş Sistemi'nin en büyük gezegeni hangisidir?",a:"Jüpiter",w:["Mars","Venüs","Merkür"]},
-{q:"Minecraft'ta Creeper ne yapar?",a:"Patlar",w:["Uçar","Su üretir","Oyuncuyu iyileştirir"]},
-{q:"Bir haftada kaç gün vardır?",a:"7",w:["5","6","8"]},
-{q:"Dünya'nın doğal uydusu hangisidir?",a:"Ay",w:["Güneş","Mars","Venüs"]},
-{q:"Türkiye'nin başkenti neresidir?",a:"Ankara",w:["İstanbul","İzmir","Bursa"]},
-{q:"Su normal basınçta kaç derecede donar?",a:"0 °C",w:["10 °C","50 °C","100 °C"]},
-{q:"Bir üçgenin kaç kenarı vardır?",a:"3",w:["2","4","5"]},
-{q:"Dünyanın en büyük okyanusu hangisidir?",a:"Pasifik Okyanusu",w:["Atlas Okyanusu","Hint Okyanusu","Arktik Okyanusu"]},
-{q:"Bitkiler fotosentezde hangi gazı kullanır?",a:"Karbondioksit",w:["Helyum","Hidrojen","Azot"]},
-{q:"Bir saatte kaç dakika vardır?",a:"60",w:["30","90","100"]},
-{q:"Satrançta şah mat ne demektir?",a:"Şahın kaçamayacağı tehdit altında olması",w:["Oyunun başlaması","Beraberlik","Taş terfisi"]},
-{q:"Minecraft'ta Ender Dragon nerede bulunur?",a:"End boyutunda",w:["Nether'da","Bir köyde","Okyanusta"]},
-{q:"Dünya hangi yıldızın etrafında döner?",a:"Güneş",w:["Sirius","Ay","Kutup Yıldızı"]},
-{q:"Bir kilogram kaç gramdır?",a:"1000",w:["100","10","10.000"]},
-{q:"Nefes almamız için gerekli gaz hangisidir?",a:"Oksijen",w:["Helyum","Metan","Karbondioksit"]},
-{q:"Bilgisayarın fiziksel parçalarına ne denir?",a:"Donanım",w:["Yazılım","İnternet","Tarayıcı"]},
-{q:"Hangisi programlama dilidir?",a:"Python",w:["Photoshop","Bluetooth","Windows"]},
-{q:"Bir yılda kaç ay vardır?",a:"12",w:["10","11","13"]},
-{q:"En hızlı kara hayvanı hangisidir?",a:"Çita",w:["Fil","Kaplumbağa","Panda"]},
-{q:"Dünya'nın şekli hangisine en yakındır?",a:"Kutuplardan hafif basık küre",w:["Küp","Düz kare","Üçgen"]},
-{q:"Bir futbol takımında sahada kaç oyuncu bulunur?",a:"11",w:["7","9","12"]},
-{q:"Web sayfalarını açmak için hangisi kullanılır?",a:"Web tarayıcısı",w:["Hesap makinesi","Müzik çalar","Boyama aracı"]},
-{q:"Gökkuşağında geleneksel olarak kaç renk sayılır?",a:"7",w:["3","5","10"]},
-{q:"Arılar hangi yiyeceği üretmeleriyle bilinir?",a:"Bal",w:["Süt","Yoğurt","Peynir"]},
-{q:"Karenin kaç kenarı vardır?",a:"4",w:["3","5","6"]},
-{q:"Dünya'ya en yakın yıldız hangisidir?",a:"Güneş",w:["Sirius","Vega","Betelgeuse"]},
-{q:"Hangisi memeli bir hayvandır?",a:"Yunus",w:["Ahtapot","Alabalık","Köpek balığı"]},
-{q:"Güneş hangi yönden doğar?",a:"Doğudan",w:["Batıdan","Kuzeyden","Güneyden"]},
-{q:"Minecraft'ta elmas genellikle nerede bulunur?",a:"Yer altında",w:["Bulutlarda","Çimenlerin üstünde","Köy çatılarında"]},
-{q:"Web sayfalarının yapısında hangi dil kullanılır?",a:"HTML",w:["MP3","JPEG","WAV"]},
-{q:"Kızıl Gezegen olarak bilinen gezegen hangisidir?",a:"Mars",w:["Satürn","Neptün","Merkür"]},
-{q:"Bir düzine kaç tanedir?",a:"12",w:["6","10","20"]},
-{q:"Sıcaklığı ölçen araç hangisidir?",a:"Termometre",w:["Pusula","Barometre","Kronometre"]},
-{q:"Elektrik akımının birimi hangisidir?",a:"Amper",w:["Metre","Litre","Kilogram"]},
-{q:"Raketle oynanan spor hangisidir?",a:"Tenis",w:["Boks","Halter","Güreş"]},
-{q:"Ay'a ilk ayak basan insan kimdir?",a:"Neil Armstrong",w:["Isaac Newton","Albert Einstein","Galileo Galilei"]},
-{q:"Hangi şeklin köşesi yoktur?",a:"Çember",w:["Kare","Üçgen","Dikdörtgen"]},
-{q:"Kod içindeki hataları bulup düzeltmeye ne denir?",a:"Hata ayıklama",w:["Yazdırma","İndirme","Kopyalama"]},
-{q:"Boynu çok uzun olan hayvan hangisidir?",a:"Zürafa",w:["Kirpi","Penguen","Kedi"]},
-{q:"Dünya kendi etrafında dönünce ne oluşur?",a:"Gece ve gündüz",w:["Yeni gezegenler","Ay'ın oluşumu","Gökkuşağı"]},
-{q:"Mıknatısın çekebildiği metal hangisidir?",a:"Demir",w:["Tahta","Cam","Kâğıt"]},
-{q:"Dikdörtgenin karşılıklı kenarları nasıldır?",a:"Eşit uzunluktadır",w:["Her zaman eğridir","Hepsi farklıdır","Köşesizdir"]},
-{q:"Hangisi bir enerji türüdür?",a:"Güneş enerjisi",w:["Ekran çözünürlüğü","Dosya adı","Kâğıt boyutu"]},
-{q:"Fotoğraf çekmek için hangi cihaz kullanılır?",a:"Kamera",w:["Yazıcı","Hoparlör","Klavye"]},
-{q:"Minecraft'ta su ve lav birleşince ne oluşabilir?",a:"Taş veya obsidyen",w:["Yün","Kâğıt","Sünger"]},
-{q:"Bir gün kaç saattir?",a:"24",w:["12","36","48"]},
-{q:"Halkalarıyla ünlü gezegen hangisidir?",a:"Satürn",w:["Merkür","Mars","Dünya"]},
-{q:"Kanı vücuda pompalayan organ hangisidir?",a:"Kalp",w:["Mide","Akciğer","Diz"]},
-{q:"Pusula neyi bulmaya yardım eder?",a:"Yönü",w:["Sıcaklığı","Ağırlığı","Zamanı"]},
-{q:"Hangisi asal sayıdır?",a:"7",w:["9","12","15"]},
-{q:"Atmosferde en bol bulunan gaz hangisidir?",a:"Azot",w:["Oksijen","Hidrojen","Karbondioksit"]},
-{q:"Kış ile yaz arasında bulunan mevsim hangisidir?",a:"İlkbahar",w:["Sonbahar","Kış","Yaz"]},
-{q:"Dosyaları uzun süre saklayan parça hangisidir?",a:"SSD veya sabit disk",w:["Fare tekerleği","Hoparlör","Mikrofon"]},
-{q:"Bir kilo pamuk ile bir kilo demirden hangisi daha ağırdır?",a:"İkisi eşittir",w:["Demir","Pamuk","Hesaplanamaz"]},
-{q:"Uçamayan kuş hangisidir?",a:"Penguen",w:["Kartal","Güvercin","Kırlangıç"]},
-{q:"İnternet adreslerinde sıkça hangisi kullanılır?",a:"https://",w:["music://","paper://","keyboard://"]},
-{q:"Hafıza ve düşünmeyle ilgili organ hangisidir?",a:"Beyin",w:["Mide","Diz","Tırnak"]},
-{q:"Satranç tahtasında kaç kare vardır?",a:"64",w:["32","48","100"]},
-{q:"Hangisi bir resim dosyası uzantısıdır?",a:".png",w:[".mp3",".exe olmayan klasör","Ctrl"]},
-{q:"Robotun görev yapması için genellikle ne gerekir?",a:"Komutlar veya program",w:["Sadece bir isim","Mutlaka tekerlek","Sadece boya"]},
-{q:"Hangisi çift sayıdır?",a:"18",w:["7","13","21"]},
-{q:"Bir örümceğin kaç bacağı vardır?",a:"8",w:["6","10","12"]},
-{q:"Arıların çiçeklerden topladığı sıvı nedir?",a:"Nektar",w:["Süt","Sirke","Yağ"]},
-{q:"Bir yıl artık yıl değilse kaç gündür?",a:"365",w:["360","364","366"]},
-{q:"Ses boşlukta yayılabilir mi?",a:"Hayır",w:["Evet, her zaman","Yalnız geceleri","Yalnız çok hızlıysa"]}
+const bank = [
+{q:"Talha'nın en sevdiği oyun hangisi?",a:["Minecraft","The Sims","FIFA","Forza Horizon"],c:0},
+{q:"Talha'nın Brawl Stars'ta sevdiği karakter hangisi?",a:["Leon","Frank","Spike","Crow"],c:1},
+{q:"Talha hangi programlama dili üzerinde çalışıyor?",a:["Java","C++","Python","Swift"],c:2},
+{q:"Talha'nın en yakın arkadaşlarından ikisi kim?",a:["Ali ve Can","Mert ve Efe","Emir ve Arda","Ömer ve Yasin"],c:3},
+{q:"Talha'nın doğum günü hangi tarihte?",a:["12 Mart","12 Haziran","3 Nisan","20 Şubat"],c:0},
+{q:"Talha'nın burcu ne?",a:["Aslan","Balık","Koç","Terazi"],c:1},
+{q:"Talha'nın istediği özel güçlerden biri ne?",a:["Görünmez olmak","Zamanı durdurmak","Yemek yiyip kilo almamak","Uçmak"],c:2},
+{q:"Talha Python öğrenirken hangi konularla uğraştı?",a:["Sadece animasyon","Video montajı","3D baskı","if, else ve elif"],c:3},
+{q:"Talha'nın Minecraft benzeri Python projesinde hangi kütüphane kullanılıyordu?",a:["Ursina","Pandas","Flask","Pygame Zero"],c:0},
+{q:"Talha'nın kişisel web oyun merkezinin adı neydi?",a:["MegaCraft","Mini Oyun Merkezi","Talha TV","Oyun Dünyası Pro"],c:1},
+{q:"Talha'nın annesi için hazırladığı sitenin başlığında hangi isim vardı?",a:["Zeynep'e Özel","Elif'in Dünyası","Aynur'a Özel","Anne Kraliçe"],c:2},
+{q:"Talha'nın web sitelerini yayımlamak için kullandığı hizmet neydi?",a:["Netflix","Discord","Steam","GitHub Pages"],c:3},
+{q:"Talha'nın web sitesinde oyuncuların puanlarını saklamak için hangi yöntem kullanılıyordu?",a:["localStorage","YouTube","Paint","Bluetooth"],c:0},
+{q:"Talha'nın geliştirmek istediği alanlardan biri ne?",a:["Profesyonel aşçılık","Programlama ve siber güvenlik","Uçak pilotluğu","Moda tasarımı"],c:1},
+{q:"Talha'nın Minecraft'ta yaptığı Python projesinde zemin hangi blok türündeydi?",a:["Elmas","Cam","Çimen","Altın"],c:2},
+{q:"Talha'nın oyun sitesindeki avatar marketinde ne satın alınabiliyordu?",a:["Gerçek araba","Uçak bileti","Okul kitabı","Avatar eşyaları"],c:3},
+{q:"Talha'nın annesine hazırladığı web sitesi ne amaçlıydı?",a:["Doğum günü hediyesi","Ödev takibi","Hava durumu","Yemek siparişi"],c:0},
+{q:"Talha'nın bilgisayarında kullandığı işletim sistemi hangisi?",a:["Linux kesin olarak","Windows","ChromeOS","macOS"],c:1},
+{q:"Talha'nın sevdiği oyunlardan biri olan Minecraft'ta temel yapı taşı neyle ilgili?",a:["Müzik notaları","Araba yarışı","Bloklar","Kart toplama"],c:2},
+{q:"Talha'nın web projelerinde kullandığı ana dosya adı genellikle ne?",a:["photo.png","music.mp3","notes.txt","index.html"],c:3},
+{q:"Talha'nın web oyun merkezinde bulunan oyunlardan biri hangisiydi?",a:["Yılan","Satranç turnuvası kesin olarak","Golf simülatörü","Kayak yarışı"],c:0},
+{q:"Talha'nın istediği kod yardımı tarzı nasıl olmalı?",a:["Kod vermeden anlatmak","Hataları açıkça gösterip yardımcı olmak","Her şeyi gizlemek","Sadece sonuç yazmak"],c:1},
+{q:"Talha'nın Minecraft dışındaki sevdiği oyunlardan biri hangisi?",a:["Sadece Sudoku","Candy Crush kesin olarak","Brawl Stars","The Sims kesin olarak"],c:2},
+{q:"Talha'nın yeni web oyunu projesinin adı neydi?",a:["Uzay Yolculuğu","Balon Patlatma","Çiftlik Dünyası","Silah Oyunu"],c:3},
+{q:"Talha'nın kişisel sitesinde oyuncu bilgileri hangi tarayıcı özelliğiyle tutuluyordu?",a:["localStorage","Kamera flaşı","Mikrofon","Yazıcı kuyruğu"],c:0},
+{q:"Talha'nın Minecraft komutlarında özellikle hangi sürüm için yardım istediği belirtilmişti?",a:["1.8","26.2","1.12","1.16"],c:1},
+{q:"Talha'nın oyun sitesinde oyuncuların kullanabildiği ödül kodları ne işe yarayacaktı?",a:["Bilgisayarı kapatmak","İnterneti hızlandırmak","Oyun içi ödül vermek","Dosya silmek"],c:2},
+{q:"Talha'nın annesi için hazırladığı web sitesinde hangi içerik vardı?",a:["Haber bülteni","Kripto para grafiği","Online mağaza zorunlu olarak","Fotoğraflar ve özel mesajlar"],c:3},
+{q:"Talha'nın Python oyununda karakterin birinci şahıs kontrolü için hangi sınıf kullanılmıştı?",a:["FirstPersonController","ImageButton","DataFrame","WebServer"],c:0},
+{q:"Talha'nın oyun merkezindeki tıklama oyunu ne kadar sürüyordu?",a:["5 saniye","30 saniye","2 dakika","10 dakika"],c:1},
+{q:"Talha'nın bilgisayarında Python için kullandığı komut satırı komutlarından biri hangisiydi?",a:["play app","open python","py app.py","run html"],c:2},
+{q:"Talha'nın istediği web sitelerinde tasarımla ilgili beklentisi neydi?",a:["Her zaman düz beyaz sayfa","Hiç buton olmaması","Sadece yazı olması","Daha zengin ve sürprizli tasarım"],c:3},
+{q:"Talha'nın oyun merkezinde hangi profil özelliği vardı?",a:["Avatar seçimi","Pasaport taraması","Gerçek banka kartı","GPS takibi"],c:0},
+{q:"Talha'nın bilgisayar oyunlarıyla ilgili sık sorduğu konulardan biri neydi?",a:["Bahçe sulama","FPS ve oyun performansı","Dikiş makineleri","Astronomi teleskopları"],c:1},
+{q:"Talha'nın istediği ücretsiz oyunlar hangi cihaz içindi?",a:["Akıllı saat","Televizyon kumandası","Bilgisayar","Fotoğraf makinesi"],c:2},
+{q:"Talha'nın Minecraft projesinde dünyaya gökyüzü eklemek için ne kullanılmıştı?",a:["Table","Sky()","Password()","SoundBox()"],c:1},
+{q:"Talha'nın annesi için yayımladığı sitenin bağlantısı hangi platform üzerinden oluşturulmuştu?",a:["TikTok Shop","Spotify","GitHub Pages","Google Maps"],c:2},
+{q:"Talha'nın web projelerinde kullanıcı hesabıyla ilgili hangi özellikler üzerinde çalıştığı oldu?",a:["Uydu kontrolü","Canlı TV yayını","Navigasyon","Giriş ve şifre işlemleri"],c:3},
+{q:"Talha'nın oyun merkezindeki markette hangi şey bulunuyordu?",a:["Avatar kıyafetleri","Gerçek silah satışı","Uçak motoru","Ev tapusu"],c:0},
+{q:"Talha'nın öğrenmek istediği Python konularından biri hangisiydi?",a:["Sadece HTML renkleri","elif kullanımı","Fotoğraf baskısı","Elektrik tesisatı"],c:1},
+{q:"Talha'nın Minecraft benzeri oyununda oyuncu hangi bakış açısıyla hareket ediyordu?",a:["Sadece harita görünümü","Sabit kamera","Birinci şahıs","Yukarıdan uydu görünümü"],c:2},
+{q:"Talha'nın web sitelerini düzenlerken sık istediği yardım türü neydi?",a:["Bilgisayarı uzaktan yönetmek","Şifrelerini tahmin etmek","İnternetini değiştirmek","Kodun nereye ekleneceğini net göstermek"],c:3},
+{q:"Talha'nın Brawl Stars'ta sevdiği Frank nasıl bir karakterdir?",a:["Ağır vuruş yapan dövüşçü","Şifacı robot","Uçan ejderha","Gizli ajan"],c:0},
+{q:"Talha'nın Minecraft'ta istediği güçlü eşyalardan biri neydi?",a:["Tahta kaşık","Netherite kılıç","Plastik kova","Karton kalkan"],c:1},
+{q:"Talha'nın annesi için hazırladığı sayfanın amacı neydi?",a:["Sınav yapmak","Oyun satmak","Özel bir hediye sunmak","Bilgisayar testi yapmak"],c:2},
+{q:"Talha'nın kişisel oyun sitesinde skorlar neden saklanıyordu?",a:["Ekranı karartmak","Ses açmak","Renk değiştirmek","En iyi sonuçları göstermek"],c:3},
+{q:"Talha'nın kod öğrenirken kullandığı ana programlama dili hangisi?",a:["Python","Kotlin kesin olarak","PHP kesin olarak","Rust kesin olarak"],c:0},
+{q:"Talha'nın istediği oyun sitelerinin hangi özelliğe sahip olması önemliydi?",a:["Sadece bilgisayarda açılması","Telefonlarda da kullanılabilmesi","İnternet olmadan her zaman çalışması","Sadece yöneticiye görünmesi"],c:1},
+{q:"Talha'nın Mini Oyun Merkezi'nde bulunan hafıza oyunu hangi beceriye dayanır?",a:["Yemek pişirmeye","Araba sürmeye","Hatırlamaya","Resim basmaya"],c:2},
+{q:"Talha'nın Minecraft projesinde blokları yerleştirme ve kırma neyle yapılıyordu?",a:["Yalnızca klavyeyi çıkararak","Yazıcıyla","Mikrofonla","Fare kontrolleriyle"],c:3},
+{q:"Talha'nın sevdiği Minecraft dünyasının temel mantığı ne?",a:["Bloklarla inşa ve keşif","Sadece kelime ezberlemek","Yalnızca futbol oynamak","Yemek tarifi yazmak"],c:0},
+{q:"Talha'nın oyun merkezinde oyuncu profilini hatırlamak için hangi yaklaşım kullanılmıştı?",a:["Her açılışta tüm verileri silmek","Tarayıcıda veri saklamak","Kameradan tanımak","Yazıcıdan çıktı almak"],c:1},
+{q:"Talha'nın web oyunu projelerinde kullanıcıya hangi tür ödüller planlanmıştı?",a:["Gerçek para garantisi","Gerçek araç","Oyun içi eşya ve puan","Ücretsiz bilgisayar garantisi"],c:2},
+{q:"Talha'nın istediği kodların hangi biçimde verilmesi yararlı oluyor?",a:["Parçalar eksik bırakılarak","Yalnızca ekran görüntüsüyle","Sadece sözlü tarifle","İstenince tek parça tam kod olarak"],c:3},
+{q:"Talha'nın kişisel bilgisayarında kod çalıştırırken kullandığı ortam neydi?",a:["Windows PowerShell","Fotoğraf galerisi","Telefon arama ekranı","Televizyon menüsü"],c:0},
+{q:"Talha'nın bir web projesinde görselleri hangi klasörde tuttuğu olmuştu?",a:["videos-only","static","system32","drivers"],c:1},
+{q:"Talha'nın oyun merkezindeki marketi açıp kapatmak için hangi JavaScript işlevi üzerinde çalışılmıştı?",a:["openCamera()","deleteWindows()","toggleMarket()","startPrinter()"],c:2},
+{q:"Talha'nın Minecraft'ta istediği uzun duvar komutunun amacı neydi?",a:["Eşyaları pişirmek","Güneşi kapatmak","Oyunu kaldırmak","Önüne uzun bir duvar oluşturmak"],c:3}
 ];
 
-let current=[],position=0,score=0,locked=false,lastScore=0;
 const letters=["A","B","C","D"];
+const seenKey="talhaQuizSeenV3";
+const bestKey="talhaQuizBestV3";
+const totalKey="talhaQuizTotalV3";
+let questions=[],index=0,score=0,answered=false,lastResult="";
 
-function shuffle(a){
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(Math.random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
+function shuffle(arr){
+ for(let i=arr.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [arr[i],arr[j]]=[arr[j],arr[i]];
  }
- return a;
+ return arr;
 }
 function getSeen(){
- try{return JSON.parse(localStorage.getItem("arenaSeen")||"[]")}
- catch(e){return []}
+ try{return JSON.parse(localStorage.getItem(seenKey)||"[]")}catch{return []}
+}
+function updateStats(){
+ document.getElementById("best").textContent=localStorage.getItem(bestKey)||0;
+ document.getElementById("total").textContent=localStorage.getItem(totalKey)||0;
+ document.getElementById("poolCount").textContent=bank.length;
+}
+function showHelp(){
+ document.getElementById("help").classList.toggle("hidden");
+}
+function showHome(){
+ document.getElementById("resultScreen").classList.add("hidden");
+ document.getElementById("quizScreen").classList.add("hidden");
+ document.getElementById("startScreen").classList.remove("hidden");
+ document.getElementById("copyMessage").textContent="";
+ updateStats();
 }
 function startQuiz(){
  let seen=getSeen();
- let available=bank.map((q,i)=>({...q,id:i})).filter(q=>!seen.includes(q.id));
- if(available.length<12){seen=[];available=bank.map((q,i)=>({...q,id:i}));}
- shuffle(available);
- current=available.slice(0,12);
+ let available=bank.filter(q=>!seen.includes(q.q));
+ if(available.length<12){
+  seen=[];
+  localStorage.setItem(seenKey,"[]");
+  available=bank.slice();
+ }
+ questions=shuffle(available.slice()).slice(0,12).map((q,i)=>({...q,id:q.q}));
+ // Doğru cevap konumları: A, B, C ve D için üçer kez.
  const targets=shuffle([0,0,0,1,1,1,2,2,2,3,3,3]);
- current=current.map((q,i)=>{
-  let wrong=shuffle([...q.w]);
-  wrong.splice(targets[i],0,q.a);
-  return {...q,options:wrong,correct:targets[i]};
+ questions.forEach((q,i)=>{
+  const correct=q.a[q.c];
+  const wrong=q.a.filter((_,j)=>j!==q.c);
+  shuffle(wrong);
+  const opts=[];
+  let wi=0;
+  for(let j=0;j<4;j++){
+   opts.push(j===targets[i]?correct:wrong[wi++]);
+  }
+  q.correct=targets[i];
+  q.options=opts;
  });
- try{localStorage.setItem("arenaSeen",JSON.stringify([...seen,...current.map(q=>q.id)]))}catch(e){}
- position=0;score=0;locked=false;
- document.getElementById("home").classList.add("hidden");
+ index=0;score=0;answered=false;
+ document.getElementById("startScreen").classList.add("hidden");
  document.getElementById("resultScreen").classList.add("hidden");
- document.getElementById("quiz").classList.remove("hidden");
- showQuestion();
+ document.getElementById("quizScreen").classList.remove("hidden");
+ renderQuestion();
 }
-function showQuestion(){
- locked=false;
- let q=current[position];
- document.getElementById("progress").textContent=`Soru ${position+1} / 12 • Puan: ${score}`;
- document.getElementById("barFill").style.width=(position/12*100)+"%";
+function renderQuestion(){
+ answered=false;
+ const q=questions[index];
+ document.getElementById("progress").textContent=`Soru ${index+1} / 12`;
+ document.getElementById("barFill").style.width=`${index/12*100}%`;
  document.getElementById("question").textContent=q.q;
  document.getElementById("feedback").textContent="";
- document.getElementById("next").classList.add("hidden");
- let area=document.getElementById("options");
- area.innerHTML="";
- q.options.forEach((answer,i)=>{
-  let b=document.createElement("button");
-  b.className="option";
-  b.textContent=letters[i]+") "+answer;
-  b.onclick=()=>chooseAnswer(i);
-  area.appendChild(b);
+ document.getElementById("nextBtn").classList.add("hidden");
+ const box=document.getElementById("options");
+ box.innerHTML="";
+ q.options.forEach((option,i)=>{
+  const btn=document.createElement("button");
+  btn.className="option";
+  btn.textContent=letters[i]+") "+option;
+  btn.onclick=()=>answer(i);
+  box.appendChild(btn);
  });
 }
-function chooseAnswer(i){
- if(locked)return;
- locked=true;
- let q=current[position];
- let buttons=[...document.querySelectorAll(".option")];
- buttons.forEach((b,j)=>{
+function answer(choice){
+ if(answered)return;
+ answered=true;
+ const q=questions[index];
+ const buttons=[...document.querySelectorAll(".option")];
+ buttons.forEach((b,i)=>{
   b.disabled=true;
-  if(j===q.correct)b.classList.add("correct");
+  if(i===q.correct)b.classList.add("correct");
+  if(i===choice&&i!==q.correct)b.classList.add("wrong");
  });
- let f=document.getElementById("feedback");
- if(i===q.correct){
+ if(choice===q.correct){
   score+=10;
-  f.textContent=["🔥 Harika!","🧠 Süper cevap!","😎 Nokta atışı!","🏆 Efsane!"][Math.floor(Math.random()*4)];
+  document.getElementById("feedback").textContent="🎉 Doğru cevap! +10 puan";
+  document.getElementById("feedback").style.color="#65f0ad";
  }else{
-  buttons[i].classList.add("wrong");
-  f.textContent=["😂 Olmadı! Devam et!","🤔 Bir dahaki soruda!","😅 Öğrenerek ilerliyoruz!","💪 Pes etmek yok!"][Math.floor(Math.random()*4)];
+  document.getElementById("feedback").textContent="🙈 Olmadı! Doğru cevap: "+q.options[q.correct];
+  document.getElementById("feedback").style.color="#ff8ba9";
  }
- document.getElementById("progress").textContent=`Soru ${position+1} / 12 • Puan: ${score}`;
- document.getElementById("next").textContent=position===11?"🏁 Sonucu Gör":"Sonraki ➜";
- document.getElementById("next").classList.remove("hidden");
+ document.getElementById("nextBtn").textContent=index===11?"🏆 Sonuçları Gör":"Sonraki ➜";
+ document.getElementById("nextBtn").classList.remove("hidden");
 }
 function nextQuestion(){
- if(!locked)return;
- position++;
- if(position<12)showQuestion();
- else showResult();
+ if(!answered)return;
+ index++;
+ if(index<12){renderQuestion();return}
+ finishQuiz();
 }
-function showResult(){
- document.getElementById("quiz").classList.add("hidden");
+function finishQuiz(){
+ document.getElementById("quizScreen").classList.add("hidden");
  document.getElementById("resultScreen").classList.remove("hidden");
  document.getElementById("barFill").style.width="100%";
- lastScore=score;
+ const best=Math.max(score,Number(localStorage.getItem(bestKey)||0));
+ localStorage.setItem(bestKey,best);
+ localStorage.setItem(totalKey,Number(localStorage.getItem(totalKey)||0)+score);
+ const seen=getSeen();
+ questions.forEach(q=>{if(!seen.includes(q.id))seen.push(q.id)});
+ localStorage.setItem(seenKey,JSON.stringify(seen));
  document.getElementById("result").textContent=score+" / 120 puan";
-
- let rank,msg;
- if(score===120){rank="👑 BİLGİ EFSANESİ!";msg="12'de 12! Her soruyu bildin!";}
- else if(score>=90){rank="🔥 BİLGİ USTASI!";msg="Çok iyi sonuç, devam et!";}
- else if(score>=60){rank="😎 GÜZEL GİDİYORSUN!";msg="Gayet iyi! Daha da yükselebilirsin.";}
- else if(score>=30){rank="🍀 ŞANSLI KAŞİF!";msg="Güzel başlangıç, yeni testte görüşürüz!";}
- else{rank="🎈 YENİ MACERA!";msg="Her yanlış yeni bir şey öğrenme fırsatı!";}
- document.getElementById("rank").textContent=rank;
- document.getElementById("message").textContent=msg;
-
+ document.getElementById("resultEmoji").textContent=score>=100?"👑":score>=70?"🏆":score>=40?"😎":"💜";
+ document.getElementById("resultMessage").textContent=
+ score>=100?"VAY CANINA! Talha'yı gerçekten çok iyi tanıyorsun!":
+ score>=70?"Harika! Talha hakkında bayağı şey biliyorsun!":
+ score>=40?"Güzel! Ama Talha hakkında biraz daha bilgi lazım.":
+ "Bu bir başlangıç! Bir dahaki sefere daha fazla doğru yapabilirsin.";
  const rewards=[
-  {min:0,icon:"🎁",title:"İlk Sürprizin!",text:"Bugünün macera mesajı: Merak etmeye devam et!"},
-  {min:30,icon:"🍀",title:"Şans Rozeti!",text:"Gizli rozet açıldı: Meraklı Zihin!"},
-  {min:50,icon:"🕵️",title:"Gizli Kaşif!",text:"Özel unvanın: Bilgi Avcısı!"},
-  {min:80,icon:"💎",title:"Elmas Başarı!",text:"Harika ilerleme! Elmas rozetini kazandın!"},
-  {min:100,icon:"👑",title:"Altın Taç!",text:"Çok yüksek puan! Taç senin!"},
-  {min:120,icon:"🌌",title:"Kozmik Efsane!",text:"Mükemmel skor! En üst unvan açıldı!"}
+ {min:0,icon:"💜",title:"İlk Adım",text:"Talha'yı tanıma yolculuğuna başladın!"},
+ {min:40,icon:"✨",title:"Meraklı Dedektif",text:"Talha hakkında bazı sırları çözdün!"},
+ {min:70,icon:"🎖️",title:"Talha Uzmanı",text:"Talha'yı oldukça iyi tanıyorsun!"},
+ {min:100,icon:"👑",title:"EFSANE TALHA UZMANI",text:"Bu kadarını bilmek büyük başarı!"}
  ];
- let eligible=rewards.filter(r=>score>=r.min);
- let reward=eligible[Math.floor(Math.random()*eligible.length)];
+ const reward=rewards.filter(r=>score>=r.min).pop();
  document.getElementById("rewardIcon").textContent=reward.icon;
  document.getElementById("rewardTitle").textContent=reward.title;
  document.getElementById("rewardText").textContent=reward.text;
+ lastResult=`Talha'yı Ne Kadar Tanıyorsun? ${score}/120 puan aldım!`;
+ updateStats();
 }
-function copyResult(){
- let text=`Bilgi Arenası'nda ${lastScore}/120 puan aldım! 🎯`;
- if(navigator.clipboard&&navigator.clipboard.writeText){
-  navigator.clipboard.writeText(text).then(()=>alert("Sonucun kopyalandı! 📋")).catch(()=>prompt("Kopyala:",text));
- }else prompt("Kopyala:",text);
+async function copyResult(){
+ const msg=document.getElementById("copyMessage");
+ try{
+  await navigator.clipboard.writeText(lastResult);
+  msg.textContent="✅ Sonucun kopyalandı!";
+ }catch{
+  msg.textContent=lastResult;
+ }
 }
+updateStats();
 </script>
 </body>
 </html>
