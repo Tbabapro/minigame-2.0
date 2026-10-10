@@ -3,62 +3,76 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>12 Soruluk Eğlence Testi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilgi Arenası 🎁</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;padding:18px;
- font-family:Arial,sans-serif;color:#fff;text-align:center;
- background:radial-gradient(circle at top,#39216d,#100d24 70%);
+ margin:0;padding:20px;min-height:100vh;
+ font-family:Arial,sans-serif;color:white;text-align:center;
+ background:radial-gradient(circle at top,#39246f,#0a0b18 75%);
 }
 .container{
- max-width:740px;margin:25px auto;padding:25px;
- background:#19152b;border:1px solid #8564ff;border-radius:24px;
- box-shadow:0 0 35px #6b42ff40;
+ max-width:720px;margin:25px auto;padding:25px;
+ background:#17172c;border:1px solid #7963d9;
+ border-radius:26px;box-shadow:0 0 40px #7355ff30;
 }
-h1{color:#d0baff;font-size:clamp(27px,5vw,40px)}
-.subtitle{color:#c9c0e2;line-height:1.6}
+.logo{font-size:58px}
+h1{font-size:clamp(28px,5vw,42px);color:#cbbaff}
+.subtitle{color:#c6c0dc;line-height:1.6}
 button{
- border:0;border-radius:12px;padding:14px 18px;margin:6px;
- font-size:16px;font-weight:bold;cursor:pointer;transition:.2s;
+ border:0;border-radius:13px;padding:14px 18px;margin:7px;
+ font-size:16px;font-weight:bold;cursor:pointer;
+ transition:.2s;
 }
-button:hover{transform:scale(1.025)}
-.primary{background:#8b5cf6;color:white}
-.secondary{background:#302744;color:white}
+button:hover{transform:translateY(-2px)}
+.primary{background:linear-gradient(100deg,#8056f5,#bd55e8);color:white}
+.secondary{background:#302b48;color:white}
+.hidden{display:none!important}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
+.stat{background:#282440;padding:12px 17px;border-radius:13px;color:#e1d5ff}
+.bar{height:10px;background:#302744;border-radius:20px;overflow:hidden}
+#barFill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#ff70d9);transition:.3s}
+#question{font-size:23px;line-height:1.5;margin:25px 0}
+#progress{color:#d2baff;font-weight:bold}
 .option{
- display:block;width:100%;text-align:left;margin:10px 0;
- background:#29233f;color:white;border:1px solid #51466f;
+ display:block;width:100%;margin:10px 0;text-align:left;
+ background:#292641;color:white;border:1px solid #51476e;
 }
-.option:hover{background:#423462}
-.option:disabled{cursor:default;opacity:1}
+.option:hover{background:#413462}
+.option:disabled{opacity:1;cursor:default}
 .option.correct{background:#176b4a;border-color:#43e5a0}
 .option.wrong{background:#7d2b46;border-color:#ff7398}
-#question{font-size:22px;line-height:1.5}
-#progress{color:#d0baff;font-weight:bold}
-.bar{height:10px;background:#302744;border-radius:20px;overflow:hidden}
-#barFill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#ff70d9);transition:width .25s}
-#feedback{min-height:28px;margin:15px 0;font-weight:bold}
-#result{font-size:25px;color:#ffe18a}
-.hidden{display:none}
-.small{font-size:13px;color:#a99fbe}
+#feedback{min-height:28px;font-weight:bold;margin:15px}
+.reward{
+ margin:22px 0;padding:22px 12px;border-radius:20px;
+ border:1px solid #e8c56b;
+ background:linear-gradient(145deg,#47331e,#29203d);
+ animation:appear .5s ease-out;
+}
+.rewardIcon{font-size:58px;animation:bounce 1s infinite alternate}
+@keyframes appear{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes bounce{to{transform:translateY(-7px) rotate(5deg)}}
+.small{font-size:13px;color:#a9a1c3}
+#rank{color:#ffe18a}
+@media(max-width:450px){.container{padding:16px}.option{font-size:15px}}
 </style>
 </head>
 <body>
 <div class="container">
- <div style="font-size:48px">🧠🎮</div>
- <h1>12 Soruluk Eğlence Testi</h1>
- <p class="subtitle">
- Her testte yeni sorular! Genel kültür, bilim, teknoloji,
- oyunlar ve mantık seni bekliyor.
- </p>
+ <div class="logo">🧠✨</div>
+ <h1>Bilgi Arenası</h1>
+ <p class="subtitle">12 soru, sürpriz ödüller ve bol eğlence!<br>Her testte yeni sorular seni bekliyor.</p>
 
  <div id="home">
-  <p>🎯 Her testte 12 soru</p>
-  <p>⭐ Her doğru cevap 10 puan</p>
-  <p>🎲 A, B, C ve D cevapları dengeli dağıtılır</p>
-  <p>🔄 Tamamladığın sorular, soru havuzu yenilenene kadar tekrarlanmaz.</p>
-  <button class="primary" onclick="startQuiz()">🚀 TESTE BAŞLA</button>
+  <div class="stats">
+   <div class="stat">🎯 12 soru</div>
+   <div class="stat">⭐ 10 puan</div>
+   <div class="stat">🎁 Sürprizler</div>
+  </div>
+  <p>Bilim, oyunlar, mantık, teknoloji ve genel kültür!</p>
+  <p>Hepsini bilmek zorunda değilsin. Eğlenmeye hazır ol! 😎</p>
+  <button class="primary" onclick="startQuiz()">🚀 Teste Başla</button>
  </div>
 
  <div id="quiz" class="hidden">
@@ -67,232 +81,208 @@ button:hover{transform:scale(1.025)}
   <h2 id="question"></h2>
   <div id="options"></div>
   <div id="feedback"></div>
-  <button id="next" class="primary hidden" onclick="nextQuestion()">Sonraki soru ➜</button>
+  <button id="next" class="primary hidden" onclick="nextQuestion()">Sonraki ➜</button>
  </div>
 
  <div id="resultScreen" class="hidden">
-  <h2>🏁 TEST BİTTİ!</h2>
-  <p id="result"></p>
+  <h2>🎉 Test Tamamlandı!</h2>
+  <p id="result" style="font-size:28px;color:#ffe18a"></p>
   <h2 id="rank"></h2>
   <p id="message"></p>
+  <div class="reward">
+   <div class="rewardIcon" id="rewardIcon">🎁</div>
+   <h2 id="rewardTitle">Sürpriz ödülün!</h2>
+   <p id="rewardText"></p>
+  </div>
   <button class="primary" onclick="startQuiz()">🔄 Yeni Test</button>
   <button class="secondary" onclick="copyResult()">📋 Sonucu Kopyala</button>
-  <p class="small">Yeni testte farklı sorular seni bekliyor!</p>
  </div>
 
- <p class="small">Hazır mısın? Bakalım kaç puan alacaksın! 😎</p>
+ <p class="small">Her test yeni bir macera! 🌟</p>
 </div>
 
 <script>
-// 60 GENEL SORU — kişisel soru yok.
-// Her soruda doğru cevap metinle tutulur; harfi önceden sabit değildir.
-const bank = [
+const bank=[
 {q:"Güneş Sistemi'nin en büyük gezegeni hangisidir?",a:"Jüpiter",w:["Mars","Venüs","Merkür"]},
-{q:"Minecraft'ta Creeper ne zaman patlar?",a:"Oyuncuya yaklaşınca",w:["Suya girince","Güneş doğunca","Yemek yiyince"]},
+{q:"Minecraft'ta Creeper ne yapar?",a:"Patlar",w:["Uçar","Su üretir","Oyuncuyu iyileştirir"]},
 {q:"Bir haftada kaç gün vardır?",a:"7",w:["5","6","8"]},
-{q:"Dünyanın doğal uydusu hangisidir?",a:"Ay",w:["Güneş","Mars","Venüs"]},
-{q:"Türkiye'nin başkenti neresidir?",a:"Ankara",w:["İstanbul","İzmir","Antalya"]},
-{q:"Su, normal hava basıncında kaç °C'de donar?",a:"0 °C",w:["10 °C","50 °C","100 °C"]},
+{q:"Dünya'nın doğal uydusu hangisidir?",a:"Ay",w:["Güneş","Mars","Venüs"]},
+{q:"Türkiye'nin başkenti neresidir?",a:"Ankara",w:["İstanbul","İzmir","Bursa"]},
+{q:"Su normal basınçta kaç derecede donar?",a:"0 °C",w:["10 °C","50 °C","100 °C"]},
 {q:"Bir üçgenin kaç kenarı vardır?",a:"3",w:["2","4","5"]},
-{q:"En büyük okyanus hangisidir?",a:"Pasifik Okyanusu",w:["Atlas Okyanusu","Hint Okyanusu","Arktik Okyanusu"]},
-{q:"Bitkiler fotosentez sırasında hangi gazı kullanır?",a:"Karbondioksit",w:["Helyum","Hidrojen","Oksijen"]},
-{q:"Bir saatte kaç dakika vardır?",a:"60",w:["30","100","90"]},
-{q:"Satrançta şah mat ne anlama gelir?",a:"Şahın kurtulamayacağı tehdit altında olması",w:["Oyunun berabere bitmesi","Bir taşın terfi etmesi","Oyuncunun sıra beklemesi"]},
-{q:"Minecraft'ta Ender Dragon nerede bulunur?",a:"End boyutunda",w:["Nether'da","Normal dünyada","Bir köyde"]},
-{q:"Dünya hangi yıldızın etrafında döner?",a:"Güneş",w:["Sirius","Kutup Yıldızı","Ay"]},
+{q:"Dünyanın en büyük okyanusu hangisidir?",a:"Pasifik Okyanusu",w:["Atlas Okyanusu","Hint Okyanusu","Arktik Okyanusu"]},
+{q:"Bitkiler fotosentezde hangi gazı kullanır?",a:"Karbondioksit",w:["Helyum","Hidrojen","Azot"]},
+{q:"Bir saatte kaç dakika vardır?",a:"60",w:["30","90","100"]},
+{q:"Satrançta şah mat ne demektir?",a:"Şahın kaçamayacağı tehdit altında olması",w:["Oyunun başlaması","Beraberlik","Taş terfisi"]},
+{q:"Minecraft'ta Ender Dragon nerede bulunur?",a:"End boyutunda",w:["Nether'da","Bir köyde","Okyanusta"]},
+{q:"Dünya hangi yıldızın etrafında döner?",a:"Güneş",w:["Sirius","Ay","Kutup Yıldızı"]},
 {q:"Bir kilogram kaç gramdır?",a:"1000",w:["100","10","10.000"]},
-{q:"İnsanlar nefes almak için hangi gazı kullanır?",a:"Oksijen",w:["Karbondioksit","Helyum","Metan"]},
+{q:"Nefes almamız için gerekli gaz hangisidir?",a:"Oksijen",w:["Helyum","Metan","Karbondioksit"]},
 {q:"Bilgisayarın fiziksel parçalarına ne denir?",a:"Donanım",w:["Yazılım","İnternet","Tarayıcı"]},
-{q:"Aşağıdakilerden hangisi bir programlama dilidir?",a:"Python",w:["Photoshop","Windows","Bluetooth"]},
+{q:"Hangisi programlama dilidir?",a:"Python",w:["Photoshop","Bluetooth","Windows"]},
 {q:"Bir yılda kaç ay vardır?",a:"12",w:["10","11","13"]},
-{q:"En hızlı kara hayvanlarından biri hangisidir?",a:"Çita",w:["Fil","Kaplumbağa","Panda"]},
-{q:"Dünya'nın şekli en iyi nasıl tanımlanır?",a:"Kutuplardan hafif basık küre",w:["Düz kare","Üçgen","Küp"]},
-{q:"Bir futbol takımında sahada normalde kaç oyuncu bulunur?",a:"11",w:["7","9","12"]},
-{q:"İnternette web sayfalarını açmak için hangisi kullanılır?",a:"Web tarayıcısı",w:["Hesap makinesi","Dosya sıkıştırıcı","Boyama aracı"]},
-{q:"Gökkuşağında genellikle kaç renk sayılır?",a:"7",w:["4","5","10"]},
-{q:"Arılar en çok ne üretmeleriyle bilinir?",a:"Bal",w:["Süt","İpek","Yoğurt"]},
-{q:"Bir karenin kaç eşit kenarı vardır?",a:"4",w:["3","5","6"]},
-{q:"Dünya'nın en yakın yıldızı hangisidir?",a:"Güneş",w:["Betelgeuse","Sirius","Vega"]},
-{q:"Hangi canlı memelidir?",a:"Yunus",w:["Köpek balığı","Alabalık","Ahtapot"]},
-{q:"Güneş doğudan mı, batıdan mı doğar?",a:"Doğudan",w:["Batıdan","Kuzeyden","Güneyden"]},
-{q:"Minecraft'ta elmas cevheri genellikle nerede aranır?",a:"Yer altında",w:["Bulutların üstünde","Okyanusun yüzeyinde","Köy evlerinin çatısında"]},
-{q:"Aşağıdakilerden hangisi bir web sayfası oluşturmakta kullanılır?",a:"HTML",w:["MP3","JPEG","WAV"]},
-{q:"Kızıl Gezegen olarak bilinen gezegen hangisidir?",a:"Mars",w:["Neptün","Satürn","Merkür"]},
+{q:"En hızlı kara hayvanı hangisidir?",a:"Çita",w:["Fil","Kaplumbağa","Panda"]},
+{q:"Dünya'nın şekli hangisine en yakındır?",a:"Kutuplardan hafif basık küre",w:["Küp","Düz kare","Üçgen"]},
+{q:"Bir futbol takımında sahada kaç oyuncu bulunur?",a:"11",w:["7","9","12"]},
+{q:"Web sayfalarını açmak için hangisi kullanılır?",a:"Web tarayıcısı",w:["Hesap makinesi","Müzik çalar","Boyama aracı"]},
+{q:"Gökkuşağında geleneksel olarak kaç renk sayılır?",a:"7",w:["3","5","10"]},
+{q:"Arılar hangi yiyeceği üretmeleriyle bilinir?",a:"Bal",w:["Süt","Yoğurt","Peynir"]},
+{q:"Karenin kaç kenarı vardır?",a:"4",w:["3","5","6"]},
+{q:"Dünya'ya en yakın yıldız hangisidir?",a:"Güneş",w:["Sirius","Vega","Betelgeuse"]},
+{q:"Hangisi memeli bir hayvandır?",a:"Yunus",w:["Ahtapot","Alabalık","Köpek balığı"]},
+{q:"Güneş hangi yönden doğar?",a:"Doğudan",w:["Batıdan","Kuzeyden","Güneyden"]},
+{q:"Minecraft'ta elmas genellikle nerede bulunur?",a:"Yer altında",w:["Bulutlarda","Çimenlerin üstünde","Köy çatılarında"]},
+{q:"Web sayfalarının yapısında hangi dil kullanılır?",a:"HTML",w:["MP3","JPEG","WAV"]},
+{q:"Kızıl Gezegen olarak bilinen gezegen hangisidir?",a:"Mars",w:["Satürn","Neptün","Merkür"]},
 {q:"Bir düzine kaç tanedir?",a:"12",w:["6","10","20"]},
-{q:"Hangi araç sıcaklığı ölçer?",a:"Termometre",w:["Barometre","Pusula","Kronometre"]},
-{q:"Elektrik akımını ölçen birimin adı nedir?",a:"Amper",w:["Metre","Litre","Kilogram"]},
-{q:"Hangi spor raketle oynanır?",a:"Tenis",w:["Boks","Güreş","Halter"]},
-{q:"Ay'a ilk ayak basan insan kimdir?",a:"Neil Armstrong",w:["Albert Einstein","Isaac Newton","Galileo Galilei"]},
-{q:"Hangi şeklin köşesi yoktur?",a:"Çember",w:["Üçgen","Kare","Dikdörtgen"]},
-{q:"Bir bilgisayar programındaki hatayı bulup düzeltmeye ne denir?",a:"Hata ayıklama",w:["İndirme","Yazdırma","Biçimlendirme"]},
-{q:"Hangi hayvanın boynu genellikle çok uzundur?",a:"Zürafa",w:["Kirpi","Penguen","Kedi"]},
-{q:"Dünya kendi etrafında dönünce ne oluşur?",a:"Gece ve gündüz",w:["Mevsimlerin tamamı","Ay tutulması","Güneş'in oluşumu"]},
-{q:"Hangi madde mıknatıs tarafından çekilebilir?",a:"Demir",w:["Tahta","Cam","Kâğıt"]},
-{q:"Bir dikdörtgenin karşılıklı kenarları nasıldır?",a:"Eşit uzunluktadır",w:["Her zaman eğridir","Hepsi farklıdır","Her zaman sıfır uzunluktadır"]},
-{q:"Aşağıdakilerden hangisi bir enerji türüdür?",a:"Güneş enerjisi",w:["Kâğıt boyutu","Ekran çözünürlüğü","Dosya adı"]},
-{q:"Hangi cihaz fotoğraf çekebilir?",a:"Kamera",w:["Yazıcı","Hoparlör","Mikrofon tek başına"]},
-{q:"Minecraft'ta su ve lav birleşince ne oluşabilir?",a:"Taş veya obsidyen",w:["Yün","Cam elyafı","Kâğıt"]},
+{q:"Sıcaklığı ölçen araç hangisidir?",a:"Termometre",w:["Pusula","Barometre","Kronometre"]},
+{q:"Elektrik akımının birimi hangisidir?",a:"Amper",w:["Metre","Litre","Kilogram"]},
+{q:"Raketle oynanan spor hangisidir?",a:"Tenis",w:["Boks","Halter","Güreş"]},
+{q:"Ay'a ilk ayak basan insan kimdir?",a:"Neil Armstrong",w:["Isaac Newton","Albert Einstein","Galileo Galilei"]},
+{q:"Hangi şeklin köşesi yoktur?",a:"Çember",w:["Kare","Üçgen","Dikdörtgen"]},
+{q:"Kod içindeki hataları bulup düzeltmeye ne denir?",a:"Hata ayıklama",w:["Yazdırma","İndirme","Kopyalama"]},
+{q:"Boynu çok uzun olan hayvan hangisidir?",a:"Zürafa",w:["Kirpi","Penguen","Kedi"]},
+{q:"Dünya kendi etrafında dönünce ne oluşur?",a:"Gece ve gündüz",w:["Yeni gezegenler","Ay'ın oluşumu","Gökkuşağı"]},
+{q:"Mıknatısın çekebildiği metal hangisidir?",a:"Demir",w:["Tahta","Cam","Kâğıt"]},
+{q:"Dikdörtgenin karşılıklı kenarları nasıldır?",a:"Eşit uzunluktadır",w:["Her zaman eğridir","Hepsi farklıdır","Köşesizdir"]},
+{q:"Hangisi bir enerji türüdür?",a:"Güneş enerjisi",w:["Ekran çözünürlüğü","Dosya adı","Kâğıt boyutu"]},
+{q:"Fotoğraf çekmek için hangi cihaz kullanılır?",a:"Kamera",w:["Yazıcı","Hoparlör","Klavye"]},
+{q:"Minecraft'ta su ve lav birleşince ne oluşabilir?",a:"Taş veya obsidyen",w:["Yün","Kâğıt","Sünger"]},
 {q:"Bir gün kaç saattir?",a:"24",w:["12","36","48"]},
-{q:"Hangi gezegen halkalarıyla ünlüdür?",a:"Satürn",w:["Merkür","Mars","Dünya"]},
-{q:"İnsan vücudunda kanı pompalayan organ hangisidir?",a:"Kalp",w:["Akciğer","Mide","Beyin"]},
-{q:"Bir pusula temel olarak neyi bulmaya yardım eder?",a:"Yönü",w:["Sıcaklığı","Ağırlığı","Zamanı"]},
-{q:"Hangi sayı asaldır?",a:"7",w:["9","12","15"]},
-{q:"Dünya atmosferinde en bol bulunan gaz hangisidir?",a:"Azot",w:["Oksijen","Karbondioksit","Hidrojen"]},
-{q:"Hangi mevsim genellikle kış ile yaz arasında yer alır?",a:"İlkbahar",w:["Sonbahar","Kış","Yaz"]},
-{q:"Dosyaları uzun süre saklamak için hangisi kullanılır?",a:"SSD veya sabit disk",w:["Fare tekerleği","Hoparlör","Web kamerası"]},
-{q:"Bir kilogram pamuk ile bir kilogram demirin ağırlığı nasıldır?",a:"Eşittir",w:["Demir daha ağırdır","Pamuk daha ağırdır","Ağırlıkları ölçülemez"]},
-{q:"Hangi hayvan uçamayan bir kuştur?",a:"Penguen",w:["Kartal","Güvercin","Kırlangıç"]},
-{q:"Bir internet adresinin başında sıkça hangi ifade bulunur?",a:"https://",w:["music://","paper://","keyboard://"]},
-{q:"Hangi organ düşünme ve hafıza ile yakından ilişkilidir?",a:"Beyin",w:["Mide","Diz","Tırnak"]},
-{q:"Bir satranç tahtasında kaç kare bulunur?",a:"64",w:["32","48","100"]},
-{q:"Aşağıdakilerden hangisi bir dosya uzantısıdır?",a:".png",w:["/folder","www","Ctrl"]},
-{q:"Bir robotun görev yapması için genellikle ne gerekir?",a:"Komutlar veya program",w:["Sadece bir isim","Mutlaka tekerlek","Sadece boya"]},
-{q:"Hangi sayı çift sayıdır?",a:"18",w:["7","13","21"]}
+{q:"Halkalarıyla ünlü gezegen hangisidir?",a:"Satürn",w:["Merkür","Mars","Dünya"]},
+{q:"Kanı vücuda pompalayan organ hangisidir?",a:"Kalp",w:["Mide","Akciğer","Diz"]},
+{q:"Pusula neyi bulmaya yardım eder?",a:"Yönü",w:["Sıcaklığı","Ağırlığı","Zamanı"]},
+{q:"Hangisi asal sayıdır?",a:"7",w:["9","12","15"]},
+{q:"Atmosferde en bol bulunan gaz hangisidir?",a:"Azot",w:["Oksijen","Hidrojen","Karbondioksit"]},
+{q:"Kış ile yaz arasında bulunan mevsim hangisidir?",a:"İlkbahar",w:["Sonbahar","Kış","Yaz"]},
+{q:"Dosyaları uzun süre saklayan parça hangisidir?",a:"SSD veya sabit disk",w:["Fare tekerleği","Hoparlör","Mikrofon"]},
+{q:"Bir kilo pamuk ile bir kilo demirden hangisi daha ağırdır?",a:"İkisi eşittir",w:["Demir","Pamuk","Hesaplanamaz"]},
+{q:"Uçamayan kuş hangisidir?",a:"Penguen",w:["Kartal","Güvercin","Kırlangıç"]},
+{q:"İnternet adreslerinde sıkça hangisi kullanılır?",a:"https://",w:["music://","paper://","keyboard://"]},
+{q:"Hafıza ve düşünmeyle ilgili organ hangisidir?",a:"Beyin",w:["Mide","Diz","Tırnak"]},
+{q:"Satranç tahtasında kaç kare vardır?",a:"64",w:["32","48","100"]},
+{q:"Hangisi bir resim dosyası uzantısıdır?",a:".png",w:[".mp3",".exe olmayan klasör","Ctrl"]},
+{q:"Robotun görev yapması için genellikle ne gerekir?",a:"Komutlar veya program",w:["Sadece bir isim","Mutlaka tekerlek","Sadece boya"]},
+{q:"Hangisi çift sayıdır?",a:"18",w:["7","13","21"]},
+{q:"Bir örümceğin kaç bacağı vardır?",a:"8",w:["6","10","12"]},
+{q:"Arıların çiçeklerden topladığı sıvı nedir?",a:"Nektar",w:["Süt","Sirke","Yağ"]},
+{q:"Bir yıl artık yıl değilse kaç gündür?",a:"365",w:["360","364","366"]},
+{q:"Ses boşlukta yayılabilir mi?",a:"Hayır",w:["Evet, her zaman","Yalnız geceleri","Yalnız çok hızlıysa"]}
 ];
 
 let current=[],position=0,score=0,locked=false,lastScore=0;
 const letters=["A","B","C","D"];
 
-function shuffle(arr){
- for(let i=arr.length-1;i>0;i--){
-  const j=Math.floor(Math.random()*(i+1));
-  [arr[i],arr[j]]=[arr[j],arr[i]];
+function shuffle(a){
+ for(let i=a.length-1;i>0;i--){
+  let j=Math.floor(Math.random()*(i+1));
+  [a[i],a[j]]=[a[j],a[i]];
  }
- return arr;
+ return a;
 }
-
 function getSeen(){
- try{return JSON.parse(localStorage.getItem("quizSeenQuestions")||"[]")}
+ try{return JSON.parse(localStorage.getItem("arenaSeen")||"[]")}
  catch(e){return []}
 }
-function saveSeen(ids){
- try{localStorage.setItem("quizSeenQuestions",JSON.stringify(ids))}
- catch(e){}
-}
-
 function startQuiz(){
  let seen=getSeen();
  let available=bank.map((q,i)=>({...q,id:i})).filter(q=>!seen.includes(q.id));
-
- // Tüm havuz bitince yeni tura geç.
- if(available.length<12){
-  seen=[];
-  available=bank.map((q,i)=>({...q,id:i}));
- }
+ if(available.length<12){seen=[];available=bank.map((q,i)=>({...q,id:i}));}
  shuffle(available);
  current=available.slice(0,12);
-
- // Her harf tam 3 kez doğru cevap olacak şekilde seçenekleri düzenle.
- const targetLetters=shuffle([0,0,0,1,1,1,2,2,2,3,3,3]);
-
+ const targets=shuffle([0,0,0,1,1,1,2,2,2,3,3,3]);
  current=current.map((q,i)=>{
-  const wrong=shuffle([...q.w]);
-  const options=[...wrong];
-  options.splice(targetLetters[i],0,q.a);
-  return {q:q.q,options,correct:targetLetters[i],id:q.id};
+  let wrong=shuffle([...q.w]);
+  wrong.splice(targets[i],0,q.a);
+  return {...q,options:wrong,correct:targets[i]};
  });
-
- saveSeen([...seen,...current.map(q=>q.id)]);
+ try{localStorage.setItem("arenaSeen",JSON.stringify([...seen,...current.map(q=>q.id)]))}catch(e){}
  position=0;score=0;locked=false;
  document.getElementById("home").classList.add("hidden");
  document.getElementById("resultScreen").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
  showQuestion();
 }
-
 function showQuestion(){
  locked=false;
- const q=current[position];
- document.getElementById("progress").textContent=
-  `Soru ${position+1} / 12 • Puan: ${score}`;
+ let q=current[position];
+ document.getElementById("progress").textContent=`Soru ${position+1} / 12 • Puan: ${score}`;
  document.getElementById("barFill").style.width=(position/12*100)+"%";
  document.getElementById("question").textContent=q.q;
  document.getElementById("feedback").textContent="";
  document.getElementById("next").classList.add("hidden");
-
- const area=document.getElementById("options");
+ let area=document.getElementById("options");
  area.innerHTML="";
  q.options.forEach((answer,i)=>{
-  const btn=document.createElement("button");
-  btn.className="option";
-  btn.textContent=letters[i]+") "+answer;
-  btn.onclick=()=>chooseAnswer(i);
-  area.appendChild(btn);
+  let b=document.createElement("button");
+  b.className="option";
+  b.textContent=letters[i]+") "+answer;
+  b.onclick=()=>chooseAnswer(i);
+  area.appendChild(b);
  });
 }
-
 function chooseAnswer(i){
  if(locked)return;
  locked=true;
- const q=current[position];
- const buttons=[...document.querySelectorAll(".option")];
- buttons.forEach((btn,j)=>{
-  btn.disabled=true;
-  if(j===q.correct)btn.classList.add("correct");
+ let q=current[position];
+ let buttons=[...document.querySelectorAll(".option")];
+ buttons.forEach((b,j)=>{
+  b.disabled=true;
+  if(j===q.correct)b.classList.add("correct");
  });
- const feedback=document.getElementById("feedback");
-
+ let f=document.getElementById("feedback");
  if(i===q.correct){
   score+=10;
-  feedback.textContent=["🔥 Harika!","🧠 Beyinler çalışıyor!","😎 Nokta atışı!","🏆 Efsane cevap!"][Math.floor(Math.random()*4)];
+  f.textContent=["🔥 Harika!","🧠 Süper cevap!","😎 Nokta atışı!","🏆 Efsane!"][Math.floor(Math.random()*4)];
  }else{
   buttons[i].classList.add("wrong");
-  feedback.textContent=["😂 Olmadı, diğer soruya!","🤔 Biraz kaçırdın!","😅 Doğru cevap yeşil renkte!","💪 Devam et, toparlarsın!"][Math.floor(Math.random()*4)];
+  f.textContent=["😂 Olmadı! Devam et!","🤔 Bir dahaki soruda!","😅 Öğrenerek ilerliyoruz!","💪 Pes etmek yok!"][Math.floor(Math.random()*4)];
  }
-
- document.getElementById("progress").textContent=
-  `Soru ${position+1} / 12 • Puan: ${score}`;
- document.getElementById("next").textContent=
-  position===11?"🏁 Sonuçları Gör":"Sonraki soru ➜";
+ document.getElementById("progress").textContent=`Soru ${position+1} / 12 • Puan: ${score}`;
+ document.getElementById("next").textContent=position===11?"🏁 Sonucu Gör":"Sonraki ➜";
  document.getElementById("next").classList.remove("hidden");
 }
-
 function nextQuestion(){
  if(!locked)return;
  position++;
  if(position<12)showQuestion();
  else showResult();
 }
-
 function showResult(){
  document.getElementById("quiz").classList.add("hidden");
  document.getElementById("resultScreen").classList.remove("hidden");
  document.getElementById("barFill").style.width="100%";
  lastScore=score;
-
  document.getElementById("result").textContent=score+" / 120 puan";
- let rank,message;
 
- if(score===120){
-  rank="👑 BİLGİ CANAVARI!";
-  message="12'de 12! Sorular sana vız geliyor!";
- }else if(score>=90){
-  rank="🔥 BİLGİ USTASI!";
-  message="Çok iyi sonuç! Genel kültürün sağlam.";
- }else if(score>=60){
-  rank="😎 GÜZEL GİDİYORSUN!";
-  message="Fena değil! Bir sonraki testte daha da yüksel.";
- }else if(score>=30){
-  rank="🧠 ANTRENMAN ZAMANI!";
-  message="Yeni sorular çöz, puanını yükselt!";
- }else{
-  rank="😂 ISINMA TURU!";
-  message="Sorular seni şaşırttı! Tekrar dene.";
- }
-
+ let rank,msg;
+ if(score===120){rank="👑 BİLGİ EFSANESİ!";msg="12'de 12! Her soruyu bildin!";}
+ else if(score>=90){rank="🔥 BİLGİ USTASI!";msg="Çok iyi sonuç, devam et!";}
+ else if(score>=60){rank="😎 GÜZEL GİDİYORSUN!";msg="Gayet iyi! Daha da yükselebilirsin.";}
+ else if(score>=30){rank="🍀 ŞANSLI KAŞİF!";msg="Güzel başlangıç, yeni testte görüşürüz!";}
+ else{rank="🎈 YENİ MACERA!";msg="Her yanlış yeni bir şey öğrenme fırsatı!";}
  document.getElementById("rank").textContent=rank;
- document.getElementById("message").textContent=message;
-}
+ document.getElementById("message").textContent=msg;
 
+ const rewards=[
+  {min:0,icon:"🎁",title:"İlk Sürprizin!",text:"Bugünün macera mesajı: Merak etmeye devam et!"},
+  {min:30,icon:"🍀",title:"Şans Rozeti!",text:"Gizli rozet açıldı: Meraklı Zihin!"},
+  {min:50,icon:"🕵️",title:"Gizli Kaşif!",text:"Özel unvanın: Bilgi Avcısı!"},
+  {min:80,icon:"💎",title:"Elmas Başarı!",text:"Harika ilerleme! Elmas rozetini kazandın!"},
+  {min:100,icon:"👑",title:"Altın Taç!",text:"Çok yüksek puan! Taç senin!"},
+  {min:120,icon:"🌌",title:"Kozmik Efsane!",text:"Mükemmel skor! En üst unvan açıldı!"}
+ ];
+ let eligible=rewards.filter(r=>score>=r.min);
+ let reward=eligible[Math.floor(Math.random()*eligible.length)];
+ document.getElementById("rewardIcon").textContent=reward.icon;
+ document.getElementById("rewardTitle").textContent=reward.title;
+ document.getElementById("rewardText").textContent=reward.text;
+}
 function copyResult(){
- const text=`12 Soruluk Eğlence Testi: ${lastScore}/120 puan aldım! 🎯`;
+ let text=`Bilgi Arenası'nda ${lastScore}/120 puan aldım! 🎯`;
  if(navigator.clipboard&&navigator.clipboard.writeText){
-  navigator.clipboard.writeText(text)
-   .then(()=>alert("Sonucun kopyalandı! 📋"))
-   .catch(()=>prompt("Sonucunu kopyala:",text));
- }else{
-  prompt("Sonucunu kopyala:",text);
- }
+  navigator.clipboard.writeText(text).then(()=>alert("Sonucun kopyalandı! 📋")).catch(()=>prompt("Kopyala:",text));
+ }else prompt("Kopyala:",text);
 }
 </script>
 </body>
