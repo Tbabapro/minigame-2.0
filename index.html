@@ -10,7 +10,7 @@
 body{
  margin:0;min-height:100vh;padding:20px;
  font-family:Arial,sans-serif;color:white;text-align:center;
- background:radial-gradient(ellipse at top,#392078 0%,#160b2c 55%,#080612 100%);
+ background:radial-gradient(ellipse at top,#392078,#160b2c 55%,#080612);
 }
 .container{max-width:750px;margin:25px auto}
 h1{font-size:clamp(27px,6vw,43px);color:#e3b6ff;text-shadow:0 0 20px #b84dff}
@@ -25,7 +25,7 @@ button{
  background:linear-gradient(120deg,#a83bff,#6439ee);
  color:white;font-weight:bold;font-size:15px;cursor:pointer;
 }
-button:hover{filter:brightness(1.2);transform:translateY(-1px)}
+button:hover{filter:brightness(1.2)}
 .option{
  display:block;width:100%;margin:10px 0;text-align:left;
  background:#ffffff0d;border:1px solid #a878d866;
@@ -45,19 +45,19 @@ button:hover{filter:brightness(1.2);transform:translateY(-1px)}
 <body>
 <div class="container">
 <h1>💜 Talha'yı Ne Kadar Tanıyorsun?</h1>
-<p class="subtitle">Talha hakkındaki 11 soruyu cevapla ve gerçek bir Talha uzmanı olduğunu kanıtla!</p>
+<p class="subtitle">Bakalım Talha'yı ne kadar iyi tanıyorsun!</p>
 
 <div id="intro" class="panel">
  <div style="font-size:55px">🧠✨</div>
  <h2>Bilgi Testine Hazır mısın?</h2>
- <p>Her soru için bir cevap seç. Bakalım Talha'yı ne kadar iyi tanıyorsun!</p>
- <p class="small">11 soru · Her doğru cevap 1 puan · Tam puana özel sürpriz 🎁</p>
+ <p>13 soruyu cevapla ve Talha uzmanı olduğunu kanıtla!</p>
+ <p class="small">13 soru · Her doğru cevap 1 puan · Tam puana özel sürpriz 🎁</p>
  <button onclick="startQuiz()">🚀 Teste Başla</button>
 </div>
 
 <div id="quiz" class="panel hidden">
  <div style="display:flex;justify-content:space-between;gap:10px">
-  <span id="counter">Soru 1 / 11</span>
+  <span id="counter">Soru 1 / 13</span>
   <span id="score">⭐ Puan: 0</span>
  </div>
  <div class="progress"><div id="bar"></div></div>
@@ -75,10 +75,10 @@ button:hover{filter:brightness(1.2);transform:translateY(-1px)}
  <div id="gift" class="hidden">
   <div class="gift">🎁</div>
   <h2>GİZLİ HEDİYE AÇILDI!</h2>
-  <p>💜 Tebrikler! 11 sorunun tamamını doğru cevapladın!</p>
+  <p>💚💜 Tebrikler! 13 sorunun tamamını doğru cevapladın!</p>
   <p>Sen resmen <b>TALHA UZMANI</b> oldun! 👑</p>
   <p>🏅 Özel unvanın: <b>Talha'nın Efsane Dostu</b></p>
-  <p>🎉 Bu gizli hediye yalnızca 11/11 yapanlara özel!</p>
+  <p>🎉 Bu gizli hediye yalnızca 13/13 yapanlara özel!</p>
  </div>
  <button onclick="startQuiz()">🔄 Tekrar Oyna</button>
  <button onclick="location.reload()">🏠 Ana Sayfa</button>
@@ -87,82 +87,30 @@ button:hover{filter:brightness(1.2);transform:translateY(-1px)}
 
 <script>
 const questions = [
- {
-  q:"Talha'nın en sevdiği oyun hangisi?",
-  a:["Roblox","Minecraft","Fortnite","Among Us"],
-  c:1
- },
- {
-  q:"Talha'nın en sevdiği Brawl Stars karakteri kim?",
-  a:["Frank","Leon","Spike","Mortis"],
-  c:0
- },
- 
- {
-  q:"Talha'nın en sevdiği yemek hangisi?",
-  a:["Pizza","Hamburger","Döner","Lahmacun"],
-  c:2
- }
-
- {
-  q:"Talha kaç yaşında?",
-  a:["10","12","11","13"],
-  c:2
- },
- {
-  q:"Talha'nın doğum günü ne zaman?",
-  a:["12 Ocak","12 Mart","12 Haziran","12 Aralık"],
-  c:1
- },
- {
-  q:"Talha'nın burcu ne?",
-  a:["Koç","Boğa","Balık","Aslan"],
-  c:2
- },
- {
-  q:"Talha'nın en yakın arkadaşları kimler?",
-  a:["Ömer ve Yasin","Ali ve Mehmet","Efe ve Mert","Can ve Emir"],
-  c:0
- },
- {
-  q:"Talha hangi özel güce sahip olmak istiyor?",
-  a:["Görünmez olmak","Zihin okumak","Işınlanmak","Uçmak"],
-  c:3
- },
- {
-  q:"Talha'nın ayak numarası kaç?",
-  a:["38","39","39.5","41"],
-  c:2
- },
- {
-  q:"Talha'nın verdiği bilgiye göre kilosu kaç?",
-  a:["70","80","90","75"],
-  c:1
- },
- {
-  q:"Talha'nın hobisi ne?",
-  a:["Resim yapmak","Bisiklete binmek","Site yapmak","Kitap okumak"],
-  c:2
- },
- {
-  q:"Talha'nın öğrendiği kodlama dili hangisi?",
-  a:["Java","Python","C++","JavaScript"],
-  c:1
- }
+ {q:"Talha'nın en sevdiği oyun hangisi?",a:["Roblox","Minecraft","Fortnite","Among Us"],c:1},
+ {q:"Talha'nın en sevdiği Brawl Stars karakteri kim?",a:["Frank","Leon","Spike","Mortis"],c:0},
+ {q:"Talha kaç yaşında?",a:["10","12","11","13"],c:2},
+ {q:"Talha'nın doğum günü ne zaman?",a:["12 Ocak","12 Mart","12 Haziran","12 Aralık"],c:1},
+ {q:"Talha'nın burcu ne?",a:["Koç","Boğa","Balık","Aslan"],c:2},
+ {q:"Talha'nın en yakın arkadaşları kimler?",a:["Ömer ve Yasin","Ali ve Mehmet","Efe ve Mert","Can ve Emir"],c:0},
+ {q:"Talha hangi özel güce sahip olmak istiyor?",a:["Görünmez olmak","Zihin okumak","Işınlanmak","Uçmak"],c:3},
+ {q:"Talha'nın ayak numarası kaç?",a:["38","39","39.5","41"],c:2},
+ {q:"Talha'nın verdiği bilgiye göre kilosu kaç?",a:["70","80","90","75"],c:1},
+ {q:"Talha'nın hobisi ne?",a:["Resim yapmak","Bisiklete binmek","Site yapmak","Kitap okumak"],c:2},
+ {q:"Talha'nın öğrendiği kodlama dili hangisi?",a:["Java","Python","C++","JavaScript"],c:1},
+ {q:"Talha'nın en sevdiği yemek hangisi?",a:["Pizza","Hamburger","Döner","Lahmacun"],c:2},
+ {q:"Talha'nın en sevdiği renk hangisi?",a:["Mavi","Kırmızı","Siyah","Yeşil"],c:3}
 ];
 
 let order=[],index=0,points=0,answered=false;
 
 function startQuiz(){
  order=questions.map((_,i)=>i);
- // Soruların sırası her oyunda karıştırılır.
  for(let i=order.length-1;i>0;i--){
   const j=Math.floor(Math.random()*(i+1));
   [order[i],order[j]]=[order[j],order[i]];
  }
- index=0;
- points=0;
- answered=false;
+ index=0;points=0;answered=false;
  document.getElementById("intro").classList.add("hidden");
  document.getElementById("result").classList.add("hidden");
  document.getElementById("quiz").classList.remove("hidden");
@@ -202,57 +150,46 @@ function chooseAnswer(choice,button){
   button.classList.add("selected");
   document.getElementById("feedback").textContent="✅ Doğru cevap! Harikasın!";
  }else{
-  document.getElementById("feedback").textContent=
-   "❌ Yanlış cevap! Doğrusu: "+q.a[q.c];
+  document.getElementById("feedback").textContent="❌ Yanlış cevap! Doğrusu: "+q.a[q.c];
   all[q.c].classList.add("selected");
  }
  document.getElementById("score").textContent=`⭐ Puan: ${points}`;
  document.getElementById("bar").style.width=((index+1)/questions.length*100)+"%";
- document.getElementById("next").textContent=
-  index===questions.length-1?"🏆 Sonuçları Gör":"Sonraki ➜";
+ document.getElementById("next").textContent=index===questions.length-1?"🏆 Sonuçları Gör":"Sonraki ➜";
  document.getElementById("next").classList.remove("hidden");
 }
 
 function nextQuestion(){
  if(!answered)return;
  index++;
- if(index<questions.length){
-  showQuestion();
- }else{
-  showResult();
- }
+ if(index<questions.length)showQuestion();
+ else showResult();
 }
 
 function showResult(){
  document.getElementById("quiz").classList.add("hidden");
  document.getElementById("result").classList.remove("hidden");
- document.getElementById("finalScore").textContent=
-  `⭐ ${points} / ${questions.length} doğru`;
-
+ document.getElementById("finalScore").textContent=`⭐ ${points} / ${questions.length} doğru`;
  const gift=document.getElementById("gift");
  gift.classList.add("hidden");
 
- if(points===11){
+ if(points===questions.length){
   document.getElementById("resultIcon").textContent="🎉";
   document.getElementById("resultTitle").textContent="MÜKEMMEL! HEPSİ DOĞRU!";
-  document.getElementById("resultText").textContent=
-   "İnanılmazsın! Talha hakkındaki bütün soruları bildin!";
+  document.getElementById("resultText").textContent="İnanılmazsın! Talha hakkındaki bütün soruları bildin!";
   gift.classList.remove("hidden");
- }else if(points>=8){
+ }else if(points>=10){
   document.getElementById("resultIcon").textContent="🏆";
   document.getElementById("resultTitle").textContent="Harika sonuç!";
-  document.getElementById("resultText").textContent=
-   "Talha'yı bayağı iyi tanıyorsun. Gizli hediye için 11/11 yapmalısın!";
- }else if(points>=5){
+  document.getElementById("resultText").textContent="Çok yaklaştın! Gizli hediye için 13/13 yapmalısın!";
+ }else if(points>=6){
   document.getElementById("resultIcon").textContent="😎";
   document.getElementById("resultTitle").textContent="Fena değil!";
-  document.getElementById("resultText").textContent=
-   "Biraz daha çalış, daha yüksek puan alabilirsin!";
+  document.getElementById("resultText").textContent="Bir tur daha oyna, daha yüksek puan alabilirsin!";
  }else{
   document.getElementById("resultIcon").textContent="💪";
   document.getElementById("resultTitle").textContent="Tekrar dene!";
-  document.getElementById("resultText").textContent=
-   "Bir tur daha oyna ve Talha uzmanı olmaya yaklaş!";
+  document.getElementById("resultText").textContent="Bir tur daha oyna ve Talha uzmanı olmaya yaklaş!";
  }
 }
 </script>
