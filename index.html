@@ -3,251 +3,612 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Talha'yı Ne Kadar Tanıyorsun?</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;padding:18px;min-height:100vh;font-family:Arial,sans-serif;color:white;background:radial-gradient(circle at top,#51268a,#111027 70%)}
-.container{max-width:720px;margin:20px auto;padding:25px;background:#19172f;border:1px solid #8067e9;border-radius:25px;box-shadow:0 0 35px #7854ff40}
-header{text-align:center}
-.logo{font-size:60px}
-h1{font-size:clamp(27px,5vw,39px);color:#d5c5ff}
-.subtitle{color:#c8c0df;line-height:1.6}
-.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:22px 0}
-.stat{background:#292440;padding:12px;border-radius:12px}
-button{border:0;border-radius:12px;padding:14px 18px;margin:6px;font-size:15px;font-weight:bold;cursor:pointer;transition:.2s}
-button:hover{transform:translateY(-2px)}
-.primary{background:linear-gradient(100deg,#8056f5,#c04fe8);color:white}
-.secondary{background:#302b48;color:white}
-.hidden{display:none!important}
-.bar{height:9px;background:#302744;border-radius:20px;overflow:hidden;margin-top:12px}
-#barFill{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#ff70d9);transition:.3s}
-#progress{color:#d0baff;font-weight:bold}
-#question{font-size:22px;line-height:1.5;margin:25px 0}
-.option{display:block;width:100%;margin:10px 0;text-align:left;background:#292641;color:white;border:1px solid #51476e}
-.option:hover{background:#423365}
-.option:disabled{opacity:1;cursor:default}
-.option.correct{background:#176b4a;border-color:#43e5a0}
-.option.wrong{background:#7d2b46;border-color:#ff7398}
-#feedback{min-height:28px;margin:15px;font-weight:bold}
-#result{font-size:32px;color:#ffe18a}
-.reward{margin:20px 0;padding:22px;background:linear-gradient(135deg,#352558,#24203f);border:1px solid #8a6ee9;border-radius:18px}
-#rewardIcon{font-size:50px}
-.small{font-size:13px;color:#aaa1c5;line-height:1.6}
-footer{text-align:center;color:#8e85a9;font-size:12px;margin-top:22px}
+:root {
+  --bg: #090716;
+  --panel: rgba(26, 20, 52, .92);
+  --purple: #a855f7;
+  --pink: #ec4899;
+  --cyan: #67e8f9;
+  --text: #f8f5ff;
+  --muted: #b9b2d3;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 10%, #482078 0, transparent 38%),
+    radial-gradient(ellipse at 90% 85%, #152c65 0, transparent 40%),
+    var(--bg);
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(#ffffff75 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: .17;
+}
+button { font: inherit; }
+.page {
+  width: min(720px, 94%);
+  margin: 0 auto;
+  padding: 30px 0 50px;
+  position: relative;
+  z-index: 1;
+}
+.top {
+  text-align: center;
+  margin: 15px 0 25px;
+}
+.logo {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  border: 1px solid #67e8f955;
+  border-radius: 30px;
+  padding: 9px 15px;
+  background: #67e8f910;
+}
+h1 {
+  font-size: clamp(30px, 7vw, 48px);
+  line-height: 1.1;
+  margin: 20px 0 12px;
+  background: linear-gradient(100deg, #fff, #d8a5ff, #ff9bd8);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.subtitle {
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 520px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid #a855f750;
+  border-radius: 25px;
+  padding: clamp(20px, 5vw, 34px);
+  box-shadow: 0 0 40px #8b5cf622, inset 0 0 30px #a855f708;
+  backdrop-filter: blur(12px);
+}
+.hero-icon {
+  font-size: 75px;
+  text-align: center;
+  filter: drop-shadow(0 0 20px #c084fc80);
+  margin: 10px 0;
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 25px 0;
+}
+.feature {
+  text-align: center;
+  border: 1px solid #ffffff15;
+  border-radius: 15px;
+  padding: 14px 5px;
+  background: #ffffff06;
+}
+.feature b { display: block; font-size: 22px; margin-bottom: 7px; }
+.feature span { color: var(--muted); font-size: 12px; }
+.primary, .secondary {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: .2s;
+}
+.primary {
+  color: white;
+  background: linear-gradient(100deg, #9333ea, #db2777);
+  box-shadow: 0 7px 25px #a855f740;
+}
+.primary:hover { transform: translateY(-2px); filter: brightness(1.12); }
+.secondary {
+  margin-top: 12px;
+  color: #e9d5ff;
+  background: #ffffff0b;
+  border: 1px solid #c084fc55;
+}
+.secondary:hover { background: #a855f722; }
+.hidden { display: none !important; }
+.quiz-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.pill {
+  background: #a855f722;
+  border: 1px solid #a855f755;
+  border-radius: 30px;
+  padding: 9px 12px;
+  color: #e9d5ff;
+}
+.progress {
+  height: 8px;
+  background: #ffffff12;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--purple), var(--pink), var(--cyan));
+  transition: width .35s;
+}
+.question-number {
+  color: var(--cyan);
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.question {
+  font-size: clamp(23px, 5vw, 30px);
+  line-height: 1.35;
+  margin: 13px 0 25px;
+}
+.answers { display: grid; gap: 12px; }
+.answer {
+  text-align: left;
+  color: var(--text);
+  padding: 16px;
+  background: #ffffff08;
+  border: 1px solid #ffffff20;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  transition: .18s;
+}
+.answer:hover:not(:disabled) {
+  border-color: var(--purple);
+  background: #a855f71b;
+  transform: translateX(3px);
+}
+.letter {
+  flex: 0 0 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #a855f729;
+  font-weight: bold;
+  color: #e9d5ff;
+}
+.answer.correct {
+  border-color: #4ade80;
+  background: #22c55e18;
+}
+.answer.correct .letter { background: #22c55e35; color: #86efac; }
+.answer.wrong {
+  border-color: #fb7185;
+  background: #f43f5e18;
+}
+.answer:disabled { cursor: default; }
+.feedback {
+  margin-top: 17px;
+  min-height: 24px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.next { margin-top: 16px; }
+.result-icon {
+  text-align: center;
+  font-size: 85px;
+  margin: 5px 0 15px;
+  animation: float 2.5s ease-in-out infinite;
+}
+.result-title { text-align: center; font-size: 32px; margin: 8px 0; }
+.result-text { text-align: center; color: var(--muted); line-height: 1.7; }
+.score-box {
+  text-align: center;
+  margin: 25px 0;
+  padding: 23px;
+  border-radius: 18px;
+  border: 1px solid #c084fc55;
+  background: #a855f713;
+}
+.score {
+  font-size: 50px;
+  font-weight: 900;
+  background: linear-gradient(90deg, #c084fc, #f9a8d4);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.reward {
+  border: 1px solid #facc1570;
+  background: linear-gradient(145deg, #713f121c, #facc1510);
+  border-radius: 20px;
+  padding: 22px;
+  text-align: center;
+  margin: 22px 0;
+}
+.reward h3 { color: #fde68a; font-size: 23px; }
+.gift-button {
+  font-size: 18px;
+  background: linear-gradient(100deg, #ca8a04, #f59e0b, #facc15);
+  color: #271600;
+  box-shadow: 0 5px 25px #f59e0b35;
+}
+.gift-box {
+  font-size: 88px;
+  cursor: pointer;
+  animation: wiggle 1.5s infinite;
+  display: block;
+  margin: 10px auto;
+}
+.gift-message {
+  border-radius: 15px;
+  background: #facc1515;
+  padding: 18px;
+  line-height: 1.8;
+  border: 1px dashed #facc1580;
+}
+.badge {
+  display: inline-block;
+  margin: 10px 0;
+  border-radius: 30px;
+  padding: 10px 16px;
+  color: #fde68a;
+  border: 1px solid #facc1580;
+  background: #facc1516;
+  font-weight: bold;
+}
+.footer {
+  text-align: center;
+  color: #938bad;
+  font-size: 12px;
+  margin-top: 24px;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-6deg) scale(1.04); }
+  75% { transform: rotate(6deg) scale(1.04); }
+}
+@keyframes sparkle {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(160deg); opacity: 0; }
+}
+.confetti {
+  position: fixed;
+  z-index: 5;
+  pointer-events: none;
+  animation: sparkle 1.8s ease-out forwards;
+}
+@media (max-width: 480px) {
+  .features { gap: 6px; }
+  .feature { padding: 12px 3px; }
+  .feature b { font-size: 19px; }
+  .feature span { font-size: 10px; }
+  .card { border-radius: 20px; }
+}
 </style>
 </head>
 <body>
-<div class="container">
-<header>
-<div class="logo">😎</div>
-<h1>Talha'yı Ne Kadar Tanıyorsun?</h1>
-<p class="subtitle">Talha'yı gerçekten tanıyor musun? Bakalım kaç soruyu bilebileceksin! 💜</p>
-</header>
+<div class="page">
+  <header class="top">
+    <div class="logo">✦ TALHA QUIZ EXPERIENCE ✦</div>
+    <h1>Talha'yı Ne Kadar Tanıyorsun?</h1>
+    <p class="subtitle">Gerçek bir Talha uzmanı mısın? 11 soruyu cevapla, puanını topla ve gizli hediyeyi keşfet! 🎯</p>
+  </header>
 
-<div class="stats">
-<div class="stat">🏆 Rekor: <b id="best">0</b></div>
-<div class="stat">⭐ Toplam puan: <b id="total">0</b></div>
-</div>
+  <section class="card" id="welcomeScreen">
+    <div class="hero-icon">🧠</div>
+    <h2 style="text-align:center">Hazır mısın?</h2>
+    <p class="subtitle">Dikkatli seç! Her sorunun yalnızca bir doğru cevabı var. Bütün soruları doğru yaparsan seni özel bir sürpriz bekliyor. 🎁</p>
+    <div class="features">
+      <div class="feature"><b>❓ 11</b><span>Soru</span></div>
+      <div class="feature"><b>💎 100</b><span>Tam puan</span></div>
+      <div class="feature"><b>🎁 1</b><span>Gizli hediye</span></div>
+    </div>
+    <button class="primary" onclick="startQuiz()">🚀 Yarışmaya Başla</button>
+  </section>
 
-<section id="startScreen" style="text-align:center">
-<div class="reward">
-<div style="font-size:45px">🧠</div>
-<h2>Talha hakkında ne biliyorsun?</h2>
-<p class="subtitle">12 soru, 120 puan ve testin sonunda sana özel bir unvan!</p>
-</div>
-<button class="primary" onclick="startQuiz()">🚀 Teste Başla</button>
-</section>
+  <section class="card hidden" id="quizScreen">
+    <div class="quiz-top">
+      <span class="pill" id="questionCounter">Soru 1 / 11</span>
+      <span class="pill">⭐ <span id="liveScore">0</span> puan</span>
+    </div>
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="question-number" id="questionLabel">SORU 01</div>
+    <h2 class="question" id="questionText"></h2>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <button class="primary next hidden" id="nextButton" onclick="nextQuestion()">Sonraki Soru →</button>
+  </section>
 
-<section id="quizScreen" class="hidden">
-<div id="progress">Soru 1 / 12</div>
-<div class="bar"><div id="barFill"></div></div>
-<h2 id="question"></h2>
-<div id="options"></div>
-<div id="feedback"></div>
-<div style="text-align:center">
-<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">Sonraki ➜</button>
-</div>
-</section>
+  <section class="card hidden" id="resultScreen">
+    <div class="result-icon" id="resultIcon">🏆</div>
+    <h2 class="result-title" id="resultTitle">Sonuç!</h2>
+    <p class="result-text" id="resultText"></p>
+    <div class="score-box">
+      <div class="score" id="finalScore">0/11</div>
+      <div style="color:var(--muted)">Doğru cevap</div>
+      <div class="badge" id="rankBadge">Quiz Oyuncusu</div>
+    </div>
 
-<section id="resultScreen" class="hidden" style="text-align:center">
-<div id="resultEmoji" style="font-size:55px">🏆</div>
-<h2>Test bitti!</h2>
-<div id="result"></div>
-<p id="resultMessage" class="subtitle"></p>
-<div class="reward">
-<div id="rewardIcon">🎁</div>
-<h2 id="rewardTitle">Ödülün</h2>
-<p id="rewardText"></p>
-</div>
-<button class="primary" onclick="startQuiz()">🔄 Yeniden Dene</button>
-<button class="secondary" onclick="copyResult()">📋 Sonucumu Kopyala</button>
-<button class="secondary" onclick="home()">🏠 Ana Sayfa</button>
-<p id="copyMessage" class="small"></p>
-</section>
+    <div class="reward hidden" id="rewardArea">
+      <div style="font-size:13px;letter-spacing:2px;color:#fde68a">★ GİZLİ ÖDÜL AÇILDI ★</div>
+      <h3>İMKÂNSIZI BAŞARDIN!</h3>
+      <p>11 sorunun tamamını doğru yaptın. Artık sıradan bir oyuncu değilsin!</p>
+      <button class="primary gift-button" id="openGiftButton" onclick="openGift()">🎁 Hediyeni Aç!</button>
+      <div class="hidden" id="giftContent">
+        <span class="gift-box">🎁</span>
+        <div class="gift-message">
+          <div style="font-size:28px">👑 🏆 👑</div>
+          <h3 style="color:#fde68a">TALHA'NIN EFSANESİ!</h3>
+          <p><b>Gizli unvanın:</b><br>🌟 TALHA UZMANI — SEVİYE EFSANE 🌟</p>
+          <p>Bu özel dijital ödül senin! Talha hakkında her şeyi biliyorsun. Hafızan efsane, dikkatin kusursuz! 😎</p>
+          <p style="font-size:13px;color:var(--muted)">Bu, yarışmaya özel sanal bir hediyedir.</p>
+        </div>
+      </div>
+    </div>
 
-<footer>Talha'nın özel testi 💜</footer>
+    <button class="primary" onclick="startQuiz()">🔄 Tekrar Oyna</button>
+    <button class="secondary" onclick="goHome()">🏠 Ana Ekrana Dön</button>
+  </section>
+
+  <div class="footer">✨ Talha'nın Kişisel Quiz'i • İyi eğlenceler! ✨</div>
 </div>
 
 <script>
-const bank=[
-{q:"Talha'nın en sevdiği oyun hangisi?",a:["Minecraft","Roblox","Fortnite","GTA"],c:0},
-{q:"Talha'nın Brawl Stars'ta en sevdiği karakter kim?",a:["Leon","Frank","Spike","Mortis"],c:1},
-{q:"Talha'nın doğum günü hangi tarihte?",a:["5 Mart","12 Nisan","12 Mart","20 Şubat"],c:2},
-{q:"Talha'nın burcu hangisi?",a:["Aslan","Koç","Akrep","Balık"],c:3},
-{q:"Talha'nın en yakın arkadaşları kimler?",a:["Ömer ve Yasin","Ali ve Mehmet","Efe ve Can","Mert ve Arda"],c:0},
-{q:"Talha'nın hayalindeki özel güçlerden biri ne?",a:["Zamanı durdurmak","Yemek yiyip kilo almamak","Uçmak","Görünmez olmak"],c:1},
-{q:"Talha kaç yaşında olduğunu söylemişti?",a:["9","13","11","15"],c:2},
-{q:"Talha'nın annesinin adı ne?",a:["Elif","Zeynep","Fatma","Aynur"],c:3},
-{q:"Talha oyun oynamayı sevdiğinde akla ilk gelen favori oyunu hangisi?",a:["Minecraft","The Sims","FIFA","Among Us"],c:0},
-{q:"Talha'nın Brawl Stars favorisi olan Frank hangi oyunun karakteri?",a:["Minecraft","Brawl Stars","Roblox","Clash Royale"],c:1},
-{q:"Talha hangi ayda doğmuş?",a:["Ocak","Mayıs","Mart","Eylül"],c:2},
-{q:"Talha'nın burcu Balık olduğuna göre doğum günü hangi mevsimdedir?",a:["Yaz","Sonbahar","Kışın sonu kesinlikle değil","Kışın sonu veya ilkbaharın başı"],c:3},
-{q:"Talha'nın iki yakın arkadaşından biri kim?",a:["Ömer","Kerem","Kaan","Burak"],c:0},
-{q:"Talha'nın istediği özel güç hangi seçenekle aynı anlama geliyor?",a:["Bir anda ışınlanmak","İstediği kadar yemek yiyebilmek ve kilo almamak","Hayvanlarla konuşmak","Duvarlardan geçmek"],c:1},
-{q:"Talha'nın en sevdiği oyun dünyasında çoğunlukla neyle inşa yapılır?",a:["Kartlarla","Arabalarla","Bloklarla","Bulmacalarla"],c:2},
-{q:"Talha'nın en sevdiği Brawl Stars karakteri kimdi?",a:["Shelly","Colt","Piper","Frank"],c:3},
-{q:"Talha'nın doğum günü hangi gün ve ay?",a:["12 Mart","12 Haziran","3 Mart","21 Nisan"],c:0},
-{q:"Talha'nın yakın arkadaşlarından diğerinin adı ne?",a:["Emir","Yasin","Arda","Efe"],c:1},
-{q:"Talha'nın özel güç hayali aşağıdakilerden hangisi?",a:["Denizin altında yaşamak","Geleceği görmek","Yemek yiyip kilo almamak","Bir anda büyümek"],c:2},
-{q:"Talha hangi oyunu oynamayı en sevdiğini söylemişti?",a:["Valorant","Rocket League","FIFA","Minecraft"],c:3},
-{q:"Talha'nın sevdiği Brawl Stars karakteri hangi karakter?",a:["Frank","Crow","Edgar","Bibi"],c:0},
-{q:"Talha'nın doğum ayı hangisi?",a:["Temmuz","Mart","Kasım","Aralık"],c:1},
-{q:"Talha'nın burcunu doğru bilen kişi hangisini seçmeli?",a:["Yay","Başak","Balık","İkizler"],c:2},
-{q:"Talha'nın en yakın arkadaşlarından biri olan Yasin'in diğer yakın arkadaşı kim?",a:["Mert","Can","Efe","Ömer"],c:3},
-{q:"Talha'nın istediği özel güçle ilgili doğru ifade hangisi?",a:["Yemek yiyip kilo almamak","Her dili konuşmak","Geçmişe gitmek","Süper hızlı koşmak"],c:0},
-{q:"Talha'nın favori oyunu olan Minecraft nasıl bir oyundur?",a:["Sadece futbol oyunu","Bloklarla keşif ve inşa oyunu","Sadece yarış oyunu","Müzik oyunu"],c:1},
-{q:"Talha'nın en sevdiği Brawl Stars karakteri ağır çekiciyle tanınan kim?",a:["Poco","Nita","Frank","Jessie"],c:2},
-{q:"Talha'nın doğum tarihi hangisi?",a:["3 Mart","12 Mayıs","20 Mart","12 Mart"],c:3},
-{q:"Talha'nın burcu hangisidir?",a:["Balık","Terazi","Oğlak","Boğa"],c:0},
-{q:"Talha'nın yakın arkadaşları arasında kimler var?",a:["Ali ve Veli","Ömer ve Yasin","Mert ve Can","Efe ve Emir"],c:1},
-{q:"Talha'nın hayalindeki güç hangi günlük isteğiyle ilgili?",a:["Daha hızlı uyumak","Daha iyi yüzmek","Yemek yiyip kilo almamak","Daha uzun boylu olmak"],c:2},
-{q:"Talha'nın favori oyununu seç:",a:["Fortnite","Among Us","Roblox","Minecraft"],c:3},
-{q:"Talha'nın Brawl Stars'taki favori karakteri hangisi?",a:["Frank","Spike","Leon","Shelly"],c:0},
-{q:"Talha'nın doğum günü hangi ayda?",a:["Nisan","Mart","Haziran","Ekim"],c:1},
-{q:"Talha'nın burcu için doğru seçenek hangisi?",a:["Koç","Aslan","Balık","Akrep"],c:2},
-{q:"Talha'nın yakın arkadaşlarından birinin adı Ömer ise diğerinin adı ne?",a:["Kaan","Emir","Mert","Yasin"],c:3},
-{q:"Talha'nın en sevdiği oyun hangisi?",a:["Minecraft","GTA","FIFA","Valorant"],c:0},
-{q:"Talha'nın en sevdiği Brawl Stars karakteri?",a:["Crow","Frank","Mortis","Dynamike"],c:1},
-{q:"Talha'nın doğum günü için doğru tarih hangisi?",a:["12 Şubat","10 Mart","12 Mart","12 Nisan"],c:2},
-{q:"Talha'nın özel güç dileği hangisi?",a:["Işınlanmak","Zihin okumak","Zamanı durdurmak","Yemek yiyip kilo almamak"],c:3}
+const questions = [
+  {
+    q: "En sevdiğim oyun hangisi?",
+    a: ["Roblox", "Minecraft", "GTA", "Fortnite"],
+    c: 1
+  },
+  {
+    q: "En sevdiğim Brawl Stars karakteri kim?",
+    a: ["Leon", "Shelly", "Frank", "Mortis"],
+    c: 2
+  },
+  {
+    q: "Kaç yaşındayım?",
+    a: ["10", "12", "13", "11"],
+    c: 3
+  },
+  {
+    q: "Doğum günüm hangi tarihte?",
+    a: ["12 Mart", "12 Nisan", "21 Mart", "3 Aralık"],
+    c: 0
+  },
+  {
+    q: "Burcum ne?",
+    a: ["Koç", "Balık", "Aslan", "Yay"],
+    c: 1
+  },
+  {
+    q: "En yakın arkadaşlarım kimler?",
+    a: ["Ali ve Efe", "Mert ve Can", "Ömer ve Yasin", "Emir ve Arda"],
+    c: 2
+  },
+  {
+    q: "Hangi özel güce sahip olmak isterim?",
+    a: ["Görünmez olmak", "Zihin okumak", "Işınlanmak", "Uçmak"],
+    c: 3
+  },
+  {
+    q: "Ayak numaram kaç?",
+    a: ["39.5", "38", "40", "41"],
+    c: 0
+  },
+  {
+    q: "Kilom kaç?",
+    a: ["70", "80", "85", "75"],
+    c: 1
+  },
+  {
+    q: "Hobim ne?",
+    a: ["Resim yapmak", "Futbol oynamak", "Site yapmak", "Kitap toplamak"],
+    c: 2
+  },
+  {
+    q: "Öğrendiğim kodlama dili hangisi?",
+    a: ["Java", "C++", "Scratch", "Python"],
+    c: 3
+  }
 ];
 
-const letters=["A","B","C","D"];
-let questions=[],index=0,score=0,answered=false,lastResult="";
+let current = 0;
+let score = 0;
+let answered = false;
+let quizQuestions = [];
 
-function shuffle(arr){
- for(let i=arr.length-1;i>0;i--){
-  const j=Math.floor(Math.random()*(i+1));
-  [arr[i],arr[j]]=[arr[j],arr[i]];
- }
- return arr;
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
-function updateStats(){
- document.getElementById("best").textContent=localStorage.getItem("talhaPersonalBest")||0;
- document.getElementById("total").textContent=localStorage.getItem("talhaPersonalTotal")||0;
+
+function showScreen(id) {
+  ["welcomeScreen", "quizScreen", "resultScreen"].forEach(screenId => {
+    document.getElementById(screenId).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-function startQuiz(){
- questions=shuffle(bank.slice()).slice(0,12).map(q=>({...q}));
- const positions=shuffle([0,0,0,1,1,1,2,2,2,3,3,3]);
- questions.forEach((q,i)=>{
-  const correct=q.a[q.c];
-  const wrong=shuffle(q.a.filter((_,j)=>j!==q.c));
-  let k=0;
-  q.options=Array.from({length:4},(_,j)=>j===positions[i]?correct:wrong[k++]);
-  q.correct=positions[i];
- });
- index=0;score=0;answered=false;
- document.getElementById("startScreen").classList.add("hidden");
- document.getElementById("resultScreen").classList.add("hidden");
- document.getElementById("quizScreen").classList.remove("hidden");
- render();
+
+function startQuiz() {
+  current = 0;
+  score = 0;
+  answered = false;
+  quizQuestions = shuffle([...questions]);
+  document.getElementById("liveScore").textContent = "0";
+  document.getElementById("rewardArea").classList.add("hidden");
+  document.getElementById("giftContent").classList.add("hidden");
+  document.getElementById("openGiftButton").classList.remove("hidden");
+  showScreen("quizScreen");
+  renderQuestion();
 }
-function render(){
- answered=false;
- const q=questions[index];
- document.getElementById("progress").textContent=`Soru ${index+1} / 12`;
- document.getElementById("barFill").style.width=(index/12*100)+"%";
- document.getElementById("question").textContent=q.q;
- document.getElementById("feedback").textContent="";
- document.getElementById("nextBtn").classList.add("hidden");
- const box=document.getElementById("options");
- box.innerHTML="";
- q.options.forEach((opt,i)=>{
-  const b=document.createElement("button");
-  b.className="option";
-  b.textContent=letters[i]+") "+opt;
-  b.onclick=()=>answer(i);
-  box.appendChild(b);
- });
+
+function renderQuestion() {
+  answered = false;
+  const item = quizQuestions[current];
+  document.getElementById("questionCounter").textContent =
+    `Soru ${current + 1} / ${quizQuestions.length}`;
+  document.getElementById("questionLabel").textContent =
+    `SORU ${String(current + 1).padStart(2, "0")}`;
+  document.getElementById("questionText").textContent = item.q;
+  document.getElementById("progressFill").style.width =
+    `${(current / quizQuestions.length) * 100}%`;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("nextButton").classList.add("hidden");
+
+  const answersBox = document.getElementById("answers");
+  answersBox.innerHTML = "";
+
+  item.a.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.className = "answer";
+
+    const letter = document.createElement("span");
+    letter.className = "letter";
+    letter.textContent = String.fromCharCode(65 + index);
+
+    const label = document.createElement("span");
+    label.textContent = answer;
+
+    button.append(letter, label);
+    button.addEventListener("click", () => chooseAnswer(index));
+    answersBox.appendChild(button);
+  });
 }
-function answer(n){
- if(answered)return;
- answered=true;
- const q=questions[index];
- document.querySelectorAll(".option").forEach((b,i)=>{
-  b.disabled=true;
-  if(i===q.correct)b.classList.add("correct");
-  if(i===n&&i!==q.correct)b.classList.add("wrong");
- });
- if(n===q.correct){
-  score+=10;
-  document.getElementById("feedback").textContent="🎉 Doğru! +10 puan";
-  document.getElementById("feedback").style.color="#65f0ad";
- }else{
-  document.getElementById("feedback").textContent="🙈 Yanlış! Doğru cevap: "+q.options[q.correct];
-  document.getElementById("feedback").style.color="#ff8ba9";
- }
- document.getElementById("nextBtn").textContent=index===11?"🏆 Sonucu Gör":"Sonraki ➜";
- document.getElementById("nextBtn").classList.remove("hidden");
+
+function chooseAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const item = quizQuestions[current];
+  const buttons = [...document.querySelectorAll(".answer")];
+  buttons.forEach(button => button.disabled = true);
+
+  if (index === item.c) {
+    score++;
+    document.getElementById("feedback").textContent = "✅ Doğru cevap! Harikasın!";
+    buttons[index].classList.add("correct");
+  } else {
+    document.getElementById("feedback").textContent =
+      `❌ Bu sefer olmadı. Doğru cevap: ${item.a[item.c]}`;
+    buttons[index].classList.add("wrong");
+    buttons[item.c].classList.add("correct");
+  }
+
+  document.getElementById("liveScore").textContent = score;
+  document.getElementById("progressFill").style.width =
+    `${((current + 1) / quizQuestions.length) * 100}%`;
+
+  const next = document.getElementById("nextButton");
+  next.textContent = current === quizQuestions.length - 1
+    ? "🏆 Sonuçları Gör"
+    : "Sonraki Soru →";
+  next.classList.remove("hidden");
 }
-function nextQuestion(){
- if(!answered)return;
- index++;
- if(index<12)render();
- else finish();
+
+function nextQuestion() {
+  if (!answered) return;
+
+  if (current < quizQuestions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
 }
-function finish(){
- document.getElementById("quizScreen").classList.add("hidden");
- document.getElementById("resultScreen").classList.remove("hidden");
- document.getElementById("barFill").style.width="100%";
- const best=Math.max(score,Number(localStorage.getItem("talhaPersonalBest")||0));
- localStorage.setItem("talhaPersonalBest",best);
- localStorage.setItem("talhaPersonalTotal",Number(localStorage.getItem("talhaPersonalTotal")||0)+score);
- document.getElementById("result").textContent=score+" / 120 puan";
- document.getElementById("resultEmoji").textContent=score>=100?"👑":score>=70?"🏆":score>=40?"😎":"💜";
- document.getElementById("resultMessage").textContent=
- score>=100?"İnanılmaz! Talha'yı çok iyi tanıyorsun!":
- score>=70?"Harika! Talha hakkında bayağı şey biliyorsun!":
- score>=40?"Fena değil! Biraz daha dikkatli ol!":
- "Daha öğrenecek çok şey var! Bir daha dene.";
- const rewards=[
- {min:0,icon:"💜",title:"Yeni Tanışan",text:"Talha'yı tanıma yolculuğun başladı!"},
- {min:40,icon:"🔍",title:"Meraklı Dedektif",text:"Talha hakkında bazı detayları biliyorsun!"},
- {min:70,icon:"🥇",title:"Talha Uzmanı",text:"Talha'yı iyi tanıyorsun!"},
- {min:100,icon:"👑",title:"Efsane Dost",text:"Talha hakkında neredeyse her şeyi biliyorsun!"}
- ].filter(r=>score>=r.min).pop();
- document.getElementById("rewardIcon").textContent=rewards.icon;
- document.getElementById("rewardTitle").textContent=rewards.title;
- document.getElementById("rewardText").textContent=rewards.text;
- lastResult=`Talha'yı Ne Kadar Tanıyorsun? ${score}/120 puan aldım!`;
- updateStats();
+
+function showResults() {
+  showScreen("resultScreen");
+  document.getElementById("finalScore").textContent =
+    `${score}/${quizQuestions.length}`;
+
+  const percent = Math.round(score / quizQuestions.length * 100);
+  let title, message, icon, rank;
+
+  if (score === 11) {
+    title = "EFSANESİN!";
+    message = "Bütün cevaplar doğru! Gizli hediyeyi kazandın. 🎉";
+    icon = "👑";
+    rank = "🌟 TALHA UZMANI";
+    document.getElementById("rewardArea").classList.remove("hidden");
+    celebrate();
+  } else if (score >= 8) {
+    title = "Muhteşem!";
+    message = "Talha'yı çok iyi tanıyorsun! Birkaç soru daha ve tam puan senin.";
+    icon = "🏆";
+    rank = "Quiz Ustası";
+    document.getElementById("rewardArea").classList.add("hidden");
+  } else if (score >= 5) {
+    title = "Güzel sonuç!";
+    message = "İyi gidiyorsun! Bir kez daha dene ve rekorunu geliştir.";
+    icon = "😎";
+    rank = "Quiz Uzmanı Adayı";
+    document.getElementById("rewardArea").classList.add("hidden");
+  } else {
+    title = "Tekrar dene!";
+    message = "Her denemede daha iyisini yapabilirsin. Pes etmek yok!";
+    icon = "🚀";
+    rank = "Yeni Oyuncu";
+    document.getElementById("rewardArea").classList.add("hidden");
+  }
+
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultText").textContent =
+    `${message} Başarı oranı: %${percent}`;
+  document.getElementById("resultIcon").textContent = icon;
+  document.getElementById("rankBadge").textContent = rank;
 }
-function home(){
- document.getElementById("resultScreen").classList.add("hidden");
- document.getElementById("startScreen").classList.remove("hidden");
- document.getElementById("copyMessage").textContent="";
+
+function openGift() {
+  document.getElementById("giftContent").classList.remove("hidden");
+  document.getElementById("openGiftButton").classList.add("hidden");
+  celebrate();
 }
-async function copyResult(){
- const msg=document.getElementById("copyMessage");
- try{
-  await navigator.clipboard.writeText(lastResult);
-  msg.textContent="✅ Sonucun kopyalandı!";
- }catch{
-  msg.textContent=lastResult;
- }
+
+function celebrate() {
+  const symbols = ["✨", "⭐", "🎉", "💜", "🌟", "🎊"];
+  for (let i = 0; i < 35; i++) {
+    const star = document.createElement("span");
+    star.className = "confetti";
+    star.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = (45 + Math.random() * 50) + "vh";
+    star.style.fontSize = (15 + Math.random() * 22) + "px";
+    star.style.animationDelay = Math.random() * .7 + "s";
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 2800);
+  }
 }
-updateStats();
+
+function goHome() {
+  showScreen("welcomeScreen");
+}
 </script>
 </body>
 </html>
